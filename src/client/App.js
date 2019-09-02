@@ -2,24 +2,16 @@ import React, { Component } from 'react';
 import './App.scss';
 
 export default class App extends Component {
-  state = { username: null };
+  state = { data: null };
 
   componentDidMount() {
-    fetch('/api/getUsername')
+    fetch('/api/mealPlan')
       .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
+      .then(res => this.setState({ data: res.meal }));
   }
 
   render() {
-    const { username } = this.state;
-    return (
-      <div>
-        {username ? (
-          <h1>{`Hello ${username}`}</h1>
-        ) : (
-          <h1>Loading... please wait!</h1>
-        )}
-      </div>
-    );
+    const { data } = this.state;
+    return <div>{data ? <p>{`${data}`}</p> : <h1>Loading</h1>}</div>;
   }
 }
