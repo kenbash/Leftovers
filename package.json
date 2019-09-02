@@ -1,7 +1,7 @@
 {
-  "name": "simple-react-full-stack",
+  "name": "leftovers",
   "version": "1.0.0",
-  "description": "Boilerplate to build a full stack web application using React, Node.js, Express and Webpack.",
+  "description": "A meal planning app",
   "main": "src/server/index.js",
   "scripts": {
     "build": "webpack --mode production",
@@ -10,11 +10,12 @@
     "server": "nodemon src/server/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "author": "Sandeep Raveesh",
+  "author": "Kenneth Ashley",
   "license": "ISC",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "express": "^4.16.3",
+    "mongodb": "^3.3.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "sass": "^1.22.10"
