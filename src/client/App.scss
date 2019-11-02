@@ -1,4 +1,86 @@
+$header-height: 64px;
+
 body {
+  width: 100vw;
+  height: 100vh;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: $header-height;
   text-align: center;
-  margin: auto;
+}
+
+main {
+  position: fixed;
+  top: $header-height;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.temp {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+@mixin face() {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  transition: 250ms;
+
+  //temp
+  text-align: center;
+}
+
+.meal-grid {
+  @include face();
+}
+
+.meal-list {
+  @include face();
+}
+
+.meal-detail {
+  @include face();
+}
+
+.home-face {
+  .meal-grid {
+    transform: translateX(0);
+  }
+  .meal-list {
+    transform: translateX(100%);
+  }
+  .meal-detail {
+    transform: translateX(-100%);
+  }
+}
+
+.list-face {
+  .meal-grid {
+    transform: translateX(-100%);
+  }
+  .meal-list {
+    transform: translateX(0);
+  }
+  .meal-detail {
+    transform: translateX(100%);
+  }
+}
+
+.detail-face {
+  .meal-grid {
+    transform: translateX(100%);
+  }
+  .meal-list {
+    transform: translateX(-100%);
+  }
+  .meal-detail {
+    transform: translateX(0);
+  }
 }
