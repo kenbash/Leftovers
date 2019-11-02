@@ -22,11 +22,6 @@ main {
   bottom: 0;
 }
 
-.temp {
-  display: flex;
-  justify-content: space-evenly;
-}
-
 .meal-grid,
 .meal-list,
 .meal-detail {
@@ -34,7 +29,6 @@ main {
   height: 100%;
   width: 100%;
   transition: margin-left 500ms;
-  text-align: center; // temp
 }
 
 .home-face {

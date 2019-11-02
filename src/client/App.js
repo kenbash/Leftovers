@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import './App.scss';
+import Home from './components/home/Home';
+import MealList from './components/meal-list/MealList';
+import MealDetail from './components/meal-detail/MealDetail';
 
 const FACE_CLASS = {
   HOME: {
@@ -67,26 +71,17 @@ export default class App extends Component {
     const { faceClass } = this.state;
     return (
       <React.Fragment>
+        <CssBaseline />
         <Header />
-        <main>
-          <section className="temp">
-            <button type="button" onClick={() => this.changeFace(false)}>
-              Left
-            </button>
-            <button type="button" onClick={() => this.changeFace(true)}>
-              Right
-            </button>
+        <main className={faceClass}>
+          <section className="meal-grid">
+            <Home rightcb={() => this.changeFace(true)} leftcb={() => this.changeFace(false)} />
           </section>
-          <section className={faceClass}>
-            <div className="meal-grid">
-              <h1>Grid</h1>
-            </div>
-            <div className="meal-list">
-              <h1>List</h1>
-            </div>
-            <div className="meal-detail">
-              <h1>Detail</h1>
-            </div>
+          <section className="meal-list">
+            <MealList rightcb={() => this.changeFace(true)} leftcb={() => this.changeFace(false)} />
+          </section>
+          <section className="meal-detail">
+            <MealDetail rightcb={() => this.changeFace(true)} leftcb={() => this.changeFace(false)} />
           </section>
         </main>
       </React.Fragment>
