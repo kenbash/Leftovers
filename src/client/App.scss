@@ -27,60 +27,45 @@ main {
   justify-content: space-evenly;
 }
 
-@mixin face() {
+.meal-grid,
+.meal-list,
+.meal-detail {
   position: absolute;
   height: 100%;
   width: 100%;
-  transition: 250ms;
-
-  //temp
-  text-align: center;
-}
-
-.meal-grid {
-  @include face();
-}
-
-.meal-list {
-  @include face();
-}
-
-.meal-detail {
-  @include face();
+  transition: margin-left 500ms;
+  text-align: center; // temp
 }
 
 .home-face {
-  .meal-grid {
-    transform: translateX(0);
-  }
   .meal-list {
-    transform: translateX(100%);
+    margin-left: 100%;
   }
   .meal-detail {
-    transform: translateX(-100%);
+    margin-left: -100%;
   }
 }
 
 .list-face {
   .meal-grid {
-    transform: translateX(-100%);
-  }
-  .meal-list {
-    transform: translateX(0);
+    margin-left: -100%;
   }
   .meal-detail {
-    transform: translateX(100%);
+    margin-left: 100%;
   }
 }
 
 .detail-face {
   .meal-grid {
-    transform: translateX(100%);
+    margin-left: 100%;
   }
   .meal-list {
-    transform: translateX(-100%);
+    margin-left: -100%;
   }
-  .meal-detail {
-    transform: translateX(0);
-  }
+}
+
+.wrap-home .meal-grid,
+.wrap-list .meal-list,
+.wrap-detail .meal-detail {
+  visibility: hidden;
 }

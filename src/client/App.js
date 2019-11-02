@@ -1,8 +1,23 @@
 import React, { Component } from 'react';
 import './App.scss';
 
+const FACE_CLASS = {
+  HOME: {
+    FROM_LIST: 'home-face wrap-detail',
+    FROM_DETAIL: 'home-face wrap-list'
+  },
+  LIST: {
+    FROM_HOME: 'list-face wrap-detail',
+    FROM_DETAIL: 'list-face wrap-home'
+  },
+  DETAIL: {
+    FROM_HOME: 'detail-face wrap-list',
+    FROM_LIST: 'detail-face wrap-home'
+  }
+};
+
 export default class App extends Component {
-  state = { faceClass: 'home-face' };
+  state = { faceClass: FACE_CLASS.HOME.FROM_LIST };
 
   componentDidMount() {
     // fetch('/api/meal?name=SteakDinner')
@@ -25,16 +40,18 @@ export default class App extends Component {
     const { faceClass } = this.state;
     let newFace;
 
-    // export faceClass to enum later?
     switch (faceClass) {
-      case 'home-face':
-        newFace = dir ? 'list-face' : 'detail-face';
+      case FACE_CLASS.HOME.FROM_LIST:
+      case FACE_CLASS.HOME.FROM_DETAIL:
+        newFace = dir ? FACE_CLASS.LIST.FROM_HOME : FACE_CLASS.DETAIL.FROM_HOME;
         break;
-      case 'list-face':
-        newFace = dir ? 'detail-face' : 'home-face';
+      case FACE_CLASS.LIST.FROM_HOME:
+      case FACE_CLASS.LIST.FROM_DETAIL:
+        newFace = dir ? FACE_CLASS.DETAIL.FROM_LIST : FACE_CLASS.HOME.FROM_LIST;
         break;
-      case 'detail-face':
-        newFace = dir ? 'home-face' : 'list-face';
+      case FACE_CLASS.DETAIL.FROM_HOME:
+      case FACE_CLASS.DETAIL.FROM_LIST:
+        newFace = dir ? FACE_CLASS.HOME.FROM_DETAIL : FACE_CLASS.LIST.FROM_DETAIL;
         break;
       default:
         newFace = faceClass;
