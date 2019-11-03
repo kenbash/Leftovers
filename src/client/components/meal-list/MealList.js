@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Container } from '@material-ui/core';
+import { Button, Container, Paper } from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
 import './MealList.scss';
 
 class MealList extends Component {
@@ -13,15 +14,17 @@ class MealList extends Component {
     const { rightcb, leftcb } = this.props;
     return (
       <Container className="meal-list-wrapper">
-        <div className="button-wrapper">
-          <Button color="primary" variant="contained" size="large" onClick={leftcb}>
-            Home
+        <Paper className="paper-wrapper">
+          <div className="button-wrapper">
+            <Button color="primary" variant="contained" size="large" onClick={leftcb} startIcon={<HomeIcon />}>
+              Home
+            </Button>
+          </div>
+          <h1>Meal List</h1>
+          <Button size="small" onClick={rightcb}>
+            go to details
           </Button>
-        </div>
-        <h1>Meal List</h1>
-        <Button size="small" onClick={rightcb}>
-          go to details
-        </Button>
+        </Paper>
       </Container>
     );
   }

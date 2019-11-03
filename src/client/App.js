@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import {
+ Button, Container, CssBaseline, Typography 
+} from '@material-ui/core';
 import './App.scss';
 import Home from './components/home/Home';
 import MealList from './components/meal-list/MealList';
 import MealDetail from './components/meal-detail/MealDetail';
+import leftoversLogo from './assets/images/leftovers_logo.png';
 
 const FACE_CLASS = {
   HOME: {
@@ -89,10 +92,24 @@ export default class App extends Component {
   }
 }
 
-function Header() {
-  return (
-    <header>
-      <h1>Leftovers</h1>
-    </header>
-  );
-}
+// TODO: Extract out to component, redesign w/ giant image (yelp style)?
+const Header = () => (
+  <header>
+    <Container style={{ height: '100%' }}>
+      <div className="header-container">
+        <div className="flex-wrapper">
+          <img src={leftoversLogo} alt="Leftovers logo" />
+        </div>
+        <Typography variant="h3" component="h1">
+          Leftovers
+        </Typography>
+        <Typography variant="subtitle2" component="h2">
+          Meal planning made cheap and easy!
+        </Typography>
+        <div className="flex-wrapper">
+          <Button>Log In</Button>
+        </div>
+      </div>
+    </Container>
+  </header>
+);

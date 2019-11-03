@@ -1,4 +1,4 @@
-$header-height: 64px;
+$header-height: 88px;
 
 body {
   width: 100vw;
@@ -11,7 +11,33 @@ header {
   right: 0;
   left: 0;
   height: $header-height;
-  text-align: center;
+}
+
+.header-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .flex-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+  }
+
+  img {
+    height: 100%;
+  }
+
+  h2 {
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 50px);
+    white-space: nowrap;
+  }
 }
 
 main {
@@ -20,6 +46,7 @@ main {
   right: 0;
   left: 0;
   bottom: 0;
+  overflow: hidden auto;
 }
 
 .meal-grid,
@@ -29,6 +56,7 @@ main {
   height: 100%;
   width: 100%;
   transition: margin-left 500ms;
+  padding-top: 2.5em;
 }
 
 .home-face {
@@ -62,4 +90,15 @@ main {
 .wrap-list .meal-list,
 .wrap-detail .meal-detail {
   visibility: hidden;
+}
+
+// Global Styles
+img {
+  outline: none !important;
+}
+.paper-wrapper {
+  padding: 1em;
+}
+.button-wrapper {
+  padding: 0 5%;
 }
