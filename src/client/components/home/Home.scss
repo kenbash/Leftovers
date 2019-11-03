@@ -5,4 +5,17 @@
     display: flex;
     justify-content: space-between;
   }
+
+  .grid-wrapper {
+    display: flex;
+    padding-bottom: 2.5em;
+
+    .meal-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 7.5vh;
+      min-height: 3em;
+    }
+  }
 }
