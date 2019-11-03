@@ -16,7 +16,7 @@ class MealDetail extends Component {
     const { rightcb, leftcb } = this.props;
     return (
       <Container className="meal-detail-wrapper">
-        <Paper className="paper-wrapper">
+        <Paper elevation={2} className="paper-wrapper">
           <div className="button-wrapper">
             <Button color="primary" variant="contained" size="large" onClick={leftcb} startIcon={<FastfoodIcon />}>
               Meal List

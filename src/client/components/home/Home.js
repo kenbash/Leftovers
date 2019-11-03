@@ -62,7 +62,7 @@ class Home extends Component {
 
     return (
       <Container className="home-wrapper">
-        <Paper className="paper-wrapper">
+        <Paper elevation={2} className="paper-wrapper">
           <div className="button-wrapper">
             <Button
               color="primary"
