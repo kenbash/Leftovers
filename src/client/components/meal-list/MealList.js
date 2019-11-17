@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Container, Paper } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
+import AddIcon from '@material-ui/icons/Add';
 import './MealList.scss';
 
 class MealList extends Component {
@@ -18,6 +19,9 @@ class MealList extends Component {
           <div className="button-wrapper">
             <Button color="primary" variant="contained" size="large" onClick={leftcb} startIcon={<HomeIcon />}>
               Home
+            </Button>
+            <Button color="primary" variant="contained" size="large" startIcon={<AddIcon />}>
+              Add Meal
             </Button>
           </div>
           <h1>Meal List</h1>
