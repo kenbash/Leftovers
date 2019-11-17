@@ -47,3 +47,44 @@ exports.deleteMeal = (req, res) => {
     res.sendStatus(200);
   });
 };
+
+exports.getMealPlan = (req, res) => {
+  // TODO, in model? read mongoose doc
+  res.send([
+    {
+      breakfast: 'one',
+      lunch: 'two',
+      dinner: 'three'
+    },
+    {
+      breakfast: 'one',
+      lunch: 'two',
+      dinner: 'three'
+    },
+    {
+      breakfast: 'one',
+      lunch: 'two',
+      dinner: 'three'
+    },
+    {
+      breakfast: 'one',
+      lunch: 'two',
+      dinner: 'three'
+    },
+    {
+      breakfast: 'one',
+      lunch: 'two',
+      dinner: 'three'
+    },
+    {
+      breakfast: 'one',
+      lunch: 'two',
+      dinner: 'three'
+    },
+    {
+      breakfast: 'one',
+      lunch: 'two',
+      dinner: 'three'
+    }
+  ]);
+};

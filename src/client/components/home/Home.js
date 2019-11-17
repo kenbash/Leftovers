@@ -15,45 +15,12 @@ class Home extends Component {
   }
 
   generateMeals() {
-    this.setState({
-      meals: [
-        {
-          breakfast: 'one',
-          lunch: 'two',
-          dinner: 'three'
-        },
-        {
-          breakfast: 'one',
-          lunch: 'two',
-          dinner: 'three'
-        },
-        {
-          breakfast: 'one',
-          lunch: 'two',
-          dinner: 'three'
-        },
-        {
-          breakfast: 'one',
-          lunch: 'two',
-          dinner: 'three'
-        },
-        {
-          breakfast: 'one',
-          lunch: 'two',
-          dinner: 'three'
-        },
-        {
-          breakfast: 'one',
-          lunch: 'two',
-          dinner: 'three'
-        },
-        {
-          breakfast: 'one',
-          lunch: 'two',
-          dinner: 'three'
-        }
-      ]
-    });
+    fetch('/api/meal/mealplan')
+      .then(res => res.json())
+      .then((res) => {
+        // handle error, move to service?
+        this.setState({ meals: res });
+      });
   }
 
   render() {
