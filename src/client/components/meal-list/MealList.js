@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
+import Meal from '../../types/Meal';
 import './MealList.scss';
 
 class MealList extends Component {
@@ -24,23 +25,11 @@ class MealList extends Component {
   }
 
   componentDidMount() {
-    // fetch('/api/meal?name=SteakDinner')
-    //   .then(res => res.json())
-    //   .then((res) => {
-    //     console.log(res);
-    //   });
-    this.setState({
-      meals: [
-        {
-          name: 'test1',
-          servings: 2
-        },
-        {
-          name: 'test2',
-          servings: 4
-        }
-      ]
-    });
+    fetch('/api/meal/all')
+      .then(res => res.json())
+      .then((res) => {
+        this.setState({ meals: res });
+      });
   }
 
   render() {
@@ -95,35 +84,37 @@ function MealTable(props) {
 
   return (
     <div className="table-wrapper">
-      <Table stickyHeader>
-        <TableHead>
-          <TableRow>
-            {columns.map(column => (
-              <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
-                {column.label}
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-            <TableRow
-              hover
-              role="checkbox"
-              tabIndex={-1}
-              key={row.code}
-              onClick={() => onRowClick(row[columns[0].id])} // later just send whole row (meal)
-              style={{ cursor: 'pointer' }}
-            >
+      <div className="meal-table">
+        <Table stickyHeader>
+          <TableHead>
+            <TableRow>
               {columns.map(column => (
-                <TableCell key={column.id} align={column.align}>
-                  {row[column.id]}
+                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
+                  {column.label}
                 </TableCell>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
+              <TableRow
+                hover
+                role="checkbox"
+                tabIndex={-1}
+                key={row.code}
+                onClick={() => onRowClick(row)}
+                style={{ cursor: 'pointer' }}
+              >
+                {columns.map(column => (
+                  <TableCell key={column.id} align={column.align}>
+                    {row[column.id]}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
@@ -144,7 +135,7 @@ function MealTable(props) {
 }
 
 MealTable.propTypes = {
-  rows: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string, servings: PropTypes.number })).isRequired,
+  rows: PropTypes.arrayOf(Meal).isRequired,
   onRowClick: PropTypes.func.isRequired
 };
 

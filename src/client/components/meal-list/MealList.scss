@@ -3,12 +3,15 @@
 
   .table-wrapper {
     width: 80%;
-    max-height: 500px;
-    overflow: auto;
     margin: 0 auto;
 
-    .MuiTableCell-stickyHeader {
-      background: none;
+    .meal-table {
+      max-height: 600px;
+      overflow: auto;
+
+      .MuiTableCell-stickyHeader {
+        background: #fff;
+      }
     }
   }
 }

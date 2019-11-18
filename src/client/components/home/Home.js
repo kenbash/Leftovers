@@ -5,13 +5,15 @@ import {
 } from '@material-ui/core';
 import CachedIcon from '@material-ui/icons/Cached';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
+import Meal from '../../types/Meal';
 import './Home.scss';
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { meals: new Array(7).fill({ breakfast: null, lunch: null, dinner: null }) };
+    // hide when meals is null, and/or make tiles gray when empty (to avoid click)
+    this.state = { meals: new Array(7).fill({ breakfast: {}, lunch: {}, dinner: {} }) };
   }
 
   generateMeals() {
@@ -74,8 +76,9 @@ class Home extends Component {
   }
 }
 
-const MealRow = (props) => {
+function MealRow(props) {
   const { day, meals, onMealClick } = props;
+
   return (
     <Grid container item xs={12} spacing={2} alignItems="center" justify="center">
       <Grid item xs={1}>
@@ -85,27 +88,27 @@ const MealRow = (props) => {
       </Grid>
       <Grid item xs={3}>
         <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.breakfast)}>
-          {meals.breakfast}
+          {meals.breakfast.name}
         </Paper>
       </Grid>
       <Grid item xs={3}>
         <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.lunch)}>
-          {meals.lunch}
+          {meals.lunch.name}
         </Paper>
       </Grid>
       <Grid item xs={3}>
         <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.dinner)}>
-          {meals.dinner}
+          {meals.dinner.name}
         </Paper>
       </Grid>
       <Grid item xs={1} />
     </Grid>
   );
-};
+}
 
 MealRow.propTypes = {
   day: PropTypes.string.isRequired,
-  meals: PropTypes.shape({ breakfast: PropTypes.string, lunch: PropTypes.string, dinner: PropTypes.string }).isRequired,
+  meals: PropTypes.shape({ breakfast: Meal, lunch: Meal, dinner: Meal }).isRequired,
   onMealClick: PropTypes.func.isRequired
 };
 

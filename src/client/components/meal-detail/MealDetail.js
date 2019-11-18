@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { Button, Container, Paper } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
+import Meal from '../../types/Meal';
 import './MealDetail.scss';
 
 class MealDetail extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {}; // maybe remove?
   }
 
   render() {
@@ -25,8 +26,8 @@ class MealDetail extends Component {
               Home
             </Button>
           </div>
-          <h1>Meal Detail</h1>
-          <p>{meal}</p>
+          <p>{meal.name}</p>
+          <p>{meal.servings}</p>
         </Paper>
       </Container>
     );
@@ -34,7 +35,7 @@ class MealDetail extends Component {
 }
 
 MealDetail.propTypes = {
-  meal: PropTypes.string.isRequired,
+  meal: Meal.isRequired,
   rightcb: PropTypes.func.isRequired,
   leftcb: PropTypes.func.isRequired
 };

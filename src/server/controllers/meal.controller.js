@@ -50,41 +50,31 @@ exports.deleteMeal = (req, res) => {
 
 exports.getMealPlan = (req, res) => {
   // TODO, in model? read mongoose doc
-  res.send([
-    {
-      breakfast: 'one',
-      lunch: 'two',
-      dinner: 'three'
-    },
-    {
-      breakfast: 'one',
-      lunch: 'two',
-      dinner: 'three'
-    },
-    {
-      breakfast: 'one',
-      lunch: 'two',
-      dinner: 'three'
-    },
-    {
-      breakfast: 'one',
-      lunch: 'two',
-      dinner: 'three'
-    },
-    {
-      breakfast: 'one',
-      lunch: 'two',
-      dinner: 'three'
-    },
-    {
-      breakfast: 'one',
-      lunch: 'two',
-      dinner: 'three'
-    },
-    {
-      breakfast: 'one',
-      lunch: 'two',
-      dinner: 'three'
-    }
-  ]);
+  const meals = [];
+  for (let i = 1; i <= 7; i += 1) {
+    meals.push({
+      breakfast: {
+        name: `breakfast${i}`,
+        servings: i % 10
+      },
+      lunch: {
+        name: `lunch${i}`,
+        servings: i % 10
+      },
+      dinner: {
+        name: `dinner${i}`,
+        servings: i % 10
+      }
+    });
+  }
+  res.send(meals);
+};
+
+exports.getAllMeals = (req, res) => {
+  // TODO: use mongoose getAll
+  const meals = [];
+  for (let i = 1; i <= 15; i += 1) {
+    meals.push({ name: `meal${i}`, servings: i % 10 });
+  }
+  res.send(meals);
 };

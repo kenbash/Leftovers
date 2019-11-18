@@ -22,7 +22,7 @@ const FACE_CLASS = {
 };
 
 export default class App extends Component {
-  state = { faceClass: FACE_CLASS.HOME.FROM_LIST, mealDetail: '' };
+  state = { faceClass: FACE_CLASS.HOME.FROM_LIST, mealDetail: {} };
 
   componentDidMount() {
     // fetch('/api/meal?name=SteakDinner')
