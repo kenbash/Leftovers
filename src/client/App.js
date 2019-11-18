@@ -42,6 +42,7 @@ export default class App extends Component {
   }
 
   setMeal(meal) {
+    // check if same? if reset btn included
     this.setState({
       mealDetail: meal
     });
@@ -93,7 +94,13 @@ export default class App extends Component {
             />
           </section>
           <section className="meal-list">
-            <MealList rightcb={() => this.changeFace(true)} leftcb={() => this.changeFace(false)} />
+            <MealList
+              rightcb={(meal) => {
+                this.setMeal(meal);
+                this.changeFace(true);
+              }}
+              leftcb={() => this.changeFace(false)}
+            />
           </section>
           <section className="meal-detail">
             <MealDetail meal={mealDetail} rightcb={() => this.changeFace(true)} leftcb={() => this.changeFace(false)} />
