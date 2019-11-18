@@ -84,17 +84,17 @@ const MealRow = (props) => {
         </Typography>
       </Grid>
       <Grid item xs={3}>
-        <Paper elevation={3} className="meal-cell" onClick={onMealClick}>
+        <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.breakfast)}>
           {meals.breakfast}
         </Paper>
       </Grid>
       <Grid item xs={3}>
-        <Paper elevation={3} className="meal-cell" onClick={onMealClick}>
+        <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.lunch)}>
           {meals.lunch}
         </Paper>
       </Grid>
       <Grid item xs={3}>
-        <Paper elevation={3} className="meal-cell" onClick={onMealClick}>
+        <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.dinner)}>
           {meals.dinner}
         </Paper>
       </Grid>

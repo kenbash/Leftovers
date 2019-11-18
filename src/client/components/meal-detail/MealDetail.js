@@ -13,7 +13,7 @@ class MealDetail extends Component {
   }
 
   render() {
-    const { rightcb, leftcb } = this.props;
+    const { meal, rightcb, leftcb } = this.props;
     return (
       <Container className="meal-detail-wrapper">
         <Paper elevation={2} className="paper-wrapper">
@@ -26,6 +26,7 @@ class MealDetail extends Component {
             </Button>
           </div>
           <h1>Meal Detail</h1>
+          <p>{meal}</p>
         </Paper>
       </Container>
     );
@@ -33,6 +34,7 @@ class MealDetail extends Component {
 }
 
 MealDetail.propTypes = {
+  meal: PropTypes.string.isRequired,
   rightcb: PropTypes.func.isRequired,
   leftcb: PropTypes.func.isRequired
 };

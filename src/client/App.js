@@ -22,7 +22,7 @@ const FACE_CLASS = {
 };
 
 export default class App extends Component {
-  state = { faceClass: FACE_CLASS.HOME.FROM_LIST };
+  state = { faceClass: FACE_CLASS.HOME.FROM_LIST, mealDetail: '' };
 
   componentDidMount() {
     // fetch('/api/meal?name=SteakDinner')
@@ -39,6 +39,12 @@ export default class App extends Component {
     //   headers: { 'Content-Type': 'application/json' },
     //   body: test
     // }).then(res => console.log(res));
+  }
+
+  setMeal(meal) {
+    this.setState({
+      mealDetail: meal
+    });
   }
 
   changeFace(dir) {
@@ -69,7 +75,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { faceClass } = this.state;
+    const { faceClass, mealDetail } = this.state;
     return (
       <React.Fragment>
         <CssBaseline />
@@ -78,13 +84,19 @@ export default class App extends Component {
         </header>
         <main className={faceClass}>
           <section className="meal-grid">
-            <Home rightcb={() => this.changeFace(true)} leftcb={() => this.changeFace(false)} />
+            <Home
+              leftcb={(meal) => {
+                this.setMeal(meal);
+                this.changeFace(false);
+              }}
+              rightcb={() => this.changeFace(true)}
+            />
           </section>
           <section className="meal-list">
             <MealList rightcb={() => this.changeFace(true)} leftcb={() => this.changeFace(false)} />
           </section>
           <section className="meal-detail">
-            <MealDetail rightcb={() => this.changeFace(true)} leftcb={() => this.changeFace(false)} />
+            <MealDetail meal={mealDetail} rightcb={() => this.changeFace(true)} leftcb={() => this.changeFace(false)} />
           </section>
         </main>
       </React.Fragment>
