@@ -1,26 +1,26 @@
 .meal-list-wrapper {
   text-align: center;
+}
 
-  .table-wrapper {
-    width: 80%;
-    margin: 0 auto;
+.meal-table-wrapper {
+  width: 80%;
+  margin: 0 auto;
 
-    .meal-search {
-      width: 40%;
-      min-width: 250px;
+  .meal-search {
+    width: 40%;
+    min-width: 250px;
+  }
+
+  .meal-table {
+    height: 600px;
+    overflow: auto;
+
+    .meal-row {
+      cursor: pointer;
     }
 
-    .meal-table {
-      height: 600px;
-      overflow: auto;
-
-      .meal-row {
-        cursor: pointer;
-      }
-
-      .MuiTableCell-stickyHeader {
-        background: #fff;
-      }
+    .MuiTableCell-stickyHeader {
+      background: #fff;
     }
   }
 }

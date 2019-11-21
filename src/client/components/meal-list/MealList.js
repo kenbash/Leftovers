@@ -3,23 +3,12 @@ import PropTypes from 'prop-types';
 import {
   Button,
   Container,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TextField,
-  InputAdornment
+  Paper
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
-import SearchIcon from '@material-ui/icons/Search';
-import Meal from '../../types/Meal';
 import './MealList.scss';
-
-let timeoutHandler; // Used to buffer filter input
+import MealTable from './MealTable';
 
 class MealList extends Component {
   static applyFilter = (meals, filter) => (
@@ -50,16 +39,10 @@ class MealList extends Component {
   }
 
   updateFilter(value) {
-    if (timeoutHandler) {
-      clearTimeout(timeoutHandler);
-    }
-    timeoutHandler = setTimeout(() => {
-      const { meals } = this.state;
-      const filter = value.trim().toLowerCase();
-      const rows = this.constructor.applyFilter(meals, filter);
-      this.setState({ rows, filter });
-      timeoutHandler = null;
-    }, 250);
+    const { meals } = this.state;
+    const filter = value.trim().toLowerCase();
+    const rows = this.constructor.applyFilter(meals, filter);
+    this.setState({ rows, filter });
   }
 
   render() {
@@ -77,121 +60,12 @@ class MealList extends Component {
               Add Meal
             </Button>
           </div>
-          <MealTable rows={rows} onRowClick={rightcb} filter={filter} onFilterChange={val => this.updateFilter(val)} />
+          <MealTable rows={rows} filter={filter} onRowClick={rightcb} onFilterChange={val => this.updateFilter(val)} />
         </Paper>
       </Container>
     );
   }
 }
-
-const columns = [
-  { id: 'name', label: 'Name', minWidth: 150 },
-  {
-    id: 'servings',
-    label: 'Servings',
-    align: 'right',
-    minWidth: 50
-  }
-  // { id: 'breakfast', label: 'Breakfast', minWidth: 50 },
-  // { id: 'lunch', label: 'Lunch', minWidth: 50 },
-  // { id: 'dinner', label: 'Dinner', minWidth: 50 }
-];
-
-function MealTable(props) {
-  const {
-    rows,
-    onRowClick,
-    filter,
-    onFilterChange
-  } = props;
-
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [filterValue, setFilter] = React.useState(filter);
-
-  const handleChangePage = (_event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-  const handleFilterChange = (event) => {
-    setFilter(event.target.value);
-    onFilterChange(event.target.value);
-  };
-
-  if ((rows.length <= 0 && page !== 0) || (rows.length > 0 && rows.length <= page * rowsPerPage)) {
-    setPage(0);
-  }
-
-  return (
-    <div className="table-wrapper">
-      <TextField
-        className="meal-search"
-        placeholder="Search"
-        value={filterValue}
-        onChange={handleFilterChange}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-      <div className="meal-table">
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
-              {columns.map(column => (
-                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-              <TableRow
-                hover
-                role="checkbox"
-                tabIndex={-1}
-                key={row.name} // change to id later
-                onClick={() => onRowClick(row)}
-                className="meal-row"
-              >
-                {columns.map(column => (
-                  <TableCell key={column.id} align={column.align}>
-                    {row[column.id]}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 50]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
-    </div>
-  );
-}
-
-MealTable.propTypes = {
-  rows: PropTypes.arrayOf(Meal).isRequired,
-  onRowClick: PropTypes.func.isRequired,
-  filter: PropTypes.string.isRequired,
-  onFilterChange: PropTypes.func.isRequired
-};
 
 MealList.propTypes = {
   rightcb: PropTypes.func.isRequired,
