@@ -159,7 +159,7 @@ function MealTable(props) {
                 hover
                 role="checkbox"
                 tabIndex={-1}
-                key={row.code}
+                key={row.name} // change to id later
                 onClick={() => onRowClick(row)}
                 className="meal-row"
               >
@@ -179,12 +179,6 @@ function MealTable(props) {
         count={rows.length}
         rowsPerPage={rowsPerPage}
         page={page}
-        backIconButtonProps={{
-          'aria-label': 'previous page'
-        }}
-        nextIconButtonProps={{
-          'aria-label': 'next page'
-        }}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
