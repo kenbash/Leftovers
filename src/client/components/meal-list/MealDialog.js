@@ -8,7 +8,6 @@ import {
   DialogActions,
   TextField
 } from '@material-ui/core';
-import './MealList.scss';
 
 function MealDialog(props) {
   const { open, onClose, onSave } = props;

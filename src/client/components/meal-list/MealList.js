@@ -7,9 +7,10 @@ import {
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
-import './MealList.scss';
+import { getMeals } from '../../services/MealService';
 import MealTable from './MealTable';
 import MealDialog from './MealDialog';
+import './MealList.scss';
 
 class MealList extends Component {
   static applyFilter = (meals, filter) => (
@@ -27,11 +28,14 @@ class MealList extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/meal/all')
-      .then(res => res.json())
-      .then((res) => {
+    getMeals().then(
+      (res) => {
         this.updateData(res);
-      });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   updateData(meals) {
@@ -49,6 +53,7 @@ class MealList extends Component {
 
   addMeal(meal) {
     // TODO: Implement with back-end
+    // createMeal().then((res) => {})
     const { meals } = this.state;
     this.updateData([...meals, meal]);
   }

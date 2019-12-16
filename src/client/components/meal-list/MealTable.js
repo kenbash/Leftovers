@@ -12,7 +12,6 @@ import {
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Meal from '../../types/Meal';
-import './MealList.scss';
 
 let timeoutHandler;
 const columns = [

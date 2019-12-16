@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
- Button, Container, Grid, Paper, Typography 
+  Button,
+  Container,
+  Grid,
+  Paper,
+  Typography
 } from '@material-ui/core';
 import CachedIcon from '@material-ui/icons/Cached';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
+import { getMealPlan } from '../../services/MealService';
 import Meal from '../../types/Meal';
 import './Home.scss';
 
@@ -17,12 +22,14 @@ class Home extends Component {
   }
 
   generateMeals() {
-    fetch('/api/meal/mealplan')
-      .then(res => res.json())
-      .then((res) => {
-        // handle error, move to service?
+    getMealPlan().then(
+      (res) => {
         this.setState({ meals: res });
-      });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   render() {
