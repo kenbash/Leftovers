@@ -9,6 +9,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import './MealList.scss';
 import MealTable from './MealTable';
+import MealDialog from './MealDialog';
 
 class MealList extends Component {
   static applyFilter = (meals, filter) => (
@@ -20,7 +21,8 @@ class MealList extends Component {
     this.state = {
       meals: [],
       rows: [],
-      filter: ''
+      filter: '',
+      dialogOpen: false
     };
   }
 
@@ -45,9 +47,19 @@ class MealList extends Component {
     this.setState({ rows, filter });
   }
 
+  addMeal(meal) {
+    // TODO: Implement with back-end
+    const { meals } = this.state;
+    this.updateData([...meals, meal]);
+  }
+
+  toggleDialog(open) {
+    this.setState({ dialogOpen: open });
+  }
+
   render() {
     const { rightcb, leftcb } = this.props;
-    const { rows, filter } = this.state;
+    const { rows, filter, dialogOpen } = this.state;
 
     return (
       <Container className="meal-list-wrapper">
@@ -56,12 +68,13 @@ class MealList extends Component {
             <Button color="primary" variant="contained" size="large" onClick={leftcb} startIcon={<HomeIcon />}>
               Home
             </Button>
-            <Button color="primary" variant="contained" size="large" startIcon={<AddIcon />}>
+            <Button color="primary" variant="contained" size="large" onClick={() => this.toggleDialog(true)} startIcon={<AddIcon />}>
               Add Meal
             </Button>
           </div>
           <MealTable rows={rows} filter={filter} onRowClick={rightcb} onFilterChange={val => this.updateFilter(val)} />
         </Paper>
+        <MealDialog open={dialogOpen} onClose={() => this.toggleDialog(false)} onSave={meal => this.addMeal(meal)} />
       </Container>
     );
   }

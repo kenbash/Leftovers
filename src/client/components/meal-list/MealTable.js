@@ -74,6 +74,8 @@ function MealTable(props) {
         placeholder="Search"
         value={filterValue}
         onChange={handleFilterChange}
+        inputProps={{ maxLength: 100 }}
+        // eslint-disable-next-line react/jsx-no-duplicate-props
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
