@@ -100,7 +100,7 @@ function MealTable(props) {
                 hover
                 role="checkbox"
                 tabIndex={-1}
-                key={row.name} // TODO: change to id
+                key={row.id}
                 onClick={() => onRowClick(row)}
                 className="meal-row"
               >

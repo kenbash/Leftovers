@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { CssBaseline } from '@material-ui/core';
-import './App.scss';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
 import MealList from './components/meal-list/MealList';
 import MealDetail from './components/meal-detail/MealDetail';
+import './App.scss';
 
 const FACE_CLASS = {
   HOME: {
@@ -23,23 +23,6 @@ const FACE_CLASS = {
 
 export default class App extends Component {
   state = { faceClass: FACE_CLASS.HOME.FROM_LIST, mealDetail: {} };
-
-  componentDidMount() {
-    // fetch('/api/meal?name=SteakDinner')
-    //   .then(res => res.json())
-    //   .then((res) => {
-    //     console.log(res);
-    //   });
-    // const test = JSON.stringify({
-    //   name: 'testFood1234',
-    //   servings: 3
-    // });
-    // fetch('/api/meal/create', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: test
-    // }).then(res => console.log(res));
-  }
 
   setMeal(meal) {
     // check if same? if reset btn included

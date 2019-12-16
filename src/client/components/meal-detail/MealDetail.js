@@ -26,6 +26,7 @@ class MealDetail extends Component {
               Home
             </Button>
           </div>
+          <p>{meal.id}</p>
           <p>{meal.name}</p>
           <p>{meal.servings}</p>
         </Paper>

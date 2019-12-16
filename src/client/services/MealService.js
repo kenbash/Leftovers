@@ -12,7 +12,7 @@ export function createMeal(meal) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: meal
-  }).then(res => console.log(res));
+  }).then(res => res.json());
 }
 
 export function editMeal() {}

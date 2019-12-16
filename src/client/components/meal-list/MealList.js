@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
-import { getMeals } from '../../services/MealService';
+import { getMeals, createMeal } from '../../services/MealService';
 import MealTable from './MealTable';
 import MealDialog from './MealDialog';
 import './MealList.scss';
@@ -52,10 +52,15 @@ class MealList extends Component {
   }
 
   addMeal(meal) {
-    // TODO: Implement with back-end
-    // createMeal().then((res) => {})
-    const { meals } = this.state;
-    this.updateData([...meals, meal]);
+    createMeal(JSON.stringify(meal)).then(
+      (res) => {
+        const { meals } = this.state;
+        this.updateData([...meals, res]);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   toggleDialog(open) {

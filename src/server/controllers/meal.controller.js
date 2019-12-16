@@ -1,4 +1,7 @@
+/* eslint-disable no-underscore-dangle */
 const Meal = require('../models/meal.model');
+
+const convertToDTO = meal => ({ id: meal._id, name: meal.name, servings: meal.servings });
 
 exports.createMeal = (req, res) => {
   const meal = new Meal({
@@ -6,12 +9,12 @@ exports.createMeal = (req, res) => {
     servings: req.body.servings
   });
 
-  meal.save((err) => {
+  meal.save((err, mealRes) => {
     if (err) {
       console.error(err);
       return;
     }
-    res.sendStatus(200);
+    res.send(convertToDTO(mealRes));
   });
 };
 
@@ -48,8 +51,17 @@ exports.deleteMeal = (req, res) => {
   });
 };
 
+exports.getAllMeals = (req, res) => {
+  Meal.find({}, (err, meals) => res.send(meals.map(convertToDTO)));
+};
+
 exports.getMealPlan = (req, res) => {
-  // TODO, in model? read mongoose doc
+  // const promises = new Array(7);
+  // Meal.count({}, (err, count) => {
+  //     var rand = Math.floor(Math.random() * count);
+  //     Meal.findOne(skip(random), exec()
+  //   }
+  // )
   const meals = [];
   for (let i = 1; i <= 7; i += 1) {
     meals.push({
@@ -66,15 +78,6 @@ exports.getMealPlan = (req, res) => {
         servings: i % 10
       }
     });
-  }
-  res.send(meals);
-};
-
-exports.getAllMeals = (req, res) => {
-  // TODO: use mongoose getAll
-  const meals = [];
-  for (let i = 1; i <= 15; i += 1) {
-    meals.push({ name: `meal${i}`, servings: i % 10 });
   }
   res.send(meals);
 };
