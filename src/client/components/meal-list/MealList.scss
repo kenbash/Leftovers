@@ -31,4 +31,8 @@
 
 #meal-dialog-content {
   width: 400px;
+
+  > div {
+    min-height: 62px;
+  }
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
+  CircularProgress,
   Container,
   Grid,
   Paper,
@@ -18,23 +19,26 @@ class Home extends Component {
     super(props);
 
     // hide when meals is null, and/or make tiles gray when empty (to avoid click)
-    this.state = { meals: new Array(7).fill({ breakfast: {}, lunch: {}, dinner: {} }) };
+    this.state = { meals: new Array(7).fill({ breakfast: {}, lunch: {}, dinner: {} }), loading: false };
   }
 
   generateMeals() {
+    this.setState({ loading: true });
+
     getMealPlan().then(
       (res) => {
-        this.setState({ meals: res });
+        this.setState({ meals: res, loading: false });
       },
       (err) => {
         console.log(err);
+        this.setState({ loading: false });
       }
     );
   }
 
   render() {
     const { rightcb, leftcb } = this.props;
-    const { meals } = this.state;
+    const { meals, loading } = this.state;
 
     return (
       <Container className="home-wrapper">
@@ -54,6 +58,9 @@ class Home extends Component {
             </Button>
           </div>
           <div className="grid-wrapper">
+            <div className="loading-wrapper" style={{ display: loading ? 'flex' : 'none' }}>
+              <CircularProgress className="loading-indicator" />
+            </div>
             <Grid container spacing={2}>
               <Grid container item xs={12} spacing={2} justify="center">
                 <Grid item xs={1} />

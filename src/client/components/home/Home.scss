@@ -4,17 +4,35 @@
   .grid-wrapper {
     display: flex;
     padding-bottom: 2.5em;
+    position: relative;
 
     .meal-cell {
       display: flex;
       align-items: center;
       justify-content: center;
+      word-break: break-word;
       height: 7.5vh;
       min-height: 3em;
 
       &:hover {
         cursor: pointer;
         background: rgba(0, 0, 0, 0.07);
+      }
+    }
+
+    .loading-wrapper {
+      position: absolute;
+      // adjust these to be responsive later
+      top: 32px;
+      bottom: 32px;
+      left: 145px;
+      right: 160px;
+      background: rgba(0, 0, 0, 0.15);
+      
+      .loading-indicator {
+        margin: auto;
+        width: 75px !important;
+        height: 75px !important;
       }
     }
   }
