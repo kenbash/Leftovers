@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, IconButton, Typography } from '@material-ui/core';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import GitHubIcon from '@material-ui/icons/GitHub';
@@ -18,9 +20,15 @@ function Header(props) {
 
   return (
     <div className="header-wrapper MuiPaper-elevation6">
-      <Typography variant="h6">Leftovers</Typography>
+      <IconButton className="header-nav-btn">
+        <ArrowBackIcon />
+      </IconButton>
+      <IconButton className="header-nav-btn">
+        <ArrowForwardIcon />
+      </IconButton>
+      <Typography className="header-title" variant="h6">Leftovers</Typography>
       <div className="header-filler" />
-      <Button className="header-btn">Log In</Button>
+      <Button className="header-btn">Login</Button>
       <IconButton className="header-btn" onClick={changeTheme}>
         {isDark ? <Brightness7Icon /> : <Brightness4Icon />}
       </IconButton>

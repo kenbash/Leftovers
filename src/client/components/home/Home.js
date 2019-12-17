@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import CachedIcon from '@material-ui/icons/Cached';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
+import WbSunnyIcon from '@material-ui/icons/WbSunny'; // placeholder
 import { getMealPlan } from '../../services/MealService';
 import MealRow from './MealRow';
 import './Home.scss';
@@ -63,13 +64,13 @@ class Home extends Component {
               <Grid container item xs={12} spacing={2} justify="center">
                 <Grid item xs={1} />
                 <Grid item xs={3}>
-                  Sunrise
+                  <WbSunnyIcon color="secondary" />
                 </Grid>
                 <Grid item xs={3}>
-                  Midday
+                  <WbSunnyIcon color="secondary" />
                 </Grid>
                 <Grid item xs={3}>
-                  Sunset
+                  <WbSunnyIcon color="secondary" />
                 </Grid>
                 <Grid item xs={1} />
               </Grid>
