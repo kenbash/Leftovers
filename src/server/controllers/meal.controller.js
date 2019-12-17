@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable no-underscore-dangle */
 const Meal = require('../models/meal.model');
 
@@ -55,29 +56,14 @@ exports.getAllMeals = (req, res) => {
   Meal.find({}, (err, meals) => res.send(meals.map(convertToDTO)));
 };
 
-exports.getMealPlan = (req, res) => {
-  // const promises = new Array(7);
-  // Meal.count({}, (err, count) => {
-  //     var rand = Math.floor(Math.random() * count);
-  //     Meal.findOne(skip(random), exec()
-  //   }
-  // )
+exports.getMealPlan = async (req, res) => {
   const meals = [];
+  const count = await Meal.count({});
   for (let i = 1; i <= 7; i += 1) {
-    meals.push({
-      breakfast: {
-        name: `breakfast${i}`,
-        servings: i % 10
-      },
-      lunch: {
-        name: `lunch${i}`,
-        servings: i % 10
-      },
-      dinner: {
-        name: `dinner${i}`,
-        servings: i % 10
-      }
-    });
+    const breakfast = await Meal.findOne().skip(Math.floor(Math.random() * count));
+    const lunch = await Meal.findOne().skip(Math.floor(Math.random() * count));
+    const dinner = await Meal.findOne().skip(Math.floor(Math.random() * count));
+    meals.push({ breakfast: convertToDTO(breakfast), lunch: convertToDTO(lunch), dinner: convertToDTO(dinner) });
   }
   res.send(meals);
 };

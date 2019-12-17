@@ -6,7 +6,6 @@ const meal = require('./routes/meal.route');
 
 // Configuration (move later)
 const port = process.env.PORT || 8080;
-// for the love of god fix this
 const mongoDB = process.env.MONGODB_URI || 'mongodb://localhost:27017/leftovers';
 
 const app = express();

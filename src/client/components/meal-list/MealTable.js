@@ -74,6 +74,7 @@ function MealTable(props) {
         value={filterValue}
         onChange={handleFilterChange}
         inputProps={{ maxLength: 100 }}
+        // inputProps and InputProps have different options
         // eslint-disable-next-line react/jsx-no-duplicate-props
         InputProps={{
           startAdornment: (
