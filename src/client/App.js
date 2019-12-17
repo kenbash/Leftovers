@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CssBaseline } from '@material-ui/core';
+import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
 import MealList from './components/meal-list/MealList';
@@ -20,15 +20,25 @@ const FACE_CLASS = {
     FROM_LIST: 'detail-face wrap-home'
   }
 };
+const LIGHT_THEME = createMuiTheme({
+  palette: { type: 'light' }
+});
+const DARK_THEME = createMuiTheme({
+  palette: { type: 'dark' }
+});
 
 export default class App extends Component {
-  state = { faceClass: FACE_CLASS.HOME.FROM_LIST, mealDetail: {} };
+  state = { faceClass: FACE_CLASS.HOME.FROM_LIST, mealDetail: {}, darkTheme: false };
 
   setMeal(meal) {
-    // check if same? if reset btn included
     this.setState({
       mealDetail: meal
     });
+  }
+
+  toggleTheme() {
+    const { darkTheme } = this.state;
+    this.setState({ darkTheme: !darkTheme });
   }
 
   changeFace(dir) {
@@ -59,12 +69,12 @@ export default class App extends Component {
   }
 
   render() {
-    const { faceClass, mealDetail } = this.state;
+    const { faceClass, mealDetail, darkTheme } = this.state;
     return (
-      <React.Fragment>
+      <ThemeProvider theme={darkTheme ? DARK_THEME : LIGHT_THEME}>
         <CssBaseline />
         <header>
-          <Header />
+          <Header themecb={() => this.toggleTheme()} />
         </header>
         <main className={faceClass}>
           <section className="meal-grid">
@@ -86,10 +96,14 @@ export default class App extends Component {
             />
           </section>
           <section className="meal-detail">
-            <MealDetail meal={mealDetail} rightcb={() => this.changeFace(true)} leftcb={() => this.changeFace(false)} />
+            <MealDetail
+              meal={mealDetail}
+              rightcb={() => this.changeFace(true)}
+              leftcb={() => this.changeFace(false)}
+            />
           </section>
         </main>
-      </React.Fragment>
+      </ThemeProvider>
     );
   }
 }

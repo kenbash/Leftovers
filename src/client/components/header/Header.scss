@@ -2,17 +2,21 @@
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   height: 100%;
-  padding: 0 2rem;
+  padding: 0 1rem;
   background: #3f51b5;
   color: #fff;
+
+  .header-filler {
+    flex: 1;
+  }
 
   img {
     height: 100%;
   }
 
-  button {
+  .header-btn {
     color: #fff;
+    margin: 0 0.25rem;
   }
 }
