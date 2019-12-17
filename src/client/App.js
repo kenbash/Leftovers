@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { purple, teal } from '@material-ui/core/colors';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
 import MealList from './components/meal-list/MealList';
@@ -20,25 +21,39 @@ const FACE_CLASS = {
     FROM_LIST: 'detail-face wrap-home'
   }
 };
+const THEME_KEY = 'LEFTOVERS_THEME';
 const LIGHT_THEME = createMuiTheme({
   palette: { type: 'light' }
 });
 const DARK_THEME = createMuiTheme({
-  palette: { type: 'dark' }
+  palette: { type: 'dark', primary: { main: purple[200] }, secondary: { main: teal[200] } }
 });
 
 export default class App extends Component {
-  state = { faceClass: FACE_CLASS.HOME.FROM_LIST, mealDetail: {}, darkTheme: false };
-
-  setMeal(meal) {
-    this.setState({
-      mealDetail: meal
-    });
+  constructor(props) {
+    super(props);
+    this.state = {
+      faceClass: FACE_CLASS.HOME.FROM_LIST,
+      darkTheme: false,
+      mealDetail: {}
+    };
   }
 
-  toggleTheme() {
-    const { darkTheme } = this.state;
-    this.setState({ darkTheme: !darkTheme });
+  componentWillMount() {
+    const theme = localStorage.getItem(THEME_KEY) || 'light-theme';
+    document.body.className = theme;
+    this.setState({ darkTheme: theme === 'dark-theme' });
+  }
+
+  setTheme(isDark) {
+    const theme = isDark ? 'dark-theme' : 'light-theme';
+    document.body.className = theme;
+    localStorage.setItem(THEME_KEY, theme);
+    this.setState({ darkTheme: isDark });
+  }
+
+  setMeal(meal) {
+    this.setState({ mealDetail: meal });
   }
 
   changeFace(dir) {
@@ -74,7 +89,7 @@ export default class App extends Component {
       <ThemeProvider theme={darkTheme ? DARK_THEME : LIGHT_THEME}>
         <CssBaseline />
         <header>
-          <Header themecb={() => this.toggleTheme()} />
+          <Header themecb={x => this.setTheme(x)} dark={darkTheme} />
         </header>
         <main className={faceClass}>
           <section className="meal-grid">

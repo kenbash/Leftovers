@@ -1,28 +1,32 @@
 .meal-list-wrapper {
   text-align: center;
+}
 
-  .meal-table-wrapper {
-    width: 80%;
-    margin: 0 auto;
-  
-    .meal-search {
-      width: 40%;
-      min-width: 250px;
+.meal-table-wrapper {
+  width: 80%;
+  margin: 0 auto;
+
+  .meal-search {
+    width: 40%;
+    min-width: 250px;
+  }
+
+  .meal-table {
+    height: 600px;
+    overflow: auto;
+
+    .MuiTableCell-stickyHeader {
+      background: #fff;
     }
-  
-    .meal-table {
-      height: 600px;
-      overflow: auto;
-  
-      .meal-row {
-        cursor: pointer;
-      }
-  
-      .MuiTableCell-stickyHeader {
-        background: #fff;
-      }
+
+    .meal-row {
+      cursor: pointer;
     }
   }
+}
+
+.dark-theme .meal-table-wrapper .meal-table .MuiTableCell-stickyHeader {
+  background: #424242;
 }
 
 #meal-dialog-title {

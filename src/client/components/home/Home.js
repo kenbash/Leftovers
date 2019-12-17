@@ -16,7 +16,6 @@ import './Home.scss';
 class Home extends Component {
   constructor(props) {
     super(props);
-
     // hide when meals is null, and/or make tiles gray when empty (to avoid click)
     this.state = { meals: new Array(7).fill({ breakfast: {}, lunch: {}, dinner: {} }), loading: false };
   }
@@ -58,7 +57,7 @@ class Home extends Component {
           </div>
           <div className="grid-wrapper">
             <div className="loading-wrapper" style={{ display: loading ? 'flex' : 'none' }}>
-              <CircularProgress className="loading-indicator" />
+              <CircularProgress className="loading-indicator" color="secondary" />
             </div>
             <Grid container spacing={2}>
               <Grid container item xs={12} spacing={2} justify="center">
