@@ -7,15 +7,11 @@
     position: relative;
 
     .meal-cell {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      word-break: break-word;
-      // TODO: make this work
-      // text-overflow: ellipsis;
-      // overflow: hidden;
+      text-overflow: ellipsis;
+      overflow: hidden;
       height: 7.5vh;
       min-height: 3em;
+      padding: 0.5em;
 
       &:hover {
         cursor: pointer;

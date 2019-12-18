@@ -19,6 +19,12 @@
       background: #fff;
     }
 
+    .MuiTableCell-root {
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     .meal-row {
       cursor: pointer;
     }

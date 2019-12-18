@@ -2,12 +2,24 @@
 /* eslint-disable no-underscore-dangle */
 const Meal = require('../models/meal.model');
 
-const convertToDTO = meal => ({ id: meal._id, name: meal.name, servings: meal.servings });
+const convertToDTO = meal => (
+  {
+    id: meal._id,
+    name: meal.name,
+    servings: meal.servings,
+    breakfast: meal.breakfast,
+    lunch: meal.lunch,
+    dinner: meal.dinner,
+  }
+);
 
 exports.createMeal = (req, res) => {
   const meal = new Meal({
     name: req.body.name,
-    servings: req.body.servings
+    servings: req.body.servings,
+    breakfast: req.body.breakfast,
+    lunch: req.body.lunch,
+    dinner: req.body.dinner
   });
 
   meal.save((err, mealRes) => {

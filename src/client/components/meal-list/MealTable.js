@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -11,6 +12,8 @@ import {
   InputAdornment
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+import CheckIcon from '@material-ui/icons/Check';
+import WbSunnyIcon from '@material-ui/icons/WbSunny'; // placeholder
 import Meal from '../../types/Meal';
 
 let timeoutHandler;
@@ -20,8 +23,29 @@ const columns = [
     id: 'servings',
     label: 'Servings',
     align: 'right',
-    minWidth: 50
-  }
+    minWidth: 50,
+  },
+  {
+    id: 'breakfast',
+    label: <WbSunnyIcon />,
+    align: 'right',
+    minWidth: 50,
+    useCheck: true
+  },
+  {
+    id: 'lunch',
+    label: <WbSunnyIcon />,
+    align: 'right',
+    minWidth: 50,
+    useCheck: true
+  },
+  {
+    id: 'dinner',
+    label: <WbSunnyIcon />,
+    align: 'right',
+    minWidth: 50,
+    useCheck: true
+  },
 ];
 
 // Used to buffer filter input
@@ -107,7 +131,7 @@ function MealTable(props) {
               >
                 {columns.map(column => (
                   <TableCell key={column.id} align={column.align}>
-                    {row[column.id]}
+                    {column.useCheck ? row[column.id] ? <CheckIcon /> : null : row[column.id]}
                   </TableCell>
                 ))}
               </TableRow>
