@@ -32,17 +32,15 @@ const DARK_THEME = createMuiTheme({
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      faceClass: FACE_CLASS.HOME.FROM_LIST,
-      darkTheme: false,
-      mealDetail: {}
-    };
-  }
 
-  componentWillMount() {
     const theme = localStorage.getItem(THEME_KEY) || 'light-theme';
     document.body.className = theme;
-    this.setState({ darkTheme: theme === 'dark-theme' });
+
+    this.state = {
+      faceClass: FACE_CLASS.HOME.FROM_LIST,
+      darkTheme: theme === 'dark-theme',
+      mealDetail: {}
+    };
   }
 
   setTheme(isDark) {

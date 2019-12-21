@@ -82,9 +82,18 @@ class MealList extends Component {
               Add Meal
             </Button>
           </div>
-          <MealTable rows={rows} filter={filter} onRowClick={rightcb} onFilterChange={val => this.updateFilter(val)} />
+          <MealTable
+            rows={rows}
+            filter={filter}
+            onRowClick={rightcb}
+            onFilterChange={x => this.updateFilter(x)}
+          />
         </Paper>
-        <MealDialog open={dialogOpen} onClose={() => this.toggleDialog(false)} onSave={meal => this.addMeal(meal)} />
+        <MealDialog
+          open={dialogOpen}
+          onClose={() => this.toggleDialog(false)}
+          onSave={x => this.addMeal(x)}
+        />
       </Container>
     );
   }

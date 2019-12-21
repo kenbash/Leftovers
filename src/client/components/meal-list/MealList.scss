@@ -35,6 +35,7 @@
   background: #424242;
 }
 
+// make these not ids, use classes?
 #meal-dialog-title {
   padding-bottom: 0;
 }
@@ -45,4 +46,28 @@
   > div { // TODO: make this cleaner
     min-height: 62px;
   }
+}
+
+#meal-time-control {
+  width: 100%;
+}
+
+#meal-time-group {
+  justify-content: space-between;
+  padding: 0 10%;
+}
+
+.meal-time-icons {
+  min-height: 0 !important; // remove later
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10%;
+
+  svg {
+    margin: 9px;
+  }
+}
+
+.meal-time-checkbox {
+  margin: 0 !important;
 }
