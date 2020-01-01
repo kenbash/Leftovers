@@ -68,14 +68,58 @@ exports.getAllMeals = (req, res) => {
   Meal.find({}, (err, meals) => res.send(meals.map(convertToDTO)));
 };
 
+/**
+ * Algorithm explanation: TODO
+ */
 exports.getMealPlan = async (req, res) => {
-  const meals = [];
-  const count = await Meal.count({});
-  for (let i = 1; i <= 7; i += 1) {
-    const breakfast = await Meal.findOne().skip(Math.floor(Math.random() * count));
-    const lunch = await Meal.findOne().skip(Math.floor(Math.random() * count));
-    const dinner = await Meal.findOne().skip(Math.floor(Math.random() * count));
-    meals.push({ breakfast: convertToDTO(breakfast), lunch: convertToDTO(lunch), dinner: convertToDTO(dinner) });
+  const meals = Array.from({ length: 7 }, () => ({ breakfast: null, lunch: null, dinner: null }));
+
+  let curDay = 0;
+  let mealsNeeded = 21;
+  let count = await Meal.count({});
+  let meal = await Meal.findOne({}).skip(Math.floor(Math.random() * count));
+  let leftovers = meal.servings;
+
+  while (mealsNeeded > 0) {
+    if (leftovers <= 0) {
+      // set conditions for needed time of day and servings
+      let conditions = {};
+      count = await Meal.count(conditions); // todo conds (using 7 - cur day)
+
+      // if no meals found, try only time of day
+      if (count < 1) {
+        conditions = {};
+        count = await Meal.count(conditions); // todo conds
+
+        // no possible meals found, exit
+        if (count < 1) break;
+      }
+
+      // select next random meal
+      meal = await Meal.findOne(conditions).skip(Math.floor(Math.random() * count));
+      leftovers = meal.servings;
+    }
+
+    for (let i = curDay; i < 7 && leftovers > 0; i += 1) {
+      if (!meals[i].breakfast && meal.breakfast) {
+        meals[i].breakfast = convertToDTO(meal);
+      } else if (!meals[i].lunch && meal.lunch) {
+        meals[i].lunch = convertToDTO(meal);
+      } else if (!meals[i].dinner && meal.dinner) {
+        meals[i].dinner = convertToDTO(meal);
+      } else {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      leftovers -= 1;
+      mealsNeeded -= 1;
+
+      if (meals[i].breakfast && meals[i].lunch && meals[i].dinner) {
+        curDay = i + 1;
+      }
+    }
   }
+
   res.send(meals);
 };

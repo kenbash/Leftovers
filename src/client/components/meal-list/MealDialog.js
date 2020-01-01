@@ -35,7 +35,7 @@ function MealDialog(props) {
 
   const handleServingsChange = (event) => {
     const num = +event.target.value;
-    const isValid = Number.isInteger(num) && num >= 1 && num <= 21;
+    const isValid = Number.isInteger(num) && num >= 1 && num <= 7;
     setServings(event.target.value);
     setServingsError(!isValid);
     updateSaveValid({ servingsValid: isValid });
@@ -94,9 +94,9 @@ function MealDialog(props) {
           margin="dense"
           type="number"
           fullWidth
-          inputProps={{ min: 1, max: 21 }}
+          inputProps={{ min: 1, max: 7 }}
           error={servingsError}
-          helperText={servingsError ? 'Servings must be an integer from 1 to 21' : ''}
+          helperText={servingsError ? 'Servings must be an integer from 1 to 7' : ''}
         />
         <div className="meal-time-icons">
           <WbSunnyIcon />
