@@ -38,7 +38,8 @@ exports.createMeal = (req, res) => {
     servings: req.body.servings,
     breakfast: req.body.breakfast,
     lunch: req.body.lunch,
-    dinner: req.body.dinner
+    dinner: req.body.dinner,
+    ingredients: req.body.ingredients
   });
 
   meal.save((err, mealRes) => {

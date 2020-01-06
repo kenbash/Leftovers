@@ -24,6 +24,7 @@ class MealDetail extends Component {
   render() {
     const { rightcb, leftcb } = this.props;
     const { loading, meal } = this.state;
+
     return (
       <Container className="meal-detail-wrapper">
         <Paper elevation={2} className="paper-wrapper">
@@ -38,6 +39,9 @@ class MealDetail extends Component {
           { loading ? <p>loading</p> : null}
           <p>{meal.name}</p>
           <p>{meal.servings}</p>
+          <p>{meal.breakfast ? 'true' : 'false'}</p>
+          <p>{meal.lunch ? 'true' : 'false'}</p>
+          <p>{meal.dinner ? 'true' : 'false'}</p>
           <p>{meal.ingredients}</p>
         </Paper>
       </Container>
