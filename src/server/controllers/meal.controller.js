@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 const Meal = require('../models/meal.model');
 
-const convertToDTO = meal => (
+const convertToMeal = meal => (
   {
     id: meal._id,
     name: meal.name,
@@ -10,6 +10,25 @@ const convertToDTO = meal => (
     breakfast: meal.breakfast,
     lunch: meal.lunch,
     dinner: meal.dinner,
+    ingredients: meal.ingredients
+  }
+);
+
+const convertToSimpleMeal = meal => (
+  {
+    id: meal._id,
+    name: meal.name,
+    servings: meal.servings,
+    breakfast: meal.breakfast,
+    lunch: meal.lunch,
+    dinner: meal.dinner,
+  }
+);
+
+const convertToMealName = meal => (
+  {
+    id: meal._id,
+    name: meal.name
   }
 );
 
@@ -27,7 +46,7 @@ exports.createMeal = (req, res) => {
       console.error(err);
       return;
     }
-    res.send(convertToDTO(mealRes));
+    res.send(convertToSimpleMeal(mealRes));
   });
 };
 
@@ -38,7 +57,7 @@ exports.getMeal = (req, res) => {
       console.error(err);
       return;
     }
-    res.send(meal);
+    res.send(convertToMeal(meal));
   });
 };
 
@@ -65,7 +84,7 @@ exports.deleteMeal = (req, res) => {
 };
 
 exports.getAllMeals = (req, res) => {
-  Meal.find({}, (err, meals) => res.send(meals.map(convertToDTO)));
+  Meal.find({}, (err, meals) => res.send(meals.map(convertToSimpleMeal)));
 };
 
 /**
@@ -76,7 +95,7 @@ exports.getMealPlan = async (req, res) => {
 
   let curDay = 0;
   let mealsNeeded = 21;
-  let count = await Meal.count({});
+  let count = await Meal.count({}); // rename variable
   let meal = await Meal.findOne({}).skip(Math.floor(Math.random() * count));
   let leftovers = meal.servings;
 
@@ -86,7 +105,7 @@ exports.getMealPlan = async (req, res) => {
       let conditions = {};
       count = await Meal.count(conditions); // todo conds (using 7 - cur day)
 
-      // if no meals found, try only time of day
+      // if no meals found, try only time of day (or just exit?)
       if (count < 1) {
         conditions = {};
         count = await Meal.count(conditions); // todo conds
@@ -102,11 +121,11 @@ exports.getMealPlan = async (req, res) => {
 
     for (let i = curDay; i < 7 && leftovers > 0; i += 1) {
       if (!meals[i].breakfast && meal.breakfast) {
-        meals[i].breakfast = convertToDTO(meal);
+        meals[i].breakfast = convertToMealName(meal);
       } else if (!meals[i].lunch && meal.lunch) {
-        meals[i].lunch = convertToDTO(meal);
+        meals[i].lunch = convertToMealName(meal);
       } else if (!meals[i].dinner && meal.dinner) {
-        meals[i].dinner = convertToDTO(meal);
+        meals[i].dinner = convertToMealName(meal);
       } else {
         // eslint-disable-next-line no-continue
         continue;

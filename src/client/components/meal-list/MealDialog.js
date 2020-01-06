@@ -20,6 +20,8 @@ function MealDialog(props) {
   const [name, setName] = React.useState('');
   const [servings, setServings] = React.useState('');
   const [servingsError, setServingsError] = React.useState(false);
+  const [ingredients, setIngredients] = React.useState('');
+  const [ingredientsHelp, setIngredientsHelp] = React.useState(false);
   const [mealTime, setMealTime] = React.useState({ breakfast: false, lunch: false, dinner: false });
   const [saveValid, setSaveValid] = React.useState({ nameValid: false, servingsValid: false, mealTimeValid: false });
 
@@ -54,6 +56,8 @@ function MealDialog(props) {
     setName('');
     setServings('');
     setServingsError(false);
+    setIngredients('');
+    setIngredientsHelp(false);
     setMealTime({ breakfast: false, lunch: false, dinner: false });
     setSaveValid({ nameValid: false, servingsValid: false, mealTimeValid: false });
   };
@@ -68,7 +72,8 @@ function MealDialog(props) {
         servings: +servings,
         breakfast,
         lunch,
-        dinner
+        dinner,
+        ingredients: ingredients.split(',').map(ingredient => ingredient.trim())
       });
       handleClose();
     }
@@ -97,6 +102,15 @@ function MealDialog(props) {
           inputProps={{ min: 1, max: 7 }}
           error={servingsError}
           helperText={servingsError ? 'Servings must be an integer from 1 to 7' : ''}
+        />
+        <TextField
+          label="Ingredients (optional)"
+          value={ingredients}
+          onChange={event => setIngredients(event.target.value)}
+          onFocus={() => setIngredientsHelp(true)}
+          fullWidth
+          inputProps={{ maxLength: 250 }}
+          helperText={ingredientsHelp ? 'Enter ingredients as a comma-delimited list' : ' '}
         />
         <div className="meal-time-icons">
           <WbSunnyIcon />

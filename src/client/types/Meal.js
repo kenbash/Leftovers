@@ -10,4 +10,11 @@ const Meal = PropTypes.shape({
   // ingredients
 });
 
-export default Meal;
+// maybe remove this?
+
+const MealName = PropTypes.shape({
+  id: PropTypes.string,
+  name: PropTypes.string
+});
+
+export { Meal, MealName };

@@ -14,7 +14,7 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 import CheckIcon from '@material-ui/icons/Check';
 import WbSunnyIcon from '@material-ui/icons/WbSunny'; // placeholder
-import Meal from '../../types/Meal';
+import { Meal } from '../../types/Meal';
 
 let timeoutHandler;
 const columns = [

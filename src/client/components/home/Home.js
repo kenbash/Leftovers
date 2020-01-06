@@ -8,7 +8,7 @@ import {
   Paper
 } from '@material-ui/core';
 import CachedIcon from '@material-ui/icons/Cached';
-import FastfoodIcon from '@material-ui/icons/Fastfood';
+import RestaurantIcon from '@material-ui/icons/Restaurant';
 import WbSunnyIcon from '@material-ui/icons/WbSunny'; // placeholder
 import { getMealPlan } from '../../services/MealService';
 import MealRow from './MealRow';
@@ -52,7 +52,7 @@ class Home extends Component {
             >
               Generate
             </Button>
-            <Button color="primary" variant="contained" size="large" onClick={rightcb} startIcon={<FastfoodIcon />}>
+            <Button color="primary" variant="contained" size="large" onClick={rightcb} startIcon={<RestaurantIcon />}>
               View Meals
             </Button>
           </div>

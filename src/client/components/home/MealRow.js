@@ -5,7 +5,7 @@ import {
   Paper,
   Typography
 } from '@material-ui/core';
-import Meal from '../../types/Meal';
+import MealName from '../../types/Meal';
 
 function MealRow(props) {
   const { day, meals, onMealClick } = props;
@@ -39,7 +39,7 @@ function MealRow(props) {
 
 MealRow.propTypes = {
   day: PropTypes.string.isRequired,
-  meals: PropTypes.shape({ breakfast: Meal, lunch: Meal, dinner: Meal }).isRequired,
+  meals: PropTypes.shape({ breakfast: MealName, lunch: MealName, dinner: MealName }).isRequired,
   onMealClick: PropTypes.func.isRequired
 };
 

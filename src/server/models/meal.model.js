@@ -6,7 +6,8 @@ const MealSchema = new mongoose.Schema({
   servings: { type: Number, required: true },
   breakfast: { type: Boolean, required: true },
   lunch: { type: Boolean, required: true },
-  dinner: { type: Boolean, required: true }
+  dinner: { type: Boolean, required: true },
+  ingredients: { type: Array, required: true }
 });
 
 module.exports = mongoose.model('Meal', MealSchema);

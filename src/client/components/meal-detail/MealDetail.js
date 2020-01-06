@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Container, Paper } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
-import FastfoodIcon from '@material-ui/icons/Fastfood';
-import Meal from '../../types/Meal';
+import RestaurantIcon from '@material-ui/icons/Restaurant';
+import { Meal } from '../../types/Meal';
 import './MealDetail.scss';
 
 class MealDetail extends Component {
@@ -19,7 +19,7 @@ class MealDetail extends Component {
       <Container className="meal-detail-wrapper">
         <Paper elevation={2} className="paper-wrapper">
           <div className="button-wrapper">
-            <Button color="primary" variant="contained" size="large" onClick={leftcb} startIcon={<FastfoodIcon />}>
+            <Button color="primary" variant="contained" size="large" onClick={leftcb} startIcon={<RestaurantIcon />}>
               Meal List
             </Button>
             <Button color="primary" variant="contained" size="large" onClick={rightcb} startIcon={<HomeIcon />}>
