@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { purple, teal } from '@material-ui/core/colors';
+import { updateMealDetail } from './services/MealService';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
 import MealList from './components/meal-list/MealList';
@@ -39,7 +40,6 @@ export default class App extends Component {
     this.state = {
       faceClass: FACE_CLASS.HOME.FROM_LIST,
       darkTheme: theme === 'dark-theme',
-      mealDetail: {}
     };
   }
 
@@ -48,10 +48,6 @@ export default class App extends Component {
     document.body.className = theme;
     localStorage.setItem(THEME_KEY, theme);
     this.setState({ darkTheme: isDark });
-  }
-
-  setMeal(meal) {
-    this.setState({ mealDetail: meal });
   }
 
   changeFace(dir) {
@@ -82,7 +78,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { faceClass, mealDetail, darkTheme } = this.state;
+    const { faceClass, darkTheme } = this.state;
     return (
       <ThemeProvider theme={darkTheme ? DARK_THEME : LIGHT_THEME}>
         <CssBaseline />
@@ -92,8 +88,8 @@ export default class App extends Component {
         <main className={faceClass}>
           <section className="meal-grid">
             <Home
-              leftcb={(meal) => {
-                this.setMeal(meal);
+              leftcb={(id) => {
+                updateMealDetail(id);
                 this.changeFace(false);
               }}
               rightcb={() => this.changeFace(true)}
@@ -101,8 +97,8 @@ export default class App extends Component {
           </section>
           <section className="meal-list">
             <MealList
-              rightcb={(meal) => {
-                this.setMeal(meal);
+              rightcb={(id) => {
+                updateMealDetail(id);
                 this.changeFace(true);
               }}
               leftcb={() => this.changeFace(false)}
@@ -110,7 +106,6 @@ export default class App extends Component {
           </section>
           <section className="meal-detail">
             <MealDetail
-              meal={mealDetail}
               rightcb={() => this.changeFace(true)}
               leftcb={() => this.changeFace(false)}
             />

@@ -18,6 +18,7 @@
     "babel-polyfill": "^6.26.0",
     "body-parser": "^1.19.0",
     "express": "^4.16.3",
+    "fbemitter": "^2.1.1",
     "mongoose": "^5.7.7",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",

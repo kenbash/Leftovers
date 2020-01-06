@@ -3,18 +3,27 @@ import PropTypes from 'prop-types';
 import { Button, Container, Paper } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
-import { Meal } from '../../types/Meal';
+import { onMealDetailChange } from '../../services/MealService';
 import './MealDetail.scss';
 
 class MealDetail extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {}; // maybe remove?
+    this.state = {
+      loading: false,
+      meal: {}
+    };
+  }
+
+  componentDidMount() {
+    onMealDetailChange(() => this.setState({ loading: true }), 'loading');
+    onMealDetailChange(meal => this.setState({ loading: false, meal }));
   }
 
   render() {
-    const { meal, rightcb, leftcb } = this.props;
+    const { rightcb, leftcb } = this.props;
+    const { loading, meal } = this.state;
     return (
       <Container className="meal-detail-wrapper">
         <Paper elevation={2} className="paper-wrapper">
@@ -26,9 +35,10 @@ class MealDetail extends Component {
               Home
             </Button>
           </div>
-          <p>{meal.id}</p>
+          { loading ? <p>loading</p> : null}
           <p>{meal.name}</p>
           <p>{meal.servings}</p>
+          <p>{meal.ingredients}</p>
         </Paper>
       </Container>
     );
@@ -36,7 +46,6 @@ class MealDetail extends Component {
 }
 
 MealDetail.propTypes = {
-  meal: Meal.isRequired,
   rightcb: PropTypes.func.isRequired,
   leftcb: PropTypes.func.isRequired
 };

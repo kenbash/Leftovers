@@ -126,7 +126,7 @@ function MealTable(props) {
                 role="checkbox"
                 tabIndex={-1}
                 key={row.id}
-                onClick={() => onRowClick(row)}
+                onClick={() => onRowClick(row.id)}
                 className="meal-row"
               >
                 {columns.map(column => (
