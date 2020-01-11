@@ -9,7 +9,9 @@ import {
 } from '@material-ui/core';
 import CachedIcon from '@material-ui/icons/Cached';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
-import WbSunnyIcon from '@material-ui/icons/WbSunny'; // placeholder
+import WbSunnyIcon from '@material-ui/icons/WbSunny';
+import Brightness3Icon from '@material-ui/icons/Brightness3';
+import SunriseIcon from '../../assets/SunriseIcon';
 import { getMealPlan } from '../../services/MealService';
 import MealRow from './MealRow';
 import './Home.scss';
@@ -64,13 +66,13 @@ class Home extends Component {
               <Grid container item xs={12} spacing={2} justify="center">
                 <Grid item xs={1} />
                 <Grid item xs={3}>
-                  <WbSunnyIcon color="secondary" />
+                  <SunriseIcon color="secondary" />
                 </Grid>
                 <Grid item xs={3}>
                   <WbSunnyIcon color="secondary" />
                 </Grid>
                 <Grid item xs={3}>
-                  <WbSunnyIcon color="secondary" />
+                  <Brightness3Icon color="secondary" />
                 </Grid>
                 <Grid item xs={1} />
               </Grid>

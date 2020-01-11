@@ -13,7 +13,9 @@ import {
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import CheckIcon from '@material-ui/icons/Check';
-import WbSunnyIcon from '@material-ui/icons/WbSunny'; // placeholder
+import WbSunnyIcon from '@material-ui/icons/WbSunny';
+import Brightness3Icon from '@material-ui/icons/Brightness3';
+import SunriseIcon from '../../assets/SunriseIcon';
 import { Meal } from '../../types/Meal';
 
 let timeoutHandler;
@@ -27,7 +29,7 @@ const columns = [
   },
   {
     id: 'breakfast',
-    label: <WbSunnyIcon />,
+    label: <SunriseIcon />,
     align: 'right',
     minWidth: 50,
     useCheck: true
@@ -41,7 +43,7 @@ const columns = [
   },
   {
     id: 'dinner',
-    label: <WbSunnyIcon />,
+    label: <Brightness3Icon />,
     align: 'right',
     minWidth: 50,
     useCheck: true

@@ -12,7 +12,9 @@ import {
   FormGroup,
   TextField
 } from '@material-ui/core';
-import WbSunnyIcon from '@material-ui/icons/WbSunny'; // placeholder
+import WbSunnyIcon from '@material-ui/icons/WbSunny';
+import Brightness3Icon from '@material-ui/icons/Brightness3';
+import SunriseIcon from '../../assets/SunriseIcon';
 
 function MealDialog(props) {
   const { open, onClose, onSave } = props;
@@ -113,9 +115,9 @@ function MealDialog(props) {
           helperText={ingredientsHelp ? 'Enter ingredients as a comma-delimited list' : ' '}
         />
         <div className="meal-time-icons">
+          <SunriseIcon />
           <WbSunnyIcon />
-          <WbSunnyIcon />
-          <WbSunnyIcon />
+          <Brightness3Icon />
         </div>
         <FormControl id="meal-time-control" component="fieldset">
           <FormGroup id="meal-time-group" row>

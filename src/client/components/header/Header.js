@@ -29,10 +29,10 @@ function Header(props) {
       <Typography className="header-title" variant="h6">Leftovers</Typography>
       <div className="header-filler" />
       <Button className="header-btn">Login</Button>
-      <IconButton className="header-btn" onClick={changeTheme}>
+      <IconButton className="header-btn" onClick={changeTheme} title="Toggle light/dark theme">
         {isDark ? <Brightness7Icon /> : <Brightness4Icon />}
       </IconButton>
-      <IconButton className="header-btn" href="https://github.com/kenbash/Leftovers">
+      <IconButton className="header-btn" href="https://github.com/kenbash/Leftovers" title="View source">
         <GitHubIcon />
       </IconButton>
     </div>

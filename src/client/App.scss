@@ -77,3 +77,20 @@ img {
   justify-content: space-between;
   padding: 0 5% .5em;
 }
+
+.sunrise-icon {
+  path.secondary {
+    fill: #f50057;
+  }
+  path.base {
+    fill: #000;
+  }
+}
+.dark-theme .sunrise-icon {
+  path.secondary {
+    fill: #80cbc4;
+  }
+  path.base {
+    fill: #fff;
+  }
+}
