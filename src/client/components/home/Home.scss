@@ -5,7 +5,8 @@
     display: flex;
     position: relative;
     max-width: 1000px;
-    padding-bottom: 2.5em;
+    padding-top: 1em;
+    padding-bottom: 2em;
     margin: auto;
 
     .meal-cell,
@@ -27,11 +28,10 @@
 
     .loading-wrapper {
       position: absolute;
-      // adjust these to be responsive later
-      top: 32px;
-      bottom: 32px;
-      left: 145px;
-      right: 160px;
+      top: 54px;
+      bottom: 20px;
+      left: 0;
+      right: 0;
       background: rgba(0, 0, 0, 0.15);
       
       .loading-indicator {
