@@ -19,8 +19,7 @@ import './Home.scss';
 class Home extends Component {
   constructor(props) {
     super(props);
-    // hide when meals is null, and/or make tiles gray when empty (to avoid click)
-    this.state = { meals: new Array(7).fill({ breakfast: {}, lunch: {}, dinner: {} }), loading: false };
+    this.state = { meals: new Array(7).fill({ breakfast: null, lunch: null, dinner: null }), loading: false };
   }
 
   generateMeals() {

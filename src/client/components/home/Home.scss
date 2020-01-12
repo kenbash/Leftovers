@@ -3,15 +3,21 @@
 
   .grid-wrapper {
     display: flex;
-    padding-bottom: 2.5em;
     position: relative;
+    max-width: 1000px;
+    padding-bottom: 2.5em;
+    margin: auto;
+
+    .meal-cell,
+    .meal-cell-empty {
+      height: 7.5vh;
+      min-height: 3em;
+      padding: 0.5em;
+    }
 
     .meal-cell {
       text-overflow: ellipsis;
       overflow: hidden;
-      height: 7.5vh;
-      min-height: 3em;
-      padding: 0.5em;
 
       &:hover {
         cursor: pointer;

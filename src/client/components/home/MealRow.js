@@ -5,7 +5,7 @@ import {
   Paper,
   Typography
 } from '@material-ui/core';
-import MealName from '../../types/Meal';
+import { MealName } from '../../types/Meal';
 
 function MealRow(props) {
   const { day, meals, onMealClick } = props;
@@ -18,19 +18,28 @@ function MealRow(props) {
         </Typography>
       </Grid>
       <Grid item xs={3}>
-        <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.breakfast)}>
-          {meals.breakfast.name}
-        </Paper>
+        { meals.breakfast ? (
+          <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.breakfast.id)}>
+            {meals.breakfast.name}
+          </Paper>
+        ) : <Paper elevation={3} className="meal-cell-empty" />
+        }
       </Grid>
       <Grid item xs={3}>
-        <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.lunch)}>
-          {meals.lunch.name}
-        </Paper>
+        { meals.lunch ? (
+          <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.lunch.id)}>
+            {meals.lunch.name}
+          </Paper>
+        ) : <Paper elevation={3} className="meal-cell-empty" />
+        }
       </Grid>
       <Grid item xs={3}>
-        <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.dinner)}>
-          {meals.dinner.name}
-        </Paper>
+        { meals.dinner ? (
+          <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.dinner.id)}>
+            {meals.dinner.name}
+          </Paper>
+        ) : <Paper elevation={3} className="meal-cell-empty" />
+        }
       </Grid>
       <Grid item xs={1} />
     </Grid>
