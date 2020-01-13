@@ -19,7 +19,7 @@ function MealRow(props) {
       </Grid>
       <Grid item xs={3}>
         { meals.breakfast ? (
-          <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.breakfast.id)}>
+          <Paper elevation={3} className="meal-cell" title={meals.breakfast.name} onClick={() => onMealClick(meals.breakfast.id)}>
             {meals.breakfast.name}
           </Paper>
         ) : <Paper elevation={3} className="meal-cell-empty" />
@@ -27,7 +27,7 @@ function MealRow(props) {
       </Grid>
       <Grid item xs={3}>
         { meals.lunch ? (
-          <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.lunch.id)}>
+          <Paper elevation={3} className="meal-cell" title={meals.lunch.name} onClick={() => onMealClick(meals.lunch.id)}>
             {meals.lunch.name}
           </Paper>
         ) : <Paper elevation={3} className="meal-cell-empty" />
@@ -35,7 +35,7 @@ function MealRow(props) {
       </Grid>
       <Grid item xs={3}>
         { meals.dinner ? (
-          <Paper elevation={3} className="meal-cell" onClick={() => onMealClick(meals.dinner.id)}>
+          <Paper elevation={3} className="meal-cell" title={meals.dinner.name} onClick={() => onMealClick(meals.dinner.id)}>
             {meals.dinner.name}
           </Paper>
         ) : <Paper elevation={3} className="meal-cell-empty" />

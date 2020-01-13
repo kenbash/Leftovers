@@ -88,6 +88,7 @@ function MealDialog(props) {
         <TextField
           label="Name"
           value={name}
+          className="meal-dialog-input"
           onChange={handleNameChange}
           margin="dense"
           fullWidth
@@ -97,6 +98,7 @@ function MealDialog(props) {
         <TextField
           label="Servings"
           value={servings}
+          className="meal-dialog-input"
           onChange={handleServingsChange}
           margin="dense"
           type="number"
@@ -108,6 +110,7 @@ function MealDialog(props) {
         <TextField
           label="Ingredients (optional)"
           value={ingredients}
+          className="meal-dialog-input"
           onChange={event => setIngredients(event.target.value)}
           onFocus={() => setIngredientsHelp(true)}
           fullWidth
@@ -119,8 +122,8 @@ function MealDialog(props) {
           <WbSunnyIcon />
           <Brightness3Icon />
         </div>
-        <FormControl id="meal-time-control" component="fieldset">
-          <FormGroup id="meal-time-group" row>
+        <FormControl className="meal-time-control" component="fieldset">
+          <FormGroup className="meal-time-group" row>
             <FormControlLabel
               className="meal-time-checkbox"
               control={(

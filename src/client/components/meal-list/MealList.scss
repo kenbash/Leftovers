@@ -35,7 +35,6 @@
   background: #424242;
 }
 
-// make these not ids, use classes?
 #meal-dialog-title {
   padding-bottom: 0;
 }
@@ -43,31 +42,32 @@
 #meal-dialog-content {
   width: 400px;
 
-  > div { // TODO: make this cleaner
+  .meal-dialog-input {
     min-height: 62px;
   }
-}
 
-#meal-time-control {
-  width: 100%;
-}
+  .meal-time {
+    &-control {
+      width: 100%;
+    }
 
-#meal-time-group {
-  justify-content: space-between;
-  padding: 0 10%;
-}
+    &-group {
+      justify-content: space-between;
+      padding: 0 10%;
+    }
 
-.meal-time-icons {
-  min-height: 0 !important; // remove later
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 10% 0 10%;
+    &-icons {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 10% 0 10%;
+    
+      svg {
+        margin: 9px;
+      }
+    }
 
-  svg {
-    margin: 9px;
+    &-checkbox {
+      margin: 0;
+    }
   }
-}
-
-.meal-time-checkbox {
-  margin: 0 !important;
 }
