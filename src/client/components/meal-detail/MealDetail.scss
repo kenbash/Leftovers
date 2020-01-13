@@ -1,3 +1,78 @@
+$content-width: 80%;
+
 .meal-detail-wrapper {
   text-align: center;
+
+  .button-wrapper {
+    padding-bottom: 1.5em;
+  }
+
+  .loading-indicator {
+    margin: auto;
+    width: 75px !important;
+    height: 75px !important;
+  }
+
+  .detail-input {
+    width: $content-width;
+    min-height: 62px;
+  }
+
+  .ingredient-meal-time-wrapper {
+    width: $content-width;
+    display: flex;
+    margin: auto;
+  }
+
+  .ingredients-table {
+    flex: 1;
+    height: 300px;
+    overflow: auto;
+
+    .MuiTableCell-stickyHeader {
+      background: #fff;
+    }
+
+    .MuiTableCell-root {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .meal-time {
+    &-wrapper {
+      display: flex;
+      justify-content: center;
+      padding-top: 24px;
+      width: 20%;
+      min-width: 100px;
+    }
+
+    &-icons,
+    &-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-icons svg {
+      margin: 25px 13px;
+    }
+
+    &-checkbox {
+      margin: 16px 4px;
+    }
+  }
+
+  .detail-action-wrapper {
+    text-align: right;
+
+    button {
+      width: 72px;
+      margin-left: 8px;
+    }
+  }
+}
+
+.dark-theme .meal-detail-wrapper .ingredients-table .MuiTableCell-stickyHeader {
+  background: #424242;
 }
