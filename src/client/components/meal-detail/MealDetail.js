@@ -33,6 +33,7 @@ class MealDetail extends Component {
     this.state = {
       loading: false,
       editable: false,
+      saveValid: { nameValid: true, servingsValid: true, mealTimeValid: true },
       meal: null,
       name: '',
       servings: 0,
@@ -55,6 +56,7 @@ class MealDetail extends Component {
     this.setState({
       meal,
       editable: false,
+      saveValid: { nameValid: true, servingsValid: true, mealTimeValid: true },
       name: meal.name,
       servings: meal.servings,
       servingsError: false,
@@ -66,6 +68,38 @@ class MealDetail extends Component {
       ingredients: meal.ingredients,
       ingredientsText: meal.ingredients.join(', ')
     });
+  }
+
+  handleNameChange = (event) => {
+    const { value } = event.target;
+    this.setState({ name: value });
+    this.updateSaveValid({ nameValid: value && value.trim().length > 0 });
+  };
+
+  handleServingsChange = (event) => {
+    const { value } = event.target;
+    const num = +value;
+    const isValid = Number.isInteger(num) && num >= 1 && num <= 7;
+    this.setState({ servings: value, servingsError: !isValid });
+    this.updateSaveValid({ servingsValid: isValid });
+  };
+
+  handleIngredientsChange = (event) => {
+    const { value } = event.target;
+    this.setState({ ingredientsText: value });
+    // TODO: update table
+  };
+
+  handleMealTimeChange = time => (event) => {
+    const { mealTime } = this.state;
+    const value = { ...mealTime, [time]: event.target.checked };
+    this.setState({ mealTime: value });
+    this.updateSaveValid({ mealTimeValid: value.breakfast || value.lunch || value.dinner });
+  };
+
+  updateSaveValid(update) {
+    const { saveValid } = this.state;
+    this.setState({ saveValid: Object.assign({ ...saveValid }, update) });
   }
 
   toggleEdit() {
@@ -81,9 +115,10 @@ class MealDetail extends Component {
   render() {
     const { rightcb, leftcb } = this.props;
     const {
-      loading, editable, name, servings, servingsError, mealTime, ingredients, ingredientsText
+      loading, editable, saveValid, name, servings, servingsError, mealTime, ingredients, ingredientsText
     } = this.state;
     const { breakfast, lunch, dinner } = mealTime;
+    const { nameValid, servingsValid, mealTimeValid } = saveValid;
 
     return (
       <Container className="meal-detail-wrapper">
@@ -103,7 +138,7 @@ class MealDetail extends Component {
             value={name}
             className="detail-input"
             margin="dense"
-            // onChange={this.handleNameChange}
+            onChange={this.handleNameChange}
             fullWidth
             inputProps={{ maxLength: 100 }}
             InputProps={{
@@ -116,7 +151,7 @@ class MealDetail extends Component {
             value={servings}
             className="detail-input"
             margin="dense"
-            // onChange={handleServingsChange}
+            onChange={this.handleServingsChange}
             type="number"
             fullWidth
             inputProps={{ min: 1, max: 7 }}
@@ -132,7 +167,7 @@ class MealDetail extends Component {
             value={ingredientsText}
             className="detail-input"
             margin="dense"
-            // onChange={event => setIngredients(event.target.value)}
+            onChange={this.handleIngredientsChange}
             fullWidth
             inputProps={{ maxLength: 250 }}
             InputProps={{
@@ -181,6 +216,7 @@ class MealDetail extends Component {
                         color="primary"
                         value="breakfast"
                         checked={breakfast}
+                        onChange={this.handleMealTimeChange('breakfast')}
                       />
                   )}
                   />
@@ -191,6 +227,7 @@ class MealDetail extends Component {
                         color="primary"
                         value="lunch"
                         checked={lunch}
+                        onChange={this.handleMealTimeChange('lunch')}
                       />
                   )}
                   />
@@ -201,6 +238,7 @@ class MealDetail extends Component {
                         color="primary"
                         value="dinner"
                         checked={dinner}
+                        onChange={this.handleMealTimeChange('dinner')}
                       />
                   )}
                   />
@@ -211,7 +249,7 @@ class MealDetail extends Component {
           <div className="detail-action-wrapper">
             <Button color="secondary">Delete</Button>
             <Button color="default" onClick={() => this.toggleEdit()}>{editable ? 'Cancel' : 'Edit'}</Button>
-            <Button color="primary">Save</Button>
+            <Button color="primary" disabled={!(editable && nameValid && servingsValid && mealTimeValid)}>Save</Button>
           </div>
         </Paper>
       </Container>
