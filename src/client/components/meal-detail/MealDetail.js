@@ -63,7 +63,7 @@ class MealDetail extends Component {
     onMealDetailChange(() => this.setState({ loading: true }), 'loading');
     onMealDetailChange((meal) => {
       this.setMeal(meal);
-      this.setState({ loading: false }); // setTimeout? make overlay
+      setTimeout(() => this.setState({ loading: false }), 250);
     });
   }
 
@@ -157,119 +157,122 @@ class MealDetail extends Component {
               Home
             </Button>
           </div>
-          { loading ? <CircularProgress className="loading-indicator" color="secondary" />
-            : null}
-          <TextField
-            label="Name"
-            value={name}
-            className="detail-input"
-            margin="dense"
-            onChange={this.handleNameChange}
-            fullWidth
-            inputProps={{ maxLength: 100 }}
-            InputProps={{
-              readOnly: !editable
-            }}
-            variant="outlined"
-          />
-          <TextField
-            label="Servings"
-            value={servings}
-            className="detail-input"
-            margin="dense"
-            onChange={this.handleServingsChange}
-            type="number"
-            fullWidth
-            inputProps={{ min: 1, max: 7 }}
-            InputProps={{
-              readOnly: !editable
-            }}
-            variant="outlined"
-            error={servingsError}
-            helperText={servingsError ? 'Servings must be an integer from 1 to 7' : ''}
-          />
-          <TextField
-            label="Ingredients (optional)"
-            value={ingredientsText}
-            className="detail-input"
-            margin="dense"
-            onChange={this.handleIngredientsChange}
-            fullWidth
-            inputProps={{ maxLength: 250 }}
-            InputProps={{
-              readOnly: !editable
-            }}
-            variant="outlined"
-            helperText={editable ? 'Enter ingredients as a comma-delimited list' : ''}
-          />
-          <div className="ingredient-meal-time-wrapper">
-            <div className="ingredients-table">
-              <Table stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <TableCell key="ingredients">
-                      Ingredients
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {ingredients.map((row, i) => (
-                    <TableRow
-                      tabIndex={-1}
-                      key={i}
-                      className="meal-row"
-                    >
+          <div className="detail-content-wrapper">
+            <div className="loading-wrapper" style={{ display: loading ? 'flex' : 'none' }}>
+              <CircularProgress className="loading-indicator" color="secondary" />
+            </div>
+            <TextField
+              label="Name"
+              value={name}
+              className="detail-input"
+              margin="dense"
+              onChange={this.handleNameChange}
+              fullWidth
+              inputProps={{ maxLength: 100 }}
+              InputProps={{
+                readOnly: !editable
+              }}
+              variant="outlined"
+            />
+            <TextField
+              label="Servings"
+              value={servings}
+              className="detail-input"
+              margin="dense"
+              onChange={this.handleServingsChange}
+              type="number"
+              fullWidth
+              inputProps={{ min: 1, max: 7 }}
+              InputProps={{
+                readOnly: !editable
+              }}
+              variant="outlined"
+              error={servingsError}
+              helperText={servingsError ? 'Servings must be an integer from 1 to 7' : ''}
+            />
+            <TextField
+              label="Ingredients (optional)"
+              value={ingredientsText}
+              className="detail-input"
+              margin="dense"
+              onChange={this.handleIngredientsChange}
+              fullWidth
+              inputProps={{ maxLength: 250 }}
+              InputProps={{
+                readOnly: !editable
+              }}
+              variant="outlined"
+              helperText={editable ? 'Enter ingredients as a comma-delimited list' : ''}
+            />
+            <div className="ingredient-meal-time-wrapper">
+              <div className="ingredients-table">
+                <Table stickyHeader>
+                  <TableHead>
+                    <TableRow>
                       <TableCell key="ingredients">
-                        {row}
+                        Ingredients
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-            <div className="meal-time-wrapper">
-              <div className="meal-time-icons">
-                <SunriseIcon />
-                <WbSunnyIcon />
-                <Brightness3Icon />
+                  </TableHead>
+                  <TableBody>
+                    {ingredients.map((row, i) => (
+                      <TableRow
+                        tabIndex={-1}
+                        key={i}
+                        className="meal-row"
+                      >
+                        <TableCell key="ingredients">
+                          {row}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
-              <FormControl component="fieldset">
-                <FormGroup className="meal-time-group" row>
-                  <FormControlLabel
-                    className="meal-time-checkbox"
-                    control={(
-                      <Checkbox
-                        color="primary"
-                        value="breakfast"
-                        checked={breakfast}
-                        onChange={this.handleMealTimeChange('breakfast')}
-                      />
-                  )}
-                  />
-                  <FormControlLabel
-                    className="meal-time-checkbox"
-                    control={(
-                      <Checkbox
-                        color="primary"
-                        value="lunch"
-                        checked={lunch}
-                        onChange={this.handleMealTimeChange('lunch')}
-                      />
-                  )}
-                  />
-                  <FormControlLabel
-                    className="meal-time-checkbox"
-                    control={(
-                      <Checkbox
-                        color="primary"
-                        value="dinner"
-                        checked={dinner}
-                        onChange={this.handleMealTimeChange('dinner')}
-                      />
-                  )}
-                  />
-                </FormGroup>
-              </FormControl>
+              <div className="meal-time-wrapper">
+                <div className="meal-time-icons">
+                  <SunriseIcon />
+                  <WbSunnyIcon />
+                  <Brightness3Icon />
+                </div>
+                <FormControl component="fieldset">
+                  <FormGroup className="meal-time-group" row>
+                    <FormControlLabel
+                      className="meal-time-checkbox"
+                      control={(
+                        <Checkbox
+                          color="primary"
+                          value="breakfast"
+                          checked={breakfast}
+                          onChange={this.handleMealTimeChange('breakfast')}
+                        />
+                    )}
+                    />
+                    <FormControlLabel
+                      className="meal-time-checkbox"
+                      control={(
+                        <Checkbox
+                          color="primary"
+                          value="lunch"
+                          checked={lunch}
+                          onChange={this.handleMealTimeChange('lunch')}
+                        />
+                    )}
+                    />
+                    <FormControlLabel
+                      className="meal-time-checkbox"
+                      control={(
+                        <Checkbox
+                          color="primary"
+                          value="dinner"
+                          checked={dinner}
+                          onChange={this.handleMealTimeChange('dinner')}
+                        />
+                    )}
+                    />
+                  </FormGroup>
+                </FormControl>
+              </div>
             </div>
           </div>
           <div className="detail-action-wrapper">

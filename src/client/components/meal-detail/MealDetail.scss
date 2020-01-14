@@ -7,10 +7,24 @@ $content-width: 80%;
     padding-bottom: 1.5em;
   }
 
-  .loading-indicator {
-    margin: auto;
-    width: 75px !important;
-    height: 75px !important;
+  .detail-content-wrapper {
+    position: relative;
+
+    .loading-wrapper {
+      position: absolute;
+      z-index: 9999;
+      top: 0;
+      bottom: 0;
+      left: 5%;
+      right: 5%;
+      background: rgba(0, 0, 0, 0.15);
+      
+      .loading-indicator {
+        margin: auto;
+        width: 75px !important;
+        height: 75px !important;
+      }
+    }
   }
 
   .detail-input {
