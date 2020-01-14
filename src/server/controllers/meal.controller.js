@@ -3,6 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 const Meal = require('../models/meal.model');
 
+// move these to models DTO?
 const convertToMeal = meal => (
   {
     id: meal._id,
@@ -46,8 +47,10 @@ exports.createMeal = (req, res) => {
   meal.save((err, mealRes) => {
     if (err) {
       console.error(err);
+      res.sendStatus(500);
       return;
     }
+
     res.send(convertToSimpleMeal(mealRes));
   });
 };
@@ -57,19 +60,35 @@ exports.getMeal = (req, res) => {
   Meal.findById(id, (err, meal) => {
     if (err) {
       console.error(err);
+      res.sendStatus(500);
       return;
     }
+
+    if (!meal) {
+      res.sendStatus(404);
+      return;
+    }
+
     res.send(convertToMeal(meal));
   });
 };
 
 exports.updateMeal = (req, res) => {
   const { id } = req.params;
-  Meal.findByIdAndUpdate(id, { $set: req.body }, (err) => {
+  const { body: meal } = req;
+
+  Meal.findByIdAndUpdate(id, meal, (err) => {
     if (err) {
       console.error(err);
+      res.sendStatus(500);
       return;
     }
+
+    if (!meal) {
+      res.sendStatus(404);
+      return;
+    }
+
     res.sendStatus(200);
   });
 };
@@ -79,16 +98,27 @@ exports.deleteMeal = (req, res) => {
   Meal.findByIdAndRemove(id, (err) => {
     if (err) {
       console.error(err);
+      res.sendStatus(500);
       return;
     }
+
     res.sendStatus(200);
   });
 };
 
-exports.getAllMeals = (req, res) => {
-  Meal.find({}, (err, meals) => res.send(meals.map(convertToSimpleMeal)));
+exports.getAllMeals = (_req, res) => {
+  Meal.find({}, (err, meals) => {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+      return;
+    }
+
+    res.send(meals.map(convertToSimpleMeal));
+  });
 };
 
+// move this logic to models somehow?
 exports.getMealPlan = async (req, res) => {
   const meals = Array.from({ length: 7 }, () => ({ breakfast: null, lunch: null, dinner: null }));
   let curDay = 0;

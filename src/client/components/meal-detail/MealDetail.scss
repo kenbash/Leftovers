@@ -18,6 +18,7 @@ $content-width: 80%;
       left: 5%;
       right: 5%;
       background: rgba(0, 0, 0, 0.15);
+      display: flex;
       
       .loading-indicator {
         margin: auto;
@@ -40,7 +41,7 @@ $content-width: 80%;
 
   .ingredients-table {
     flex: 1;
-    height: 300px;
+    height: 315px;
     overflow: auto;
 
     .MuiTableCell-stickyHeader {

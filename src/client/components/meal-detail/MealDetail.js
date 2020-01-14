@@ -23,12 +23,13 @@ import RestaurantIcon from '@material-ui/icons/Restaurant';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
 import SunriseIcon from '../../assets/SunriseIcon';
-import { onMealDetailChange } from '../../services/MealService';
+import { onMealDetailChange, updateMeal, deleteMeal } from '../../services/MealService';
 import './MealDetail.scss';
 
 // Used to buffer ingredient table updates
 let timeoutHandler;
 
+// TODO: extract ingredients table & mealtime to separate components
 class MealDetail extends Component {
   static handleBuffer = (func) => {
     if (timeoutHandler) {
@@ -68,20 +69,22 @@ class MealDetail extends Component {
   }
 
   setMeal(meal) {
+    // toast msg if meal null, better soln than ternaries?
+
     this.setState({
       meal,
       editable: false,
       saveValid: { nameValid: true, servingsValid: true, mealTimeValid: true },
-      name: meal.name,
-      servings: meal.servings,
+      name: meal ? meal.name : '',
+      servings: meal ? meal.servings : '',
       servingsError: false,
       mealTime: {
-        breakfast: meal.breakfast,
-        lunch: meal.lunch,
-        dinner: meal.dinner
+        breakfast: meal ? meal.breakfast : false,
+        lunch: meal ? meal.lunch : false,
+        dinner: meal ? meal.dinner : false
       },
-      ingredients: meal.ingredients,
-      ingredientsText: meal.ingredients.join(', ')
+      ingredients: meal ? meal.ingredients : [],
+      ingredientsText: meal ? meal.ingredients.join(', ') : ''
     });
   }
 
@@ -130,10 +133,66 @@ class MealDetail extends Component {
     }
   }
 
+  handleSave() {
+    const {
+      meal,
+      name,
+      servings,
+      mealTime,
+      ingredientsText,
+      saveValid,
+      editable
+    } = this.state;
+    const { nameValid, servingsValid, mealTimeValid } = saveValid;
+
+    if (!(meal && editable && nameValid && servingsValid && mealTimeValid)) return;
+
+    const { breakfast, lunch, dinner } = mealTime;
+    const mealUpdate = {
+      name,
+      servings,
+      breakfast,
+      lunch,
+      dinner,
+      ingredients: this.constructor.convertIngredientsText(ingredientsText)
+    };
+    this.setState({ editable: false, loading: true });
+
+    updateMeal(meal.id, JSON.stringify(mealUpdate)).then(
+      () => this.setState({ loading: false }),
+      (err) => {
+        console.error(err);
+        this.setState({ loading: false });
+        // toast msg
+      }
+    );
+  }
+
+  handleDelete() {
+    const { rightcb } = this.props;
+    const { meal } = this.state;
+    if (!meal) return;
+
+    this.setState({ editable: false, loading: true });
+
+    deleteMeal(meal.id).then(
+      () => {
+        this.setState({ loading: false });
+        rightcb();
+      },
+      (err) => {
+        console.error(err);
+        this.setState({ loading: false });
+        // toast msg
+      }
+    );
+  }
+
   render() {
     const { rightcb, leftcb } = this.props;
     const {
       loading,
+      meal,
       editable,
       saveValid,
       name,
@@ -158,7 +217,7 @@ class MealDetail extends Component {
             </Button>
           </div>
           <div className="detail-content-wrapper">
-            <div className="loading-wrapper" style={{ display: loading ? 'flex' : 'none' }}>
+            <div className="loading-wrapper" style={loading ? null : { display: 'none' }}>
               <CircularProgress className="loading-indicator" color="secondary" />
             </div>
             <TextField
@@ -276,9 +335,27 @@ class MealDetail extends Component {
             </div>
           </div>
           <div className="detail-action-wrapper">
-            <Button color="secondary">Delete</Button>
-            <Button color="default" onClick={() => this.toggleEdit()}>{editable ? 'Cancel' : 'Edit'}</Button>
-            <Button color="primary" disabled={!(editable && nameValid && servingsValid && mealTimeValid)}>Save</Button>
+            <Button
+              color="secondary"
+              disabled={!meal || loading}
+              onClick={() => this.handleDelete()}
+            >
+              Delete
+            </Button>
+            <Button
+              color="default"
+              disabled={!meal || loading}
+              onClick={() => this.toggleEdit()}
+            >
+              {editable ? 'Cancel' : 'Edit'}
+            </Button>
+            <Button
+              color="primary"
+              disabled={!(meal && editable && nameValid && servingsValid && mealTimeValid)}
+              onClick={() => this.handleSave()}
+            >
+              Save
+            </Button>
           </div>
         </Paper>
       </Container>

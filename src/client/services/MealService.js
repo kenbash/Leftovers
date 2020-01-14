@@ -17,9 +17,17 @@ export function createMeal(meal) {
   }).then(res => res.json());
 }
 
-export function editMeal() {}
+export function updateMeal(id, meal) {
+  return fetch(`/api/meal/update/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: meal
+  });
+}
 
-export function deleteMeal() {}
+export function deleteMeal(id) {
+  return fetch(`/api/meal/delete/${id}`, { method: 'DELETE' });
+}
 
 const mealDetailChange = new EventEmitter();
 
@@ -28,7 +36,10 @@ export function updateMealDetail(id) {
 
   fetch(`api/meal/get/${id}`)
     .then(res => res.json())
-    .then(meal => mealDetailChange.emit('change', meal));
+    .then(
+      meal => mealDetailChange.emit('change', meal),
+      () => mealDetailChange.emit('change', null)
+    );
 }
 
 export function onMealDetailChange(listener, eventType = 'change') {

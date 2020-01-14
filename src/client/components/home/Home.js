@@ -58,7 +58,7 @@ class Home extends Component {
             </Button>
           </div>
           <div className="grid-wrapper">
-            <div className="loading-wrapper" style={{ display: loading ? 'flex' : 'none' }}>
+            <div className="loading-wrapper" style={loading ? null : { display: 'none' }}>
               <CircularProgress className="loading-indicator" color="secondary" />
             </div>
             <Grid container spacing={2}>
