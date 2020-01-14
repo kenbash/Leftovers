@@ -26,7 +26,22 @@ import SunriseIcon from '../../assets/SunriseIcon';
 import { onMealDetailChange } from '../../services/MealService';
 import './MealDetail.scss';
 
+// Used to buffer ingredient table updates
+let timeoutHandler;
+
 class MealDetail extends Component {
+  static handleBuffer = (func) => {
+    if (timeoutHandler) {
+      clearTimeout(timeoutHandler);
+    }
+    timeoutHandler = setTimeout(() => {
+      timeoutHandler = null;
+      func();
+    }, 250);
+  };
+
+  static convertIngredientsText = text => text.split(',').map(x => x.trim()).filter(x => x)
+
   constructor(props) {
     super(props);
 
@@ -48,7 +63,7 @@ class MealDetail extends Component {
     onMealDetailChange(() => this.setState({ loading: true }), 'loading');
     onMealDetailChange((meal) => {
       this.setMeal(meal);
-      this.setState({ loading: false }); // setTimeout?
+      this.setState({ loading: false }); // setTimeout? make overlay
     });
   }
 
@@ -87,12 +102,15 @@ class MealDetail extends Component {
   handleIngredientsChange = (event) => {
     const { value } = event.target;
     this.setState({ ingredientsText: value });
-    // TODO: update table
+    this.constructor.handleBuffer(
+      () => this.setState({ ingredients: this.constructor.convertIngredientsText(value) })
+    );
   };
 
   handleMealTimeChange = time => (event) => {
-    const { mealTime } = this.state;
+    const { editable, mealTime } = this.state;
     const value = { ...mealTime, [time]: event.target.checked };
+    if (!editable) return;
     this.setState({ mealTime: value });
     this.updateSaveValid({ mealTimeValid: value.breakfast || value.lunch || value.dinner });
   };
@@ -115,7 +133,15 @@ class MealDetail extends Component {
   render() {
     const { rightcb, leftcb } = this.props;
     const {
-      loading, editable, saveValid, name, servings, servingsError, mealTime, ingredients, ingredientsText
+      loading,
+      editable,
+      saveValid,
+      name,
+      servings,
+      servingsError,
+      mealTime,
+      ingredients,
+      ingredientsText
     } = this.state;
     const { breakfast, lunch, dinner } = mealTime;
     const { nameValid, servingsValid, mealTimeValid } = saveValid;

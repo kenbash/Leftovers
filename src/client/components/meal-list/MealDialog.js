@@ -24,8 +24,12 @@ function MealDialog(props) {
   const [servingsError, setServingsError] = React.useState(false);
   const [ingredients, setIngredients] = React.useState('');
   const [ingredientsHelp, setIngredientsHelp] = React.useState(false);
-  const [mealTime, setMealTime] = React.useState({ breakfast: false, lunch: false, dinner: false });
-  const [saveValid, setSaveValid] = React.useState({ nameValid: false, servingsValid: false, mealTimeValid: false });
+  const [mealTime, setMealTime] = React.useState({
+    breakfast: false, lunch: false, dinner: false
+  });
+  const [saveValid, setSaveValid] = React.useState({
+    nameValid: false, servingsValid: false, mealTimeValid: false
+  });
 
   const updateSaveValid = (update) => {
     setSaveValid(Object.assign({ ...saveValid }, update));
@@ -75,7 +79,7 @@ function MealDialog(props) {
         breakfast,
         lunch,
         dinner,
-        ingredients: ingredients.split(',').map(ingredient => ingredient.trim())
+        ingredients: ingredients.split(',').map(x => x.trim()).filter(x => x)
       });
       handleClose();
     }
