@@ -1,39 +1,28 @@
-/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
-  Checkbox,
   CircularProgress,
   Container,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
   Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
   TextField
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
-import WbSunnyIcon from '@material-ui/icons/WbSunny';
-import Brightness3Icon from '@material-ui/icons/Brightness3';
-import SunriseIcon from '../../assets/SunriseIcon';
 import {
   deleteMeal,
   onMealDetailChange,
   updateMeal,
-  updateMealList } from '../../services/MealService';
+  updateMealList
+} from '../../services/MealService';
+import IngredientTable from './IngredientTable';
+import MealTimeSelector from './MealTimeSelector';
 import './MealDetail.scss';
 
 // Used to buffer ingredient table updates
 let timeoutHandler;
 
-// TODO: extract ingredients table & mealtime to separate components
 class MealDetail extends Component {
   static handleBuffer = (func) => {
     if (timeoutHandler) {
@@ -210,7 +199,6 @@ class MealDetail extends Component {
       ingredients,
       ingredientsText
     } = this.state;
-    const { breakfast, lunch, dinner } = mealTime;
     const { nameValid, servingsValid, mealTimeValid } = saveValid;
 
     return (
@@ -272,74 +260,8 @@ class MealDetail extends Component {
               helperText={editable ? 'Enter ingredients as a comma-delimited list' : ''}
             />
             <div className="ingredient-meal-time-wrapper">
-              <div className="ingredients-table">
-                <Table stickyHeader>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell key="ingredients">
-                        Ingredients
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {ingredients.map((row, i) => (
-                      <TableRow
-                        tabIndex={-1}
-                        key={i}
-                        className="meal-row"
-                      >
-                        <TableCell key="ingredients">
-                          {row}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-              <div className="meal-time-wrapper">
-                <div className="meal-time-icons">
-                  <SunriseIcon />
-                  <WbSunnyIcon />
-                  <Brightness3Icon />
-                </div>
-                <FormControl component="fieldset">
-                  <FormGroup className="meal-time-group" row>
-                    <FormControlLabel
-                      className="meal-time-checkbox"
-                      control={(
-                        <Checkbox
-                          color="primary"
-                          value="breakfast"
-                          checked={breakfast}
-                          onChange={this.handleMealTimeChange('breakfast')}
-                        />
-                    )}
-                    />
-                    <FormControlLabel
-                      className="meal-time-checkbox"
-                      control={(
-                        <Checkbox
-                          color="primary"
-                          value="lunch"
-                          checked={lunch}
-                          onChange={this.handleMealTimeChange('lunch')}
-                        />
-                    )}
-                    />
-                    <FormControlLabel
-                      className="meal-time-checkbox"
-                      control={(
-                        <Checkbox
-                          color="primary"
-                          value="dinner"
-                          checked={dinner}
-                          onChange={this.handleMealTimeChange('dinner')}
-                        />
-                    )}
-                    />
-                  </FormGroup>
-                </FormControl>
-              </div>
+              <IngredientTable rows={ingredients} />
+              <MealTimeSelector mealTime={mealTime} handleChange={this.handleMealTimeChange} />
             </div>
           </div>
           <div className="detail-action-wrapper">
