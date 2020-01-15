@@ -1,6 +1,9 @@
 
 import { EventEmitter } from 'fbemitter';
 
+const mealDetailChange = new EventEmitter(); // eventType = 'change' | 'loading'
+const mealListChange = new EventEmitter(); // eventType = 'edit' | 'delete'
+
 export function getMealPlan() {
   return fetch('/api/meal/mealplan').then(res => res.json());
 }
@@ -29,8 +32,6 @@ export function deleteMeal(id) {
   return fetch(`/api/meal/delete/${id}`, { method: 'DELETE' });
 }
 
-const mealDetailChange = new EventEmitter();
-
 export function updateMealDetail(id) {
   mealDetailChange.emit('loading', true);
 
@@ -42,6 +43,14 @@ export function updateMealDetail(id) {
     );
 }
 
-export function onMealDetailChange(listener, eventType = 'change') {
+export function onMealDetailChange(eventType, listener) {
   mealDetailChange.addListener(eventType, listener);
+}
+
+export function updateMealList(eventType, meal) {
+  mealListChange.emit(eventType, meal);
+}
+
+export function onMealListChange(eventType, listener) {
+  mealListChange.addListener(eventType, listener);
 }

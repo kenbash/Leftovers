@@ -23,7 +23,11 @@ import RestaurantIcon from '@material-ui/icons/Restaurant';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
 import SunriseIcon from '../../assets/SunriseIcon';
-import { onMealDetailChange, updateMeal, deleteMeal } from '../../services/MealService';
+import {
+  deleteMeal,
+  onMealDetailChange,
+  updateMeal,
+  updateMealList } from '../../services/MealService';
 import './MealDetail.scss';
 
 // Used to buffer ingredient table updates
@@ -61,16 +65,15 @@ class MealDetail extends Component {
   }
 
   componentDidMount() {
-    onMealDetailChange(() => this.setState({ loading: true }), 'loading');
-    onMealDetailChange((meal) => {
+    onMealDetailChange('loading', () => this.setState({ loading: true }));
+    onMealDetailChange('change', (meal) => {
+      // toast msg if meal null
       this.setMeal(meal);
       setTimeout(() => this.setState({ loading: false }), 250);
     });
   }
 
   setMeal(meal) {
-    // toast msg if meal null, better soln than ternaries?
-
     this.setState({
       meal,
       editable: false,
@@ -159,11 +162,15 @@ class MealDetail extends Component {
     this.setState({ editable: false, loading: true });
 
     updateMeal(meal.id, JSON.stringify(mealUpdate)).then(
-      () => this.setState({ loading: false }),
+      () => {
+        mealUpdate.id = meal.id;
+        updateMealList('edit', mealUpdate);
+        this.setState({ meal: mealUpdate, loading: false });
+      },
       (err) => {
+        // toast msg
         console.error(err);
         this.setState({ loading: false });
-        // toast msg
       }
     );
   }
@@ -178,6 +185,7 @@ class MealDetail extends Component {
     deleteMeal(meal.id).then(
       () => {
         this.setState({ loading: false });
+        updateMealList('delete', meal);
         rightcb();
       },
       (err) => {

@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
-import { getMeals, createMeal } from '../../services/MealService';
+import { getMeals, createMeal, onMealListChange } from '../../services/MealService';
 import MealTable from './MealTable';
 import MealDialog from './MealDialog';
 import './MealList.scss';
@@ -33,9 +33,26 @@ class MealList extends Component {
         this.updateData(res);
       },
       (err) => {
-        console.log(err);
+        // toast msg
+        console.error(err);
       }
     );
+
+    onMealListChange('edit', (meal) => {
+      const { meals } = this.state;
+      const index = meals.findIndex(x => x.id === meal.id);
+      if (index < 0) {
+        // toast msg
+        return;
+      }
+      meals[index] = meal;
+      this.updateData(meals);
+    });
+
+    onMealListChange('delete', (meal) => {
+      const { meals } = this.state;
+      this.updateData(meals.filter(x => x.id !== meal.id));
+    });
   }
 
   updateData(meals) {
@@ -55,10 +72,12 @@ class MealList extends Component {
     createMeal(JSON.stringify(meal)).then(
       (res) => {
         const { meals } = this.state;
-        this.updateData([...meals, res]);
+        meals.push(res);
+        this.updateData(meals);
       },
       (err) => {
-        console.log(err);
+        // toast msg
+        console.error(err);
       }
     );
   }
