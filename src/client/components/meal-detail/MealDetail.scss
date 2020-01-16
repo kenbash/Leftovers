@@ -37,44 +37,35 @@ $content-width: 80%;
     width: $content-width;
     display: flex;
     margin: auto;
-  }
 
-  .ingredients-table {
-    flex: 1;
-    height: 315px;
-    overflow: auto;
-
-    .MuiTableCell-stickyHeader {
-      background: #fff;
+    .ingredients-table {
+      flex: 1;
+      height: 315px;
+      overflow: auto;
     }
-
-    .MuiTableCell-root {
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-
-  .meal-time {
-    &-wrapper {
-      display: flex;
-      justify-content: center;
-      padding-top: 24px;
-      width: 20%;
-      min-width: 100px;
-    }
-
-    &-icons,
-    &-group {
-      display: flex;
-      flex-direction: column;
-    }
-
-    &-icons svg {
-      margin: 25px 13px;
-    }
-
-    &-checkbox {
-      margin: 16px 4px;
+    
+    .meal-time {
+      &-wrapper {
+        display: flex;
+        justify-content: center;
+        padding-top: 24px;
+        width: 20%;
+        min-width: 100px;
+      }
+    
+      &-icons,
+      &-group {
+        display: flex;
+        flex-direction: column;
+      }
+    
+      &-icons svg {
+        margin: 25px 13px;
+      }
+    
+      &-checkbox {
+        margin: 16px 4px;
+      }
     }
   }
 
@@ -86,8 +77,4 @@ $content-width: 80%;
       margin-left: 8px;
     }
   }
-}
-
-.dark-theme .meal-detail-wrapper .ingredients-table .MuiTableCell-stickyHeader {
-  background: #424242;
 }

@@ -1,38 +1,28 @@
 .meal-list-wrapper {
   text-align: center;
-}
 
-.meal-table-wrapper {
-  width: 80%;
-  margin: 0 auto;
+  .meal-table-wrapper {
+    width: 80%;
+    margin: 0 auto;
 
-  .meal-search {
-    width: 40%;
-    min-width: 250px;
-  }
-
-  .meal-table {
-    height: 600px;
-    overflow: auto;
-
-    .MuiTableCell-stickyHeader {
-      background: #fff;
+    .meal-search {
+      width: 40%;
+      min-width: 250px;
     }
 
-    .MuiTableCell-root {
-      max-width: 300px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .meal-table {
+      height: 600px;
+      overflow: auto;
 
-    .meal-row {
-      cursor: pointer;
+      .MuiTableCell-root {
+        max-width: 300px;
+      }
+
+      .meal-row {
+        cursor: pointer;
+      }
     }
   }
-}
-
-.dark-theme .meal-table-wrapper .meal-table .MuiTableCell-stickyHeader {
-  background: #424242;
 }
 
 #meal-dialog-title {

@@ -65,15 +65,27 @@ main {
   visibility: hidden;
 }
 
-// Global Styles
-.paper-wrapper {
-  padding: 1em;
-}
-
+/* * * * * * * * * * *
+    Global Styles
+* * * * * * * * * * */
 .button-wrapper {
   display: flex;
   justify-content: space-between;
   padding: 0 5% .5em;
+}
+
+.paper-wrapper {
+  padding: 1em;
+}
+
+.MuiTableCell {
+  &-stickyHeader {
+    background: #fff !important;
+  }
+  &-root {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .sunrise-icon {
@@ -85,12 +97,11 @@ main {
   }
 }
 
-// mozilla scrollbar customization
+// Scrollbar customization
 * {
   scrollbar-width: thin;
   scrollbar-color: #c1c1c1 #f1f1f1;
 }
-// chrome scrollbar customization
 ::-webkit-scrollbar {
   width: 12px;
   height: 12px;
@@ -110,6 +121,7 @@ main {
   background: #f1f1f1;
 }
 
+// Dark theme custom color overrides
 .dark-theme {
   * {
     scrollbar-color: #3e3e3e #262626;
@@ -127,6 +139,10 @@ main {
   ::-webkit-scrollbar-track,
   ::-webkit-scrollbar-corner {
     background: #262626;
+  }
+
+  .MuiTableCell-stickyHeader {
+    background: #424242 !important;
   }
 
   .sunrise-icon path {
