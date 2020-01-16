@@ -19,7 +19,11 @@ import './Home.scss';
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = { meals: new Array(7).fill({ breakfast: null, lunch: null, dinner: null }), loading: false };
+    this.state = {
+      meals: new Array(7).fill({ breakfast: null, lunch: null, dinner: null }),
+      ingredients: [],
+      loading: false
+    };
   }
 
   generateMeals() {
@@ -27,7 +31,8 @@ class Home extends Component {
 
     getMealPlan().then(
       (res) => {
-        this.setState({ meals: res, loading: false });
+        const { meals, ingredients } = res;
+        this.setState({ meals, ingredients, loading: false });
       },
       (err) => {
         console.log(err);
@@ -38,7 +43,8 @@ class Home extends Component {
 
   render() {
     const { rightcb, leftcb } = this.props;
-    const { meals, loading } = this.state;
+    const { meals, ingredients, loading } = this.state;
+    console.log(ingredients); // remove
 
     return (
       <Container className="home-wrapper">

@@ -2,37 +2,7 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-underscore-dangle */
 const Meal = require('../models/meal.model');
-
-// move these to models DTO?
-const convertToMeal = meal => (
-  {
-    id: meal._id,
-    name: meal.name,
-    servings: meal.servings,
-    breakfast: meal.breakfast,
-    lunch: meal.lunch,
-    dinner: meal.dinner,
-    ingredients: meal.ingredients
-  }
-);
-
-const convertToSimpleMeal = meal => (
-  {
-    id: meal._id,
-    name: meal.name,
-    servings: meal.servings,
-    breakfast: meal.breakfast,
-    lunch: meal.lunch,
-    dinner: meal.dinner,
-  }
-);
-
-const convertToMealName = meal => (
-  {
-    id: meal._id,
-    name: meal.name
-  }
-);
+const MealDTO = require('../models/mealDTO');
 
 exports.createMeal = (req, res) => {
   const meal = new Meal({
@@ -51,7 +21,7 @@ exports.createMeal = (req, res) => {
       return;
     }
 
-    res.send(convertToSimpleMeal(mealRes));
+    res.send(MealDTO.convertToSimpleMeal(mealRes));
   });
 };
 
@@ -69,7 +39,7 @@ exports.getMeal = (req, res) => {
       return;
     }
 
-    res.send(convertToMeal(meal));
+    res.send(MealDTO.convertToMeal(meal));
   });
 };
 
@@ -114,13 +84,13 @@ exports.getAllMeals = (_req, res) => {
       return;
     }
 
-    res.send(meals.map(convertToSimpleMeal));
+    res.send(meals.map(MealDTO.convertToSimpleMeal));
   });
 };
 
-// move this logic to models somehow?
-exports.getMealPlan = async (req, res) => {
+exports.getMealPlan = async (_req, res) => {
   const meals = Array.from({ length: 7 }, () => ({ breakfast: null, lunch: null, dinner: null }));
+  const ingredients = [];
   let curDay = 0;
 
   while (curDay < 7) {
@@ -138,15 +108,16 @@ exports.getMealPlan = async (req, res) => {
     // select next random meal
     const meal = await Meal.findOne(conditions).skip(Math.floor(Math.random() * mealCount));
     let leftovers = meal.servings;
+    ingredients.push(...meal.ingredients);
 
     // fill in meal plan with chosen meal
     for (let i = curDay; i < 7 && leftovers > 0; i += 1) {
       if (!meals[i].breakfast && meal.breakfast) {
-        meals[i].breakfast = convertToMealName(meal);
+        meals[i].breakfast = MealDTO.convertToMealName(meal);
       } else if (!meals[i].lunch && meal.lunch) {
-        meals[i].lunch = convertToMealName(meal);
+        meals[i].lunch = MealDTO.convertToMealName(meal);
       } else if (!meals[i].dinner && meal.dinner) {
-        meals[i].dinner = convertToMealName(meal);
+        meals[i].dinner = MealDTO.convertToMealName(meal);
       } else {
         continue;
       }
@@ -159,5 +130,5 @@ exports.getMealPlan = async (req, res) => {
     }
   }
 
-  res.send(meals);
+  res.send({ meals, ingredients });
 };

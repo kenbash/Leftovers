@@ -7,10 +7,7 @@ const Meal = PropTypes.shape({
   breakfast: PropTypes.bool,
   lunch: PropTypes.bool,
   dinner: PropTypes.bool
-  // ingredients
 });
-
-// maybe remove this?
 
 const MealName = PropTypes.shape({
   id: PropTypes.string,
