@@ -9,7 +9,7 @@ import {
   TableRow,
 } from '@material-ui/core';
 
-function MealTable(props) {
+function IngredientTable(props) {
   const { rows } = props;
 
   return (
@@ -40,8 +40,8 @@ function MealTable(props) {
   );
 }
 
-MealTable.propTypes = {
+IngredientTable.propTypes = {
   rows: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default MealTable;
+export default IngredientTable;

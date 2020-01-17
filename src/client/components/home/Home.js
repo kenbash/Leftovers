@@ -14,6 +14,7 @@ import Brightness3Icon from '@material-ui/icons/Brightness3';
 import SunriseIcon from '../../assets/SunriseIcon';
 import { getMealPlan } from '../../services/MealService';
 import MealRow from './MealRow';
+import IngredientList from './IngredientList';
 import './Home.scss';
 
 class Home extends Component {
@@ -26,7 +27,7 @@ class Home extends Component {
     };
   }
 
-  generateMeals() {
+  generateMeals = () => {
     this.setState({ loading: true });
 
     getMealPlan().then(
@@ -36,6 +37,7 @@ class Home extends Component {
       },
       (err) => {
         console.log(err);
+        // toast msg
         this.setState({ loading: false });
       }
     );
@@ -44,7 +46,6 @@ class Home extends Component {
   render() {
     const { rightcb, leftcb } = this.props;
     const { meals, ingredients, loading } = this.state;
-    console.log(ingredients); // remove
 
     return (
       <Container className="home-wrapper">
@@ -54,7 +55,7 @@ class Home extends Component {
               color="primary"
               variant="contained"
               size="large"
-              onClick={() => this.generateMeals()}
+              onClick={this.generateMeals}
               startIcon={<CachedIcon />}
             >
               Generate
@@ -90,6 +91,7 @@ class Home extends Component {
               <MealRow day="S" meals={meals[6]} onMealClick={leftcb} />
             </Grid>
           </div>
+          <IngredientList rows={ingredients} />
         </Paper>
       </Container>
     );
