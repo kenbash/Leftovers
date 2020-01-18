@@ -8,6 +8,7 @@ import {
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import { getMeals, createMeal, onMealListChange } from '../../services/MealService';
+import { sendSnackbar } from '../../services/SnackbarService';
 import MealTable from './MealTable';
 import MealDialog from './MealDialog';
 import './MealList.scss';
@@ -32,9 +33,8 @@ class MealList extends Component {
       (res) => {
         this.updateData(res);
       },
-      (err) => {
-        // toast msg
-        console.error(err);
+      () => {
+        sendSnackbar({ type: 'error', title: 'Error', text: 'Failed to load meals' });
       }
     );
 
@@ -42,7 +42,7 @@ class MealList extends Component {
       const { meals } = this.state;
       const index = meals.findIndex(x => x.id === meal.id);
       if (index < 0) {
-        // toast msg
+        sendSnackbar({ type: 'error', title: 'Error', text: 'Failed to update meal list' });
         return;
       }
       meals[index] = meal;
@@ -75,9 +75,8 @@ class MealList extends Component {
         meals.push(res);
         this.updateData(meals);
       },
-      (err) => {
-        // toast msg
-        console.error(err);
+      () => {
+        sendSnackbar({ type: 'error', title: 'Error', text: 'Failed to create meal' });
       }
     );
   }

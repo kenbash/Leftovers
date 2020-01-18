@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
-import { purple, teal } from '@material-ui/core/colors';
+import {
+  red, yellow, green, teal, blue, indigo, purple
+} from '@material-ui/core/colors';
 import { updateMealDetail } from './services/MealService';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
 import MealList from './components/meal-list/MealList';
 import MealDetail from './components/meal-detail/MealDetail';
+import SnackbarContainer from './components/snackbar-container/SnackbarContainer';
 import './App.scss';
 
 const FACE_CLASS = {
@@ -24,10 +27,24 @@ const FACE_CLASS = {
 };
 const THEME_KEY = 'LEFTOVERS_THEME';
 const LIGHT_THEME = createMuiTheme({
-  palette: { type: 'light' }
+  palette: {
+    type: 'light',
+    success: { main: green[500] },
+    info: { main: indigo[500] },
+    warning: { main: yellow[400] },
+    error: { main: red[800] }
+  }
 });
 const DARK_THEME = createMuiTheme({
-  palette: { type: 'dark', primary: { main: purple[200] }, secondary: { main: teal[200] } }
+  palette: {
+    type: 'dark',
+    primary: { main: purple[200] },
+    secondary: { main: teal[200] },
+    success: { main: green[300] },
+    info: { main: purple[200] },
+    warning: { main: yellow[600] },
+    error: { main: red[300] }
+  }
 });
 
 export default class App extends Component {
@@ -111,6 +128,7 @@ export default class App extends Component {
             />
           </section>
         </main>
+        <SnackbarContainer />
       </ThemeProvider>
     );
   }

@@ -90,6 +90,13 @@ main {
   }
 }
 
+.MuiAlert {
+  &-filledWarning,
+  &-filledSuccess {
+    color: black !important;
+  } 
+}
+
 .sunrise-icon {
   path.secondary {
     fill: #f50057;
@@ -145,6 +152,13 @@ main {
 
   .MuiTableCell-stickyHeader {
     background: #424242 !important;
+  }
+
+  .MuiAlert {
+    &-filledInfo,
+    &-filledError {
+      color: black !important;
+    } 
   }
 
   .sunrise-icon path {

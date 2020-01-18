@@ -16,6 +16,7 @@ import {
   updateMeal,
   updateMealList
 } from '../../services/MealService';
+import { sendSnackbar } from '../../services/SnackbarService';
 import IngredientTable from './IngredientTable';
 import MealTimeSelector from './MealTimeSelector';
 import './MealDetail.scss';
@@ -56,7 +57,7 @@ class MealDetail extends Component {
   componentDidMount() {
     onMealDetailChange('loading', () => this.setState({ loading: true }));
     onMealDetailChange('change', (meal) => {
-      // toast msg if meal null
+      if (!meal) sendSnackbar({ type: 'error', title: 'Error', text: 'Meal not found' });
       this.setMeal(meal);
       setTimeout(() => this.setState({ loading: false }), 250);
     });
@@ -156,9 +157,8 @@ class MealDetail extends Component {
         updateMealList('edit', mealUpdate);
         this.setState({ meal: mealUpdate, loading: false });
       },
-      (err) => {
-        // toast msg
-        console.error(err);
+      () => {
+        sendSnackbar({ type: 'error', title: 'Error', text: 'Failed to save meal' });
         this.setState({ loading: false });
       }
     );
@@ -177,10 +177,9 @@ class MealDetail extends Component {
         updateMealList('delete', meal);
         rightcb();
       },
-      (err) => {
-        console.error(err);
+      () => {
+        sendSnackbar({ type: 'error', title: 'Error', text: 'Failed to delete meal' });
         this.setState({ loading: false });
-        // toast msg
       }
     );
   }

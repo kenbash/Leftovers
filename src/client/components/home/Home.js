@@ -13,6 +13,7 @@ import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
 import SunriseIcon from '../../assets/SunriseIcon';
 import { getMealPlan } from '../../services/MealService';
+import { sendSnackbar } from '../../services/SnackbarService';
 import MealRow from './MealRow';
 import IngredientPanel from './IngredientPanel';
 import './Home.scss';
@@ -35,9 +36,8 @@ class Home extends Component {
         const { meals, ingredients } = res;
         this.setState({ meals, ingredients, loading: false });
       },
-      (err) => {
-        console.log(err);
-        // toast msg
+      () => {
+        sendSnackbar({ type: 'error', title: 'Error', text: 'Failed to generate meal plan' });
         this.setState({ loading: false });
       }
     );

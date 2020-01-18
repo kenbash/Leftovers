@@ -86,7 +86,7 @@ function MealDialog(props) {
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={handleClose}>
       <DialogTitle id="meal-dialog-title">Add Meal</DialogTitle>
       <DialogContent id="meal-dialog-content">
         <TextField
