@@ -5,11 +5,13 @@ const mealDetailChange = new EventEmitter(); // eventType = 'change' | 'loading'
 const mealListChange = new EventEmitter(); // eventType = 'edit' | 'delete'
 
 export function getMealPlan() {
-  return fetch('/api/meal/mealplan').then(res => res.json());
+  return fetch('/api/meal/mealplan')
+    .then(res => (res.ok ? res.json() : Promise.reject(res)));
 }
 
 export function getMeals() {
-  return fetch('/api/meal/all').then(res => res.json());
+  return fetch('/api/meal/all')
+    .then(res => (res.ok ? res.json() : Promise.reject(res)));
 }
 
 export function createMeal(meal) {
@@ -17,7 +19,7 @@ export function createMeal(meal) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: meal
-  }).then(res => res.json());
+  }).then(res => (res.ok ? res.json() : Promise.reject(res)));
 }
 
 export function updateMeal(id, meal) {
@@ -25,18 +27,19 @@ export function updateMeal(id, meal) {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: meal
-  });
+  }).then(res => (res.ok ? res : Promise.reject(res)));
 }
 
 export function deleteMeal(id) {
-  return fetch(`/api/meal/delete/${id}`, { method: 'DELETE' });
+  return fetch(`/api/meal/delete/${id}`, { method: 'DELETE' })
+    .then(res => (res.ok ? res : Promise.reject(res)));
 }
 
 export function updateMealDetail(id) {
   mealDetailChange.emit('loading', true);
 
   fetch(`api/meal/get/${id}`)
-    .then(res => res.json())
+    .then(res => (res.ok ? res.json() : Promise.reject(res)))
     .then(
       meal => mealDetailChange.emit('change', meal),
       () => mealDetailChange.emit('change', null)

@@ -46,7 +46,7 @@ class MealDetail extends Component {
       saveValid: { nameValid: true, servingsValid: true, mealTimeValid: true },
       meal: null,
       name: '',
-      servings: 0,
+      servings: '',
       servingsError: false,
       mealTime: { breakfast: false, lunch: false, dinner: false },
       ingredients: [],
@@ -57,9 +57,11 @@ class MealDetail extends Component {
   componentDidMount() {
     onMealDetailChange('loading', () => this.setState({ loading: true }));
     onMealDetailChange('change', (meal) => {
-      if (!meal) sendSnackbar({ type: 'error', title: 'Error', text: 'Meal not found' });
       this.setMeal(meal);
-      setTimeout(() => this.setState({ loading: false }), 250);
+      setTimeout(() => {
+        if (!meal) sendSnackbar({ type: 'error', title: 'Error', text: 'Meal not found' });
+        this.setState({ loading: false });
+      }, 250);
     });
   }
 
@@ -155,6 +157,7 @@ class MealDetail extends Component {
       () => {
         mealUpdate.id = meal.id;
         updateMealList('edit', mealUpdate);
+        sendSnackbar({ type: 'success', title: 'Success', text: 'Meal saved' });
         this.setState({ meal: mealUpdate, loading: false });
       },
       () => {
@@ -173,8 +176,9 @@ class MealDetail extends Component {
 
     deleteMeal(meal.id).then(
       () => {
-        this.setState({ loading: false });
         updateMealList('delete', meal);
+        sendSnackbar({ type: 'success', title: 'Success', text: 'Meal deleted' });
+        this.setState({ loading: false });
         rightcb();
       },
       () => {
