@@ -14,7 +14,7 @@ import Brightness3Icon from '@material-ui/icons/Brightness3';
 import SunriseIcon from '../../assets/SunriseIcon';
 import { getMealPlan } from '../../services/MealService';
 import MealRow from './MealRow';
-import IngredientList from './IngredientList';
+import IngredientPanel from './IngredientPanel';
 import './Home.scss';
 
 class Home extends Component {
@@ -91,7 +91,9 @@ class Home extends Component {
               <MealRow day="S" meals={meals[6]} onMealClick={leftcb} />
             </Grid>
           </div>
-          <IngredientList rows={ingredients} />
+          <div className="ingredient-list-wrapper">
+            <IngredientPanel rows={ingredients} />
+          </div>
         </Paper>
       </Container>
     );

@@ -130,5 +130,7 @@ exports.getMealPlan = async (_req, res) => {
     }
   }
 
+  ingredients.sort();
+
   res.send({ meals, ingredients });
 };

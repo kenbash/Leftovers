@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-function IngredientList(props) {
+function IngredientPanel(props) {
   const { rows } = props;
 
   return (
@@ -47,8 +47,8 @@ function IngredientList(props) {
   );
 }
 
-IngredientList.propTypes = {
+IngredientPanel.propTypes = {
   rows: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default IngredientList;
+export default IngredientPanel;
