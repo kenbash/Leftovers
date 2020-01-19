@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-duplicate-props */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {

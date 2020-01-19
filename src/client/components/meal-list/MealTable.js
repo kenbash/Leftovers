@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -101,7 +100,6 @@ function MealTable(props) {
         onChange={handleFilterChange}
         inputProps={{ maxLength: 100 }}
         // inputProps and InputProps have different options
-        // eslint-disable-next-line react/jsx-no-duplicate-props
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -115,7 +113,11 @@ function MealTable(props) {
           <TableHead>
             <TableRow>
               {columns.map(column => (
-                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
                   {column.label}
                 </TableCell>
               ))}

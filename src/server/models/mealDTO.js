@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 exports.convertToMeal = meal => (
   {
     id: meal._id,

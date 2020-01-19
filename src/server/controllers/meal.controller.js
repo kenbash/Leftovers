@@ -1,6 +1,3 @@
-/* eslint-disable no-continue */
-/* eslint-disable no-await-in-loop */
-/* eslint-disable no-underscore-dangle */
 const Meal = require('../models/meal.model');
 const MealDTO = require('../models/mealDTO');
 

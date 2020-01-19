@@ -9,6 +9,11 @@
     "no-console": "off",
     "comma-dangle": "off",
     "react/jsx-filename-extension": "off",
-    "linebreak-style": 0
+    "react/jsx-no-duplicate-props": "off",
+    "linebreak-style": 0,
+    "no-nested-ternary": "off",
+    "no-continue": "off",
+    "no-await-in-loop": "off",
+    "no-underscore-dangle": "off"
   }
 }
