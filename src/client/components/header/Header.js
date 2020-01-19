@@ -9,7 +9,14 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import './Header.scss';
 
 function Header(props) {
-  const { themecb, dark } = props;
+  const {
+    themecb,
+    dark,
+    backcb,
+    forwardcb,
+    enableBack,
+    enableForward
+  } = props;
 
   const [isDark, setIsDark] = React.useState(dark);
 
@@ -20,10 +27,10 @@ function Header(props) {
 
   return (
     <div className="header-wrapper MuiPaper-elevation6">
-      <IconButton className="header-nav-btn">
+      <IconButton className="header-nav-btn" onClick={backcb} disabled={!enableBack}>
         <ArrowBackIcon />
       </IconButton>
-      <IconButton className="header-nav-btn">
+      <IconButton className="header-nav-btn" onClick={forwardcb} disabled={!enableForward}>
         <ArrowForwardIcon />
       </IconButton>
       <Typography className="header-title" variant="h6">Leftovers</Typography>
@@ -41,7 +48,11 @@ function Header(props) {
 
 Header.propTypes = {
   themecb: PropTypes.func.isRequired,
-  dark: PropTypes.bool.isRequired
+  dark: PropTypes.bool.isRequired,
+  backcb: PropTypes.func.isRequired,
+  forwardcb: PropTypes.func.isRequired,
+  enableBack: PropTypes.bool.isRequired,
+  enableForward: PropTypes.bool.isRequired
 };
 
 export default Header;

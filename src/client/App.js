@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import {
-  red, yellow, green, teal, blue, indigo, purple
+  red, yellow, green, teal, indigo, purple
 } from '@material-ui/core/colors';
 import { updateMealDetail } from './services/MealService';
 import Header from './components/header/Header';
@@ -11,21 +11,6 @@ import MealDetail from './components/meal-detail/MealDetail';
 import SnackbarContainer from './components/snackbar-container/SnackbarContainer';
 import './App.scss';
 
-const FACE_CLASS = {
-  HOME: {
-    FROM_LIST: 'home-face wrap-detail',
-    FROM_DETAIL: 'home-face wrap-list'
-  },
-  LIST: {
-    FROM_HOME: 'list-face wrap-detail',
-    FROM_DETAIL: 'list-face wrap-home'
-  },
-  DETAIL: {
-    FROM_HOME: 'detail-face wrap-list',
-    FROM_LIST: 'detail-face wrap-home'
-  }
-};
-const THEME_KEY = 'LEFTOVERS_THEME';
 const LIGHT_THEME = createMuiTheme({
   palette: {
     type: 'light',
@@ -46,8 +31,30 @@ const DARK_THEME = createMuiTheme({
     error: { main: red[300] }
   }
 });
+const THEME_KEY = 'LEFTOVERS_THEME';
+
+const FACE_CLASS = {
+  HOME: {
+    FROM_LIST: 'home-face wrap-detail',
+    FROM_DETAIL: 'home-face wrap-list'
+  },
+  LIST: {
+    FROM_HOME: 'list-face wrap-detail',
+    FROM_DETAIL: 'list-face wrap-home'
+  },
+  DETAIL: {
+    FROM_HOME: 'detail-face wrap-list',
+    FROM_LIST: 'detail-face wrap-home'
+  }
+};
 
 export default class App extends Component {
+  backHistory = [];
+
+  forwardHistory = [];
+
+  curMealId = null;
+
   constructor(props) {
     super(props);
 
@@ -60,11 +67,49 @@ export default class App extends Component {
     };
   }
 
-  setTheme(isDark) {
+  setTheme = (isDark) => {
     const theme = isDark ? 'dark-theme' : 'light-theme';
     document.body.className = theme;
     localStorage.setItem(THEME_KEY, theme);
     this.setState({ darkTheme: isDark });
+  }
+
+  navigateBack = () => {
+    if (!this.backHistory.length) return;
+
+    const { dir, id } = this.backHistory.pop();
+    this.forwardHistory.push({ dir: !dir, id: this.curMealId });
+
+    this.changeFace(dir);
+    this.updateMealId(id);
+  }
+
+  navigateForward = () => {
+    if (!this.forwardHistory.length) return;
+
+    const { dir, id } = this.forwardHistory.pop();
+    this.backHistory.push({ dir: !dir, id: this.curMealId });
+
+    this.changeFace(dir);
+    this.updateMealId(id);
+  }
+
+  navigatePage(dir, mealId = null) {
+    if (this.forwardHistory.length > 0) {
+      this.forwardHistory = [];
+    }
+    if (this.backHistory.length >= 50) {
+      this.backHistory.shift();
+    }
+    this.backHistory.push({ dir: !dir, id: this.curMealId });
+
+    this.changeFace(dir);
+    this.updateMealId(mealId);
+  }
+
+  updateMealId(id) {
+    this.curMealId = id;
+    if (id) updateMealDetail(id);
   }
 
   changeFace(dir) {
@@ -100,31 +145,32 @@ export default class App extends Component {
       <ThemeProvider theme={darkTheme ? DARK_THEME : LIGHT_THEME}>
         <CssBaseline />
         <header>
-          <Header themecb={x => this.setTheme(x)} dark={darkTheme} />
+          <Header
+            themecb={this.setTheme}
+            dark={darkTheme}
+            backcb={this.navigateBack}
+            forwardcb={this.navigateForward}
+            enableBack={this.backHistory.length > 0}
+            enableForward={this.forwardHistory.length > 0}
+          />
         </header>
         <main className={faceClass}>
           <section className="meal-grid">
             <Home
-              leftcb={(id) => {
-                updateMealDetail(id);
-                this.changeFace(false);
-              }}
-              rightcb={() => this.changeFace(true)}
+              leftcb={id => this.navigatePage(false, id)}
+              rightcb={() => this.navigatePage(true)}
             />
           </section>
           <section className="meal-list">
             <MealList
-              rightcb={(id) => {
-                updateMealDetail(id);
-                this.changeFace(true);
-              }}
-              leftcb={() => this.changeFace(false)}
+              rightcb={id => this.navigatePage(true, id)}
+              leftcb={() => this.navigatePage(false)}
             />
           </section>
           <section className="meal-detail">
             <MealDetail
-              rightcb={() => this.changeFace(true)}
-              leftcb={() => this.changeFace(false)}
+              rightcb={() => this.navigatePage(true)}
+              leftcb={() => this.navigatePage(false)}
             />
           </section>
         </main>
