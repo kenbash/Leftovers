@@ -51,11 +51,6 @@ exports.updateMeal = (req, res) => {
       return;
     }
 
-    if (!meal) {
-      res.sendStatus(404);
-      return;
-    }
-
     res.sendStatus(200);
   });
 };
