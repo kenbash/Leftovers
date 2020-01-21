@@ -1,5 +1,5 @@
 const Meal = require('../models/meal.model');
-const MealDTO = require('../models/mealDTO');
+const MealDTO = require('../models/meal.dto');
 
 exports.createMeal = (req, res) => {
   const meal = new Meal({
