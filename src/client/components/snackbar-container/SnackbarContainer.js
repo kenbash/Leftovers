@@ -4,7 +4,7 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import { onSnackbarSent } from '../../services/SnackbarService';
 
 class SnackbarContainer extends Component {
-  messagQueue = [];
+  messageQueue = [];
 
   constructor(props) {
     super(props);
@@ -22,7 +22,7 @@ class SnackbarContainer extends Component {
 
   componentDidMount() {
     onSnackbarSent((props) => {
-      this.messagQueue.push({ ...props, key: new Date().getTime() });
+      this.messageQueue.push({ ...props, key: new Date().getTime() });
 
       const { open } = this.state;
       if (open) {
