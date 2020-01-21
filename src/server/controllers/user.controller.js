@@ -1,11 +1,12 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user.model');
 
-// TODO: write checkAuthentication middleware
-
 exports.registerUser = async (req, res) => {
   try {
-    // TODO: Check username not taken
+    if (await User.findOne({ username: req.body.username })) {
+      res.sendStatus(409);
+      return;
+    }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const user = new User({
@@ -19,22 +20,29 @@ exports.registerUser = async (req, res) => {
         res.sendStatus(500);
         return;
       }
-      res.sendStatus(201);
+      res.sendStatus(200);
     });
   } catch {
     res.sendStatus(500);
   }
 };
 
-// TODO: use passport.authenticate
-exports.loginUser = (req, res) => {};
+exports.loginUser = (_req, res) => {
+  res.sendStatus(200);
+};
 
-// TODO: req.logout?
-exports.logoutUser = (req, res) => {};
+exports.logoutUser = (req, res) => {
+  req.logout();
+  res.sendStatus(200);
+};
 
-// TODO: use middleware to check login state on startup
-exports.getUser = (req, res) => {};
+exports.getUser = (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.send(req.user.username);
+  }
+  return res.sendStatus(204);
+};
 
-exports.getUserByNameAsync = async name => User.findOne({ name });
+exports.getUserByNameAsync = async name => User.findOne({ username: name });
 
 exports.getUserByIdAsync = async id => User.findById(id);
