@@ -2,9 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line global-require, import/no-extraneous-dependencies
+  require('dotenv').config({ path: require('path').resolve(__dirname, '.env') });
+}
+
 const meal = require('./routes/meal.route');
 
-// Configuration (move later)
 const port = process.env.PORT || 8080;
 const mongoDB = process.env.MONGODB_URI || 'mongodb://localhost:27017/leftovers';
 
