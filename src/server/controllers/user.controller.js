@@ -38,9 +38,9 @@ exports.logoutUser = (req, res) => {
 
 exports.getUser = (req, res) => {
   if (req.isAuthenticated()) {
-    return res.send(req.user.username);
+    return res.send({ username: req.user.username });
   }
-  return res.sendStatus(204);
+  return res.send({ username: null });
 };
 
 exports.getUserByNameAsync = async name => User.findOne({ username: name });

@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, IconButton, Typography } from '@material-ui/core';
+import { IconButton, Typography } from '@material-ui/core';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import LoginMenu from './LoginMenu';
 import './Header.scss';
 
 function Header(props) {
@@ -35,7 +36,7 @@ function Header(props) {
       </IconButton>
       <Typography className="header-title" variant="h6">Leftovers</Typography>
       <div className="header-filler" />
-      <Button className="header-btn">Login</Button>
+      <LoginMenu />
       <IconButton className="header-btn" onClick={changeTheme} title="Toggle light/dark theme">
         {isDark ? <Brightness7Icon /> : <Brightness4Icon />}
       </IconButton>
