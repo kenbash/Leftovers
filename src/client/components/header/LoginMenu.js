@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, IconButton } from '@material-ui/core';
+import { Button, IconButton, Menu, TextField } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { getUser } from '../../services/UserService';
 
@@ -10,6 +10,8 @@ class LoginMenu extends Component {
     this.state = {
       loggedIn: false,
       username: undefined,
+      password: undefined,
+      menuAnchor: null
     };
   }
 
@@ -28,8 +30,25 @@ class LoginMenu extends Component {
     );
   }
 
+  handleNameChange = (event) => {
+    this.setState({ username: event.target.value });
+  }
+
+  handlePasswordChange = (event) => {
+    this.setState({ password: event.target.value });
+  }
+
+  openMenu = event => this.setState({ menuAnchor: event.currentTarget });
+
+  handleClose = () => this.setState({ menuAnchor: null });
+
   render() {
-    const { loggedIn, username } = this.state;
+    const {
+      loggedIn,
+      username,
+      password,
+      menuAnchor
+    } = this.state;
 
     if (loggedIn) {
       console.log(username);
@@ -40,8 +59,44 @@ class LoginMenu extends Component {
       );
     }
 
+    // use form instead of textfields?
+    // use css api for menu classes instead of wrapper
+    // setup auto focus
     return (
-      <Button className="header-btn">Login</Button>
+      <React.Fragment>
+        <Button className="header-btn" aria-controls="login-menu" aria-haspopup="true" onClick={this.openMenu}>Login</Button>
+        <Menu
+          id="login-menu"
+          anchorEl={menuAnchor}
+          keepMounted
+          open={!!menuAnchor}
+          onClose={this.handleClose}
+        >
+          <div className="menu-content-wrapper">
+            <TextField
+              label="Username"
+              value={username}
+              className="login-menu-input"
+              onChange={this.handleUsernameChange}
+              margin="dense"
+              type="text"
+              fullWidth
+              autoFocus
+              inputProps={{ maxLength: 100 }}
+            />
+            <TextField
+              label="Password"
+              value={password}
+              className="meal-dialog-input"
+              onChange={this.handlePasswordChange}
+              margin="dense"
+              type="password"
+              fullWidth
+            />
+            <Button color="primary" variant="contained" size="large" onClick={this.handleClose}>Login</Button>
+          </div>
+        </Menu>
+      </React.Fragment>
     );
   }
 }
