@@ -43,8 +43,8 @@ class SnackbarContainer extends Component {
   }
 
   processQueue() {
-    if (this.messagQueue.length > 0) {
-      this.setState({ open: true, message: this.messagQueue.shift() });
+    if (this.messageQueue.length > 0) {
+      this.setState({ open: true, message: this.messageQueue.shift() });
     }
   }
 
