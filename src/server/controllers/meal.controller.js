@@ -93,9 +93,12 @@ exports.getMealPlan = async (_req, res) => {
     if (!meals[curDay].dinner) days.push({ dinner: true });
     const conditions = { servings: { $lte: 7 - curDay }, $or: days };
 
-    // if no possible meals found, exit
+    // if no possible meals found, try next day
     const mealCount = await Meal.countDocuments(conditions);
-    if (mealCount < 1) break;
+    if (mealCount < 1) {
+      curDay += 1;
+      continue;
+    }
 
     // select next random meal
     const meal = await Meal.findOne(conditions).skip(Math.floor(Math.random() * mealCount));
