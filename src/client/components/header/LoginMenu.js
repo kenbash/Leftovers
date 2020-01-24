@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { Button, IconButton, Menu, TextField } from '@material-ui/core';
+import {
+  Button,
+  IconButton,
+  Menu,
+  TextField
+} from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { getUser } from '../../services/UserService';
 
@@ -68,6 +73,9 @@ class LoginMenu extends Component {
         <Menu
           id="login-menu"
           anchorEl={menuAnchor}
+          getContentAnchorEl={null}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
           keepMounted
           open={!!menuAnchor}
           onClose={this.handleClose}
