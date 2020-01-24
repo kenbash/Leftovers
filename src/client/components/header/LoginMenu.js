@@ -6,7 +6,12 @@ import {
   TextField
 } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { getUser } from '../../services/UserService';
+import {
+  getUser,
+  loginUser,
+  logoutUser,
+  registerUser
+} from '../../services/UserService';
 
 class LoginMenu extends Component {
   usernameRef = { focus: () => {} }; // used for autofocus
@@ -39,6 +44,69 @@ class LoginMenu extends Component {
     );
   }
 
+  handleRegister = () => {
+    const { username, password } = this.state;
+    if (username.trim() === '' || password === '') {
+      this.setState({ hasError: true, infoText: 'Username and Password cannot be empty' });
+      return;
+    }
+    this.setState({ hasError: false, infoText: '' });
+
+    const userForm = [
+      `${encodeURIComponent('username')}=${encodeURIComponent(username)}`,
+      `${encodeURIComponent('password')}=${encodeURIComponent(password)}`
+    ];
+    registerUser(userForm.join('&')).then(
+      (status) => {
+        if (status === 200) {
+          this.setState({ infoText: 'Registration successful! Login to continue' });
+        } else if (status === 409) {
+          this.setState({ hasError: true, infoText: 'Username already in use' });
+        } else {
+          this.setState({ hasError: true, infoText: 'Registration failed, internal server error' });
+        }
+      },
+      err => console.error(err)
+    );
+  }
+
+  handleLogin = () => {
+    const { username, password } = this.state;
+    if (username.trim() === '' || password === '') {
+      this.setState({ hasError: true, infoText: 'Username and Password cannot be empty' });
+      return;
+    }
+    this.setState({ hasError: false, infoText: '' });
+
+    const userForm = [
+      `${encodeURIComponent('username')}=${encodeURIComponent(username)}`,
+      `${encodeURIComponent('password')}=${encodeURIComponent(password)}`
+    ];
+    loginUser(userForm.join('&')).then(
+      (status) => {
+        if (status === 200) {
+          this.setState({ loggedIn: true });
+          this.handleClose();
+        } else if (status === 401) {
+          this.setState({ hasError: true, infoText: 'Invalid username or password' });
+        } else {
+          this.setState({ hasError: true, infoText: 'Login failed, internal server error' });
+        }
+      },
+      err => console.error(err)
+    );
+  }
+
+  handleLogout = () => {
+    logoutUser().then(
+      () => {
+        this.setState({ loggedIn: false });
+        this.handleClose();
+      },
+      err => console.error(err)
+    );
+  }
+
   handleUsernameChange = (event) => {
     this.setState({ username: event.target.value });
   }
@@ -47,9 +115,15 @@ class LoginMenu extends Component {
     this.setState({ password: event.target.value });
   }
 
-  openMenu = event => this.setState({ menuAnchor: event.currentTarget });
+  handleClose = () => this.setState({
+    menuAnchor: null,
+    username: '',
+    password: '',
+    hasError: false,
+    infoText: ''
+  });
 
-  handleClose = () => this.setState({ menuAnchor: null, username: '', password: '' });
+  openMenu = event => this.setState({ menuAnchor: event.currentTarget });
 
   render() {
     const {
@@ -62,9 +136,8 @@ class LoginMenu extends Component {
     } = this.state;
 
     if (loggedIn) {
-      console.log(username);
       return (
-        <IconButton className="header-btn">
+        <IconButton className="header-btn" onClick={this.handleLogout}>
           <AccountCircleIcon />
         </IconButton>
       );
@@ -109,8 +182,8 @@ class LoginMenu extends Component {
               error={hasError}
               helperText={infoText}
             />
-            <Button color="primary" variant="contained" onClick={this.handleClose} className="login-btn">Login</Button>
-            <Button variant="outlined" onClick={this.handleClose} className="register-btn">Register</Button>
+            <Button color="primary" variant="contained" onClick={this.handleLogin} className="login-btn">Login</Button>
+            <Button variant="outlined" onClick={this.handleRegister} className="register-btn">Register</Button>
           </div>
         </Popover>
       </React.Fragment>
