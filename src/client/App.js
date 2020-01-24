@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import {
-  red, yellow, green, teal, indigo, purple
+  red, yellow, green, teal, indigo, deepPurple
 } from '@material-ui/core/colors';
 import { updateMealDetail } from './services/MealService';
 import Header from './components/header/Header';
@@ -23,10 +23,10 @@ const LIGHT_THEME = createMuiTheme({
 const DARK_THEME = createMuiTheme({
   palette: {
     type: 'dark',
-    primary: { main: purple[200] },
+    primary: { main: deepPurple[200] },
     secondary: { main: teal[200] },
     success: { main: green[300] },
-    info: { main: purple[200] },
+    info: { main: deepPurple[200] },
     warning: { main: yellow[600] },
     error: { main: red[300] }
   }
