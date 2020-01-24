@@ -2,20 +2,24 @@ import React, { Component } from 'react';
 import {
   Button,
   IconButton,
-  Menu,
+  Popover,
   TextField
 } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { getUser } from '../../services/UserService';
 
 class LoginMenu extends Component {
+  usernameRef = { focus: () => {} }; // used for autofocus
+
   constructor(props) {
     super(props);
 
     this.state = {
       loggedIn: false,
-      username: undefined,
-      password: undefined,
+      username: '',
+      password: '',
+      infoText: '',
+      hasError: false,
       menuAnchor: null
     };
   }
@@ -35,7 +39,7 @@ class LoginMenu extends Component {
     );
   }
 
-  handleNameChange = (event) => {
+  handleUsernameChange = (event) => {
     this.setState({ username: event.target.value });
   }
 
@@ -45,13 +49,15 @@ class LoginMenu extends Component {
 
   openMenu = event => this.setState({ menuAnchor: event.currentTarget });
 
-  handleClose = () => this.setState({ menuAnchor: null });
+  handleClose = () => this.setState({ menuAnchor: null, username: '', password: '' });
 
   render() {
     const {
       loggedIn,
       username,
       password,
+      infoText,
+      hasError,
       menuAnchor
     } = this.state;
 
@@ -64,46 +70,49 @@ class LoginMenu extends Component {
       );
     }
 
-    // use form instead of textfields?
-    // use css api for menu classes instead of wrapper
-    // setup auto focus
     return (
       <React.Fragment>
         <Button className="header-btn" aria-controls="login-menu" aria-haspopup="true" onClick={this.openMenu}>Login</Button>
-        <Menu
+        <Popover
           id="login-menu"
+          open={!!menuAnchor}
           anchorEl={menuAnchor}
-          getContentAnchorEl={null}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           transformOrigin={{ vertical: 'top', horizontal: 'right' }}
           keepMounted
-          open={!!menuAnchor}
+          disableEnforceFocus
+          onEntering={() => this.usernameRef.focus()}
           onClose={this.handleClose}
         >
           <div className="menu-content-wrapper">
             <TextField
               label="Username"
               value={username}
-              className="login-menu-input"
+              className="username-input"
               onChange={this.handleUsernameChange}
               margin="dense"
               type="text"
               fullWidth
               autoFocus
-              inputProps={{ maxLength: 100 }}
+              inputProps={{ maxLength: 32, ref: (input) => { this.usernameRef = input; } }}
+              error={hasError}
             />
             <TextField
               label="Password"
               value={password}
-              className="meal-dialog-input"
+              className="password-input"
               onChange={this.handlePasswordChange}
               margin="dense"
               type="password"
               fullWidth
+              inputProps={{ maxLength: 64 }}
+              error={hasError}
+              helperText={infoText}
             />
-            <Button color="primary" variant="contained" size="large" onClick={this.handleClose}>Login</Button>
+            <Button color="primary" variant="contained" onClick={this.handleClose} className="login-btn">Login</Button>
+            <Button variant="outlined" onClick={this.handleClose} className="register-btn">Register</Button>
           </div>
-        </Menu>
+        </Popover>
       </React.Fragment>
     );
   }
