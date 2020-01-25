@@ -70,7 +70,11 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    onLoginChange(loggedIn => this.setState({ loggedIn }));
+    onLoginChange((loggedIn) => {
+      this.backHistory = [];
+      this.forwardHistory = [];
+      this.setState({ loggedIn });
+    });
   }
 
   setTheme = (isDark) => {
