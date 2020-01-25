@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
+import ReadOnlyAlert from '../../assets/ReadOnlyAlert';
 import {
   deleteMeal,
   onMealDetailChange,
@@ -188,7 +189,7 @@ class MealDetail extends Component {
   }
 
   render() {
-    const { rightcb, leftcb } = this.props;
+    const { rightcb, leftcb, loggedIn } = this.props;
     const {
       loading,
       meal,
@@ -214,6 +215,7 @@ class MealDetail extends Component {
               Home
             </Button>
           </div>
+          {loggedIn ? null : <ReadOnlyAlert />}
           <div className="detail-content-wrapper">
             <div className="loading-wrapper" style={loading ? null : { display: 'none' }}>
               <CircularProgress className="loading-indicator" color="secondary" />
@@ -269,14 +271,14 @@ class MealDetail extends Component {
           <div className="detail-action-wrapper">
             <Button
               color="secondary"
-              disabled={!meal || loading}
+              disabled={!meal || !loggedIn || loading}
               onClick={() => this.handleDelete()}
             >
               Delete
             </Button>
             <Button
               color="default"
-              disabled={!meal || loading}
+              disabled={!meal || !loggedIn || loading}
               onClick={() => this.toggleEdit()}
             >
               {editable ? 'Cancel' : 'Edit'}
@@ -297,7 +299,8 @@ class MealDetail extends Component {
 
 MealDetail.propTypes = {
   rightcb: PropTypes.func.isRequired,
-  leftcb: PropTypes.func.isRequired
+  leftcb: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired
 };
 
 export default MealDetail;

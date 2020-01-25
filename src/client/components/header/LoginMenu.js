@@ -10,7 +10,8 @@ import {
   getUser,
   loginUser,
   logoutUser,
-  registerUser
+  registerUser,
+  updateLogin
 } from '../../services/UserService';
 
 class LoginMenu extends Component {
@@ -33,14 +34,12 @@ class LoginMenu extends Component {
     getUser().then(
       (res) => {
         const { username } = res;
-
         if (username) {
           this.setState({ loggedIn: true, username });
+          updateLogin(true);
         }
       },
-      (err) => {
-        console.log(err);
-      }
+      err => console.error(err)
     );
   }
 
@@ -87,6 +86,7 @@ class LoginMenu extends Component {
         if (status === 200) {
           this.setState({ loggedIn: true });
           this.handleClose();
+          updateLogin(true);
         } else if (status === 401) {
           this.setState({ hasError: true, infoText: 'Invalid username or password' });
         } else {
@@ -102,6 +102,7 @@ class LoginMenu extends Component {
       () => {
         this.setState({ loggedIn: false });
         this.handleClose();
+        updateLogin(false);
       },
       err => console.error(err)
     );

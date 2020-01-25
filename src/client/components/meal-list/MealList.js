@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
+import ReadOnlyAlert from '../../assets/ReadOnlyAlert';
 import { getMeals, createMeal, onMealListChange } from '../../services/MealService';
 import { sendSnackbar } from '../../services/SnackbarService';
 import MealTable from './MealTable';
@@ -86,20 +87,34 @@ class MealList extends Component {
   }
 
   render() {
-    const { rightcb, leftcb } = this.props;
+    const { rightcb, leftcb, loggedIn } = this.props;
     const { rows, filter, dialogOpen } = this.state;
 
     return (
       <Container className="meal-list-wrapper">
         <Paper elevation={2} className="paper-wrapper">
           <div className="button-wrapper">
-            <Button color="primary" variant="contained" size="large" onClick={leftcb} startIcon={<HomeIcon />}>
+            <Button
+              color="primary"
+              variant="contained"
+              size="large"
+              onClick={leftcb}
+              startIcon={<HomeIcon />}
+            >
               Home
             </Button>
-            <Button color="primary" variant="contained" size="large" onClick={() => this.toggleDialog(true)} startIcon={<AddIcon />}>
+            <Button
+              color="primary"
+              variant="contained"
+              size="large"
+              onClick={() => this.toggleDialog(true)}
+              startIcon={<AddIcon />}
+              disabled={!loggedIn}
+            >
               Add Meal
             </Button>
           </div>
+          {loggedIn ? null : <ReadOnlyAlert />}
           <MealTable
             rows={rows}
             filter={filter}
@@ -119,7 +134,8 @@ class MealList extends Component {
 
 MealList.propTypes = {
   rightcb: PropTypes.func.isRequired,
-  leftcb: PropTypes.func.isRequired
+  leftcb: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired
 };
 
 export default MealList;

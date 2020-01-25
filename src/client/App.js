@@ -10,6 +10,7 @@ import MealList from './components/meal-list/MealList';
 import MealDetail from './components/meal-detail/MealDetail';
 import SnackbarContainer from './components/snackbar-container/SnackbarContainer';
 import './App.scss';
+import { onLoginChange } from './services/UserService';
 
 const LIGHT_THEME = createMuiTheme({
   palette: {
@@ -64,7 +65,12 @@ export default class App extends Component {
     this.state = {
       faceClass: FACE_CLASS.HOME.FROM_LIST,
       darkTheme: theme === 'dark-theme',
+      loggedIn: false
     };
+  }
+
+  componentDidMount() {
+    onLoginChange(loggedIn => this.setState({ loggedIn }));
   }
 
   setTheme = (isDark) => {
@@ -140,7 +146,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { faceClass, darkTheme } = this.state;
+    const { faceClass, darkTheme, loggedIn } = this.state;
     return (
       <ThemeProvider theme={darkTheme ? DARK_THEME : LIGHT_THEME}>
         <CssBaseline />
@@ -165,12 +171,14 @@ export default class App extends Component {
             <MealList
               rightcb={id => this.navigatePage(true, id)}
               leftcb={() => this.navigatePage(false)}
+              loggedIn={loggedIn}
             />
           </section>
           <section className="meal-detail">
             <MealDetail
               rightcb={() => this.navigatePage(true)}
               leftcb={() => this.navigatePage(false)}
+              loggedIn={loggedIn}
             />
           </section>
         </main>
