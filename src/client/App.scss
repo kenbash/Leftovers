@@ -168,6 +168,10 @@ main {
     } 
   }
 
+  .read-only-alert .MuiAlert-message {
+    color: #fff;
+  }
+
   .sunrise-icon path {
     &.secondary {
       fill: #80cbc4;
