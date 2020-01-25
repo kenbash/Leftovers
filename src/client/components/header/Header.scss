@@ -34,6 +34,14 @@
   padding: 8px 12px;
   outline: none;
 
+  h6 {
+    padding-bottom: 8px;
+  }
+
+  button {
+    width: 100%;
+  }
+
   .username-input {
     margin-top: 4px;
   }
@@ -43,12 +51,7 @@
     margin-bottom: 8px;
   }
 
-  .register-btn {
-    width: 100%;
-  }
-
   .login-btn {
-    width: 100%;
     margin-bottom: 8px;
   }
 }

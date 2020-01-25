@@ -3,7 +3,8 @@ import {
   Button,
   IconButton,
   Popover,
-  TextField
+  TextField,
+  Typography
 } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {
@@ -21,6 +22,7 @@ class LoginMenu extends Component {
     super(props);
 
     this.state = {
+      user: null,
       loggedIn: false,
       username: '',
       password: '',
@@ -35,7 +37,7 @@ class LoginMenu extends Component {
       (res) => {
         const { username } = res;
         if (username) {
-          this.setState({ loggedIn: true, username });
+          this.setState({ loggedIn: true, user: username });
           updateLogin(true);
         }
       },
@@ -49,6 +51,7 @@ class LoginMenu extends Component {
       this.setState({ hasError: true, infoText: 'Username and Password cannot be empty' });
       return;
     }
+
     this.setState({ hasError: false, infoText: '' });
 
     const userForm = [
@@ -69,12 +72,15 @@ class LoginMenu extends Component {
     );
   }
 
-  handleLogin = () => {
+  handleLogin = (e) => {
+    e.preventDefault();
+
     const { username, password } = this.state;
     if (username.trim() === '' || password === '') {
       this.setState({ hasError: true, infoText: 'Username and Password cannot be empty' });
       return;
     }
+
     this.setState({ hasError: false, infoText: '' });
 
     const userForm = [
@@ -84,9 +90,9 @@ class LoginMenu extends Component {
     loginUser(userForm.join('&')).then(
       (status) => {
         if (status === 200) {
-          this.setState({ loggedIn: true });
-          this.handleClose();
           updateLogin(true);
+          this.handleClose();
+          setTimeout(() => this.setState({ loggedIn: true, user: username }), 500);
         } else if (status === 401) {
           this.setState({ hasError: true, infoText: 'Invalid username or password' });
         } else {
@@ -100,9 +106,9 @@ class LoginMenu extends Component {
   handleLogout = () => {
     logoutUser().then(
       () => {
-        this.setState({ loggedIn: false });
-        this.handleClose();
         updateLogin(false);
+        this.handleClose();
+        setTimeout(() => this.setState({ loggedIn: false, user: null }), 500);
       },
       err => console.error(err)
     );
@@ -128,6 +134,7 @@ class LoginMenu extends Component {
 
   render() {
     const {
+      user,
       loggedIn,
       username,
       password,
@@ -138,15 +145,34 @@ class LoginMenu extends Component {
 
     if (loggedIn) {
       return (
-        <IconButton className="header-btn" onClick={this.handleLogout}>
-          <AccountCircleIcon />
-        </IconButton>
+        <React.Fragment>
+          <IconButton className="header-btn" onClick={this.openMenu}>
+            <AccountCircleIcon />
+          </IconButton>
+          <Popover
+            id="logout-menu"
+            open={!!menuAnchor}
+            anchorEl={menuAnchor}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            keepMounted
+            disableEnforceFocus
+            onClose={this.handleClose}
+          >
+            <div className="menu-content-wrapper">
+              <Typography variant="h6">
+                {`Hello, ${user}`}
+              </Typography>
+              <Button color="primary" variant="contained" onClick={this.handleLogout}>Log Out</Button>
+            </div>
+          </Popover>
+        </React.Fragment>
       );
     }
 
     return (
       <React.Fragment>
-        <Button className="header-btn" aria-controls="login-menu" aria-haspopup="true" onClick={this.openMenu}>Login</Button>
+        <Button className="header-btn" aria-controls="login-menu" aria-haspopup="true" onClick={this.openMenu}>Log In</Button>
         <Popover
           id="login-menu"
           open={!!menuAnchor}
@@ -159,32 +185,36 @@ class LoginMenu extends Component {
           onClose={this.handleClose}
         >
           <div className="menu-content-wrapper">
-            <TextField
-              label="Username"
-              value={username}
-              className="username-input"
-              onChange={this.handleUsernameChange}
-              margin="dense"
-              type="text"
-              fullWidth
-              autoFocus
-              inputProps={{ maxLength: 32, ref: (input) => { this.usernameRef = input; } }}
-              error={hasError}
-            />
-            <TextField
-              label="Password"
-              value={password}
-              className="password-input"
-              onChange={this.handlePasswordChange}
-              margin="dense"
-              type="password"
-              fullWidth
-              inputProps={{ maxLength: 64 }}
-              error={hasError}
-              helperText={infoText}
-            />
-            <Button color="primary" variant="contained" onClick={this.handleLogin} className="login-btn">Login</Button>
-            <Button variant="outlined" onClick={this.handleRegister} className="register-btn">Register</Button>
+            <form onSubmit={this.handleLogin} noValidate autoComplete="off">
+              <TextField
+                id="username"
+                label="Username"
+                value={username}
+                className="username-input"
+                onChange={this.handleUsernameChange}
+                margin="dense"
+                type="text"
+                fullWidth
+                autoFocus
+                inputProps={{ maxLength: 32, ref: (input) => { this.usernameRef = input; } }}
+                error={hasError}
+              />
+              <TextField
+                id="password"
+                label="Password"
+                value={password}
+                className="password-input"
+                onChange={this.handlePasswordChange}
+                margin="dense"
+                type="password"
+                fullWidth
+                inputProps={{ maxLength: 64 }}
+                error={hasError}
+                helperText={infoText}
+              />
+              <Button color="primary" variant="contained" type="submit" className="login-btn">Log In</Button>
+            </form>
+            <Button variant="outlined" onClick={this.handleRegister}>Register</Button>
           </div>
         </Popover>
       </React.Fragment>
