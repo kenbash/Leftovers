@@ -55,8 +55,8 @@ class LoginMenu extends Component {
     this.setState({ hasError: false, infoText: '' });
 
     const userForm = [
-      `${encodeURIComponent('username')}=${encodeURIComponent(username)}`,
-      `${encodeURIComponent('password')}=${encodeURIComponent(password)}`
+      `username=${encodeURIComponent(username)}`,
+      `password=${encodeURIComponent(password)}`
     ];
     registerUser(userForm.join('&')).then(
       (status) => {
@@ -84,8 +84,8 @@ class LoginMenu extends Component {
     this.setState({ hasError: false, infoText: '' });
 
     const userForm = [
-      `${encodeURIComponent('username')}=${encodeURIComponent(username)}`,
-      `${encodeURIComponent('password')}=${encodeURIComponent(password)}`
+      `username=${encodeURIComponent(username)}`,
+      `password=${encodeURIComponent(password)}`
     ];
     loginUser(userForm.join('&')).then(
       (status) => {
