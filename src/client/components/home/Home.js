@@ -17,6 +17,7 @@ import { sendSnackbar } from '../../services/SnackbarService';
 import MealRow from './MealRow';
 import IngredientPanel from './IngredientPanel';
 import './Home.scss';
+import { onLoginChange } from '../../services/UserService';
 
 class Home extends Component {
   constructor(props) {
@@ -26,6 +27,15 @@ class Home extends Component {
       ingredients: [],
       loading: false
     };
+  }
+
+  componentDidMount() {
+    onLoginChange(() => {
+      this.setState({
+        meals: new Array(7).fill({ breakfast: null, lunch: null, dinner: null }),
+        ingredients: []
+      });
+    });
   }
 
   generateMeals = () => {

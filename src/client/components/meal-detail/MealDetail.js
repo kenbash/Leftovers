@@ -16,6 +16,7 @@ import {
   updateMeal,
   updateMealList
 } from '../../services/MealService';
+import { onLoginChange } from '../../services/UserService';
 import { sendSnackbar } from '../../services/SnackbarService';
 import IngredientTable from './IngredientTable';
 import MealTimeSelector from './MealTimeSelector';
@@ -50,18 +51,27 @@ class MealDetail extends Component {
       servingsError: false,
       mealTime: { breakfast: false, lunch: false, dinner: false },
       ingredients: [],
-      ingredientsText: ''
+      ingredientsText: '',
     };
   }
 
   componentDidMount() {
     onMealDetailChange('loading', () => this.setState({ loading: true }));
+
     onMealDetailChange('change', (meal) => {
       this.setMeal(meal);
       setTimeout(() => {
         if (!meal) sendSnackbar({ type: 'error', title: 'Error', text: 'Meal not found' });
         this.setState({ loading: false });
       }, 250);
+    });
+
+    onLoginChange(() => {
+      const { meal } = this.state;
+      if (meal) {
+        const { rightcb } = this.props;
+        rightcb();
+      }
     });
   }
 
@@ -81,6 +91,11 @@ class MealDetail extends Component {
       ingredients: meal ? meal.ingredients : [],
       ingredientsText: meal ? meal.ingredients.join(', ') : ''
     });
+  }
+
+  handleNavigation = navcb => () => {
+    this.setState({ meal: null });
+    navcb();
   }
 
   handleNameChange = (event) => {
@@ -208,10 +223,10 @@ class MealDetail extends Component {
       <Container className="meal-detail-wrapper">
         <Paper elevation={2} className="paper-wrapper">
           <div className="button-wrapper">
-            <Button color="primary" variant="contained" size="large" onClick={leftcb} startIcon={<RestaurantIcon />}>
+            <Button color="primary" variant="contained" size="large" onClick={this.handleNavigation(leftcb)} startIcon={<RestaurantIcon />}>
               Meals
             </Button>
-            <Button color="primary" variant="contained" size="large" onClick={rightcb} startIcon={<HomeIcon />}>
+            <Button color="primary" variant="contained" size="large" onClick={this.handleNavigation(rightcb)} startIcon={<HomeIcon />}>
               Home
             </Button>
           </div>

@@ -9,6 +9,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import ReadOnlyAlert from '../../assets/ReadOnlyAlert';
 import { getMeals, createMeal, onMealListChange } from '../../services/MealService';
+import { onLoginChange } from '../../services/UserService';
 import { sendSnackbar } from '../../services/SnackbarService';
 import MealTable from './MealTable';
 import MealDialog from './MealDialog';
@@ -30,14 +31,7 @@ class MealList extends Component {
   }
 
   componentDidMount() {
-    getMeals().then(
-      (res) => {
-        this.updateData(res);
-      },
-      () => {
-        sendSnackbar({ type: 'error', title: 'Error', text: 'Failed to load meals' });
-      }
-    );
+    this.getMealData();
 
     onMealListChange('edit', (meal) => {
       const { meals } = this.state;
@@ -54,6 +48,19 @@ class MealList extends Component {
       const { meals } = this.state;
       this.updateData(meals.filter(x => x.id !== meal.id));
     });
+
+    onLoginChange(() => this.getMealData());
+  }
+
+  getMealData() {
+    getMeals().then(
+      (data) => {
+        this.updateData(data);
+      },
+      () => {
+        sendSnackbar({ type: 'error', title: 'Error', text: 'Failed to load meals' });
+      }
+    );
   }
 
   updateData(meals) {
