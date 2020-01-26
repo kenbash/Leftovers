@@ -8,7 +8,8 @@ exports.createMeal = (req, res) => {
     breakfast: req.body.breakfast,
     lunch: req.body.lunch,
     dinner: req.body.dinner,
-    ingredients: req.body.ingredients
+    ingredients: req.body.ingredients,
+    user_id: req.user._id
   });
 
   meal.save((err, mealRes) => {
@@ -24,6 +25,7 @@ exports.createMeal = (req, res) => {
 
 exports.getMeal = (req, res) => {
   const { id } = req.params;
+
   Meal.findById(id, (err, meal) => {
     if (err) {
       console.error(err);
@@ -68,8 +70,10 @@ exports.deleteMeal = (req, res) => {
   });
 };
 
-exports.getAllMeals = (_req, res) => {
-  Meal.find({}, (err, meals) => {
+exports.getAllMeals = (req, res) => {
+  const user = req.isAuthenticated() ? req.user._id : 'example';
+
+  Meal.find({ user_id: user }, (err, meals) => {
     if (err) {
       console.error(err);
       res.sendStatus(500);
@@ -80,7 +84,8 @@ exports.getAllMeals = (_req, res) => {
   });
 };
 
-exports.getMealPlan = async (_req, res) => {
+exports.getMealPlan = async (req, res) => {
+  const user = req.isAuthenticated() ? req.user._id : 'example';
   const meals = Array.from({ length: 7 }, () => ({ breakfast: null, lunch: null, dinner: null }));
   const ingredients = [];
   let curDay = 0;
@@ -91,7 +96,7 @@ exports.getMealPlan = async (_req, res) => {
     if (!meals[curDay].breakfast) days.push({ breakfast: true });
     if (!meals[curDay].lunch) days.push({ lunch: true });
     if (!meals[curDay].dinner) days.push({ dinner: true });
-    const conditions = { servings: { $lte: 7 - curDay }, $or: days };
+    const conditions = { user_id: user, servings: { $lte: 7 - curDay }, $or: days };
 
     // if no possible meals found, try next day
     const mealCount = await Meal.countDocuments(conditions);
