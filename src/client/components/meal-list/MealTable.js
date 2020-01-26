@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -65,7 +66,8 @@ function MealTable(props) {
     rows,
     filter,
     onRowClick,
-    onFilterChange
+    onFilterChange,
+    loading
   } = props;
 
   const [page, setPage] = React.useState(0);
@@ -93,6 +95,9 @@ function MealTable(props) {
 
   return (
     <div className="meal-table-wrapper">
+      <div className="loading-wrapper" style={loading ? null : { display: 'none' }}>
+        <CircularProgress className="loading-indicator" color="secondary" />
+      </div>
       <TextField
         className="meal-search"
         placeholder="Search"
@@ -160,7 +165,8 @@ MealTable.propTypes = {
   rows: PropTypes.arrayOf(Meal).isRequired,
   onRowClick: PropTypes.func.isRequired,
   filter: PropTypes.string.isRequired,
-  onFilterChange: PropTypes.func.isRequired
+  onFilterChange: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 export default MealTable;

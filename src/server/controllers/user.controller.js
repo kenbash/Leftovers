@@ -28,6 +28,7 @@ exports.registerUser = async (req, res) => {
 };
 
 exports.loginUser = (_req, res) => {
+  // authentication handled by passport middleware
   res.sendStatus(200);
 };
 

@@ -26,7 +26,8 @@ class MealList extends Component {
       meals: [],
       rows: [],
       filter: '',
-      dialogOpen: false
+      dialogOpen: false,
+      tableLoading: false
     };
   }
 
@@ -53,12 +54,16 @@ class MealList extends Component {
   }
 
   getMealData() {
+    this.setState({ tableLoading: true });
+
     getMeals().then(
       (data) => {
         this.updateData(data);
+        this.setState({ tableLoading: false });
       },
       () => {
         sendSnackbar({ type: 'error', title: 'Error', text: 'Failed to load meals' });
+        this.setState({ tableLoading: false });
       }
     );
   }
@@ -95,7 +100,12 @@ class MealList extends Component {
 
   render() {
     const { rightcb, leftcb, loggedIn } = this.props;
-    const { rows, filter, dialogOpen } = this.state;
+    const {
+      rows,
+      filter,
+      dialogOpen,
+      tableLoading
+    } = this.state;
 
     return (
       <Container className="meal-list-wrapper">
@@ -127,6 +137,7 @@ class MealList extends Component {
             filter={filter}
             onRowClick={rightcb}
             onFilterChange={x => this.updateFilter(x)}
+            loading={tableLoading}
           />
         </Paper>
         <MealDialog
