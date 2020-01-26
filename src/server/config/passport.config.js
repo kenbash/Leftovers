@@ -4,12 +4,12 @@ const userController = require('../controllers/user.controller');
 
 function initialize(passport) {
   const authenticateUser = async (username, password, done) => {
-    const user = await userController.getUserByNameAsync(username);
-    if (!user) {
-      return done(null, false);
-    }
-
     try {
+      const user = await userController.getUserByNameAsync(username);
+      if (!user) {
+        return done(null, false);
+      }
+
       if (await bcrypt.compare(password, user.password)) {
         return done(null, user);
       }
