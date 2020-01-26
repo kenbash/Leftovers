@@ -28,37 +28,24 @@ main {
   position: absolute;
   height: 100%;
   width: 100%;
-  transition: margin-left 500ms;
   padding-top: 2.5em;
   padding-bottom: 2em;
   overflow: auto;
+  transition: transform 500ms;
+  transform: none;
+  will-change: transform;
 }
 
-.home-face {
-  .meal-list {
-    margin-left: 100%;
-  }
-  .meal-detail {
-    margin-left: -100%;
-  }
+.home-face .meal-list,
+.list-face .meal-detail,
+.detail-face .meal-grid {
+  transform: translateX(100%);
 }
 
-.list-face {
-  .meal-grid {
-    margin-left: -100%;
-  }
-  .meal-detail {
-    margin-left: 100%;
-  }
-}
-
-.detail-face {
-  .meal-grid {
-    margin-left: 100%;
-  }
-  .meal-list {
-    margin-left: -100%;
-  }
+.home-face .meal-detail,
+.list-face .meal-grid,
+.detail-face .meal-list {
+  transform: translateX(-100%);
 }
 
 .wrap-home .meal-grid,
