@@ -61,7 +61,7 @@ class SnackbarContainer extends Component {
           open={open}
           onClose={this.handleClose}
           onExited={this.handleExited}
-          autoHideDuration={6000}
+          autoHideDuration={4800}
         >
           <Alert elevation={6} variant="filled" severity={type} onClose={this.handleClose}>
             {title ? <AlertTitle>{title}</AlertTitle> : null}
