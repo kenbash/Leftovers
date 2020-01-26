@@ -85,52 +85,12 @@ exports.getAllMeals = (req, res) => {
 };
 
 exports.getMealPlan = async (req, res) => {
-  const user = req.isAuthenticated() ? req.user._id : 'example';
-  const meals = Array.from({ length: 7 }, () => ({ breakfast: null, lunch: null, dinner: null }));
-  const ingredients = [];
-  let curDay = 0;
+  try {
+    const user = req.isAuthenticated() ? req.user._id : 'example';
+    const mealPlan = await Meal.generateMealPlan(user);
 
-  while (curDay < 7) {
-    // set conditions for needed time of day and servings
-    const days = [];
-    if (!meals[curDay].breakfast) days.push({ breakfast: true });
-    if (!meals[curDay].lunch) days.push({ lunch: true });
-    if (!meals[curDay].dinner) days.push({ dinner: true });
-    const conditions = { user_id: user, servings: { $lte: 7 - curDay }, $or: days };
-
-    // if no possible meals found, try next day
-    const mealCount = await Meal.countDocuments(conditions);
-    if (mealCount < 1) {
-      curDay += 1;
-      continue;
-    }
-
-    // select next random meal
-    const meal = await Meal.findOne(conditions).skip(Math.floor(Math.random() * mealCount));
-    let leftovers = meal.servings;
-    ingredients.push(...meal.ingredients);
-
-    // fill in meal plan with chosen meal
-    for (let i = curDay; i < 7 && leftovers > 0; i += 1) {
-      if (!meals[i].breakfast && meal.breakfast) {
-        meals[i].breakfast = MealDTO.convertToMealName(meal);
-      } else if (!meals[i].lunch && meal.lunch) {
-        meals[i].lunch = MealDTO.convertToMealName(meal);
-      } else if (!meals[i].dinner && meal.dinner) {
-        meals[i].dinner = MealDTO.convertToMealName(meal);
-      } else {
-        continue;
-      }
-
-      leftovers -= 1;
-
-      if (meals[i].breakfast && meals[i].lunch && meals[i].dinner) {
-        curDay = i + 1;
-      }
-    }
+    res.send(mealPlan);
+  } catch {
+    res.sendStatus(500);
   }
-
-  ingredients.sort();
-
-  res.send({ meals, ingredients });
 };
