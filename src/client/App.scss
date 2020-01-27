@@ -11,6 +11,7 @@ header {
   right: 0;
   left: 0;
   height: $header-height;
+  z-index: 999;
 }
 
 main {
