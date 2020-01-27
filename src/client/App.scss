@@ -100,7 +100,31 @@ main {
   margin: 0 auto 1.5em auto;
 }
 
-// Scrollbar customization
+/* * * * * * * * * * *
+    Responsiveness
+* * * * * * * * * * */
+@media only screen and (max-width: 450px) {
+  .meal-grid,
+  .meal-list,
+  .meal-detail {
+    padding-top: 1em;
+    padding-bottom: 1em;
+
+    .MuiContainer-root {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  .button-wrapper {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* * * * * * * * * * *
+    Scrollbar
+* * * * * * * * * * */
 * {
   scrollbar-width: thin;
   scrollbar-color: #c1c1c1 #f1f1f1;
@@ -124,7 +148,9 @@ main {
   background: #f1f1f1;
 }
 
-// Dark theme custom color overrides
+/* * * * * * * * * * *
+    Dark Theme
+* * * * * * * * * * */
 .dark-theme {
   * {
     scrollbar-color: #3e3e3e #262626;

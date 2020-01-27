@@ -20,7 +20,7 @@ import { Meal } from '../../types/Meal';
 
 let timeoutHandler;
 const columns = [
-  { id: 'name', label: 'Name', minWidth: 150 },
+  { id: 'name', label: 'Name', minWidth: 100 },
   {
     id: 'servings',
     label: 'Servings',
