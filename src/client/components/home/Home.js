@@ -23,7 +23,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      meals: new Array(7).fill({ breakfast: null, lunch: null, dinner: null }),
+      meals: new Array(7).fill({}),
       ingredients: [],
       loading: false
     };
@@ -32,7 +32,7 @@ class Home extends Component {
   componentDidMount() {
     onLoginChange(() => {
       this.setState({
-        meals: new Array(7).fill({ breakfast: null, lunch: null, dinner: null }),
+        meals: new Array(7).fill({}),
         ingredients: []
       });
     });
