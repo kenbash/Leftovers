@@ -16,8 +16,7 @@ exports.registerUser = async (req, res) => {
 
     user.save((err) => {
       if (err) {
-        console.error(err);
-        res.sendStatus(500);
+        res.sendStatus(403);
         return;
       }
       res.sendStatus(200);

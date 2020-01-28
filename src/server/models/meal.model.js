@@ -1,10 +1,18 @@
 const mongoose = require('mongoose');
-// const validator = require('validator');
 const MealDTO = require('./meal.dto');
 
 const MealSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  servings: { type: Number, required: true },
+  name: {
+    type: String,
+    required: true,
+    minlength: 1
+  },
+  servings: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 7
+  },
   breakfast: { type: Boolean, required: true },
   lunch: { type: Boolean, required: true },
   dinner: { type: Boolean, required: true },

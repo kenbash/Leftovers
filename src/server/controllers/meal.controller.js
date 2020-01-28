@@ -14,8 +14,7 @@ exports.createMeal = (req, res) => {
 
   meal.save((err, mealRes) => {
     if (err) {
-      console.error(err);
-      res.sendStatus(500);
+      res.sendStatus(403);
       return;
     }
 
@@ -28,7 +27,6 @@ exports.getMeal = (req, res) => {
 
   Meal.findById(id, (err, meal) => {
     if (err) {
-      console.error(err);
       res.sendStatus(500);
       return;
     }
@@ -48,8 +46,7 @@ exports.updateMeal = (req, res) => {
 
   Meal.findByIdAndUpdate(id, meal, (err) => {
     if (err) {
-      console.error(err);
-      res.sendStatus(500);
+      res.sendStatus(403);
       return;
     }
 
@@ -61,7 +58,6 @@ exports.deleteMeal = (req, res) => {
   const { id } = req.params;
   Meal.findByIdAndRemove(id, (err) => {
     if (err) {
-      console.error(err);
       res.sendStatus(500);
       return;
     }
@@ -75,7 +71,6 @@ exports.getAllMeals = (req, res) => {
 
   Meal.find({ user_id: user }, (err, meals) => {
     if (err) {
-      console.error(err);
       res.sendStatus(500);
       return;
     }
