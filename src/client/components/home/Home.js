@@ -4,7 +4,6 @@ import {
   Button,
   CircularProgress,
   Container,
-  Grid,
   Paper
 } from '@material-ui/core';
 import CachedIcon from '@material-ui/icons/Cached';
@@ -78,28 +77,16 @@ class Home extends Component {
             <div className="loading-wrapper" style={loading ? null : { display: 'none' }}>
               <CircularProgress className="loading-indicator" color="secondary" />
             </div>
-            <Grid container spacing={2}>
-              <Grid container item xs={12} spacing={2} justify="center">
-                <Grid item xs={1} />
-                <Grid item xs={3}>
-                  <SunriseIcon color="secondary" />
-                </Grid>
-                <Grid item xs={3}>
-                  <WbSunnyIcon color="secondary" />
-                </Grid>
-                <Grid item xs={3}>
-                  <Brightness3Icon color="secondary" />
-                </Grid>
-                <Grid item xs={1} />
-              </Grid>
-              <MealRow day="M" meals={meals[0]} onMealClick={leftcb} />
-              <MealRow day="T" meals={meals[1]} onMealClick={leftcb} />
-              <MealRow day="W" meals={meals[2]} onMealClick={leftcb} />
-              <MealRow day="T" meals={meals[3]} onMealClick={leftcb} />
-              <MealRow day="F" meals={meals[4]} onMealClick={leftcb} />
-              <MealRow day="S" meals={meals[5]} onMealClick={leftcb} />
-              <MealRow day="S" meals={meals[6]} onMealClick={leftcb} />
-            </Grid>
+            <SunriseIcon color="secondary" />
+            <WbSunnyIcon color="secondary" />
+            <Brightness3Icon color="secondary" />
+            <MealRow day="M" meals={meals[0]} onMealClick={leftcb} />
+            <MealRow day="T" meals={meals[1]} onMealClick={leftcb} />
+            <MealRow day="W" meals={meals[2]} onMealClick={leftcb} />
+            <MealRow day="T" meals={meals[3]} onMealClick={leftcb} />
+            <MealRow day="F" meals={meals[4]} onMealClick={leftcb} />
+            <MealRow day="S" meals={meals[5]} onMealClick={leftcb} />
+            <MealRow day="S" meals={meals[6]} onMealClick={leftcb} />
           </div>
           <div className="ingredient-list-wrapper">
             <IngredientPanel rows={ingredients} />

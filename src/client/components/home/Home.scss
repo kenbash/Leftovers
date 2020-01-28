@@ -2,17 +2,28 @@
   text-align: center;
 
   .grid-wrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: 2.5em repeat(3, 1fr) 2.5em;
+    grid-auto-flow: row;
+    grid-gap: 1em;
+    place-items: center;
     position: relative;
     max-width: 1000px;
-    padding-top: 1em;
-    padding-bottom: 2em;
+    padding: 1em;
     margin: auto;
+
+    .sunrise-icon {
+      grid-column: 2/3;
+    }
+
+    .day-cell {
+      grid-column: 1/2;
+    }
 
     .meal-cell,
     .meal-cell-empty {
-      height: 7.5vh;
-      min-height: 3em;
+      height: 5em;
+      width: 100%;
       padding: 0.5em;
     }
 
@@ -46,7 +57,8 @@
   .ingredient-list-wrapper {
     width: 45%;
     min-width: 250px;
-    max-width: 450px;
+    max-width: 500px;
+    padding-top: 1em;
     margin: auto;
 
     .ingredients-table {
