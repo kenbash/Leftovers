@@ -19,6 +19,7 @@
       left: 0;
       right: 0;
       background: rgba(0, 0, 0, 0.15);
+      display: -webkit-box;
       display: flex;
       
       .loading-indicator {
@@ -36,19 +37,23 @@
 
   .ingredient-meal-time-wrapper {
     width: 100%;
+    display: -webkit-box;
     display: flex;
     margin: auto;
 
     .ingredients-table {
-      flex: 1;
+      -webkit-box-flex: 1;
+              flex: 1;
       height: 315px;
       overflow: auto;
     }
     
     .meal-time {
       &-wrapper {
+        display: -webkit-box;
         display: flex;
-        justify-content: center;
+        -webkit-box-pack: center;
+                justify-content: center;
         padding-top: 24px;
         width: 20%;
         min-width: 100px;
@@ -56,8 +61,11 @@
     
       &-icons,
       &-group {
+        display: -webkit-box;
         display: flex;
-        flex-direction: column;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+                flex-direction: column;
       }
     
       &-icons svg {

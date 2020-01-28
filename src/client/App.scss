@@ -32,21 +32,27 @@ main {
   padding-top: 2.5em;
   padding-bottom: 2em;
   overflow: auto;
+  -webkit-transition: -webkit-transform 500ms;
+  transition: -webkit-transform 500ms;
   transition: transform 500ms;
-  transform: none;
+  transition: transform 500ms, -webkit-transform 500ms;
+  -webkit-transform: none;
+          transform: none;
   will-change: transform;
 }
 
 .home-face .meal-list,
 .list-face .meal-detail,
 .detail-face .meal-grid {
-  transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+          transform: translateX(100%);
 }
 
 .home-face .meal-detail,
 .list-face .meal-grid,
 .detail-face .meal-list {
-  transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
 }
 
 .wrap-home .meal-grid,
@@ -59,8 +65,10 @@ main {
     Global Styles
 * * * * * * * * * * */
 .button-wrapper {
+  display: -webkit-box;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+          justify-content: space-between;
   padding: 0 5% .5em;
 }
 

@@ -34,6 +34,7 @@
       left: 0;
       right: 0;
       background: rgba(0, 0, 0, 0.15);
+      display: -webkit-box;
       display: flex;
       
       .loading-indicator {
@@ -80,13 +81,16 @@
     }
 
     &-group {
-      justify-content: space-between;
+      -webkit-box-pack: justify;
+              justify-content: space-between;
       padding: 0 10%;
     }
 
     &-icons {
+      display: -webkit-box;
       display: flex;
-      justify-content: space-between;
+      -webkit-box-pack: justify;
+              justify-content: space-between;
       padding: 8px 10% 0 10%;
     
       svg {

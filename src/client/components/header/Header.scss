@@ -1,14 +1,17 @@
 .header-wrapper {
   position: relative;
+  display: -webkit-box;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+          align-items: center;
   height: 100%;
   padding: 0 1rem;
   background: #3f51b5;
   color: #fff;
 
   .header-filler {
-    flex: 1;
+    -webkit-box-flex: 1;
+            flex: 1;
   }
 
   .header-title {

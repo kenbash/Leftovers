@@ -44,6 +44,7 @@
       left: 0;
       right: 0;
       background: rgba(0, 0, 0, 0.15);
+      display: -webkit-box;
       display: flex;
       
       .loading-indicator {
