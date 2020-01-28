@@ -68,3 +68,13 @@
     }
   }
 }
+
+@media only screen and (max-width: 450px) {
+  .home-wrapper {
+    .grid-wrapper {
+      grid-template-columns: 1.5em repeat(3, 1fr);
+      grid-gap: 0.5em;
+      padding: 1em 0;
+    }
+  }
+}

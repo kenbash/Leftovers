@@ -8,8 +8,7 @@
   .detail-content-wrapper {
     position: relative;
     width: 80%;
-    max-width: 1000px;
-    min-width: 275px;
+    max-width: 900px;
     margin: auto;
 
     .loading-wrapper {
@@ -77,6 +76,14 @@
     button {
       width: 72px;
       margin-left: 8px;
+    }
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .meal-detail-wrapper {
+    .detail-content-wrapper {
+      width: 100%;
     }
   }
 }
