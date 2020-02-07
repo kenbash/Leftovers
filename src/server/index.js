@@ -1,14 +1,11 @@
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const path = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const MongoStore = require('connect-mongo')(session);
-
-if (process.env.NODE_ENV !== 'production') {
-  // eslint-disable-next-line global-require, import/no-extraneous-dependencies
-  require('dotenv').config({ path: require('path').resolve(__dirname, '.env') });
-}
+require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 const initMongoose = require('./config/mongoose.config');
 const initPassport = require('./config/passport.config');

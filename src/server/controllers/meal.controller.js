@@ -67,7 +67,7 @@ exports.deleteMeal = (req, res) => {
 };
 
 exports.getAllMeals = (req, res) => {
-  const user = req.isAuthenticated() ? req.user._id : 'example';
+  const user = req.isAuthenticated() ? req.user._id : process.env.DEFAULT_USER;
 
   Meal.find({ user_id: user }, (err, meals) => {
     if (err) {
@@ -81,7 +81,7 @@ exports.getAllMeals = (req, res) => {
 
 exports.getMealPlan = async (req, res) => {
   try {
-    const user = req.isAuthenticated() ? req.user._id : 'example';
+    const user = req.isAuthenticated() ? req.user._id : process.env.DEFAULT_USER;
     const mealPlan = await Meal.generateMealPlan(user);
 
     res.send(mealPlan);
