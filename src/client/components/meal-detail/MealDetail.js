@@ -193,7 +193,7 @@ class MealDetail extends Component {
       () => {
         updateMealList('delete', meal);
         sendSnackbar({ type: 'success', title: 'Success', text: 'Meal deleted' });
-        this.setState({ loading: false });
+        this.setState({ meal: null, loading: false });
         rightcb();
       },
       () => {
