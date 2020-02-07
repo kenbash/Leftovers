@@ -24,6 +24,7 @@ class LoginMenu extends Component {
     this.state = {
       user: null,
       loggedIn: false,
+      registration: false,
       username: '',
       password: '',
       infoText: '',
@@ -45,7 +46,49 @@ class LoginMenu extends Component {
     );
   }
 
-  handleRegister = () => {
+  openMenu = event => this.setState({ menuAnchor: event.currentTarget });
+
+  openRegistration = () => this.setState({ registration: true });
+
+  handleSubmit = registration => (e) => {
+    e.preventDefault();
+
+    if (registration) {
+      this.handleRegister();
+    } else {
+      this.handleLogin();
+    }
+  }
+
+  handleLogout = () => {
+    logoutUser().then(
+      () => {
+        updateLogin(false);
+        this.handleClose();
+        setTimeout(() => this.setState({ loggedIn: false, user: null }), 500);
+      },
+      err => console.error(err)
+    );
+  }
+
+  handleUsernameChange = (event) => {
+    this.setState({ username: event.target.value });
+  }
+
+  handlePasswordChange = (event) => {
+    this.setState({ password: event.target.value });
+  }
+
+  handleClose = () => this.setState({
+    menuAnchor: null,
+    username: '',
+    password: '',
+    hasError: false,
+    infoText: '',
+    registration: false
+  });
+
+  handleRegister() {
     const { username, password } = this.state;
     if (username.trim() === '' || password === '') {
       this.setState({ hasError: true, infoText: 'Username and Password cannot be empty' });
@@ -61,7 +104,7 @@ class LoginMenu extends Component {
     registerUser(userForm.join('&')).then(
       (status) => {
         if (status === 200) {
-          this.setState({ infoText: 'Registration successful! Login to continue' });
+          this.setState({ infoText: 'Registration successful! Login to continue', registration: false });
         } else if (status === 409) {
           this.setState({ hasError: true, infoText: 'Username already in use' });
         } else {
@@ -72,9 +115,7 @@ class LoginMenu extends Component {
     );
   }
 
-  handleLogin = (e) => {
-    e.preventDefault();
-
+  handleLogin() {
     const { username, password } = this.state;
     if (username.trim() === '' || password === '') {
       this.setState({ hasError: true, infoText: 'Username and Password cannot be empty' });
@@ -103,39 +144,11 @@ class LoginMenu extends Component {
     );
   }
 
-  handleLogout = () => {
-    logoutUser().then(
-      () => {
-        updateLogin(false);
-        this.handleClose();
-        setTimeout(() => this.setState({ loggedIn: false, user: null }), 500);
-      },
-      err => console.error(err)
-    );
-  }
-
-  handleUsernameChange = (event) => {
-    this.setState({ username: event.target.value });
-  }
-
-  handlePasswordChange = (event) => {
-    this.setState({ password: event.target.value });
-  }
-
-  handleClose = () => this.setState({
-    menuAnchor: null,
-    username: '',
-    password: '',
-    hasError: false,
-    infoText: ''
-  });
-
-  openMenu = event => this.setState({ menuAnchor: event.currentTarget });
-
   render() {
     const {
       user,
       loggedIn,
+      registration,
       username,
       password,
       infoText,
@@ -185,7 +198,7 @@ class LoginMenu extends Component {
           onClose={this.handleClose}
         >
           <div className="menu-content-wrapper">
-            <form onSubmit={this.handleLogin} noValidate autoComplete="off">
+            <form onSubmit={this.handleSubmit(registration)} noValidate autoComplete="off">
               <TextField
                 id="username"
                 label="Username"
@@ -212,9 +225,11 @@ class LoginMenu extends Component {
                 error={hasError}
                 helperText={infoText}
               />
-              <Button color="primary" variant="contained" type="submit" className="login-btn">Log In</Button>
+              <Button color="primary" variant="contained" type="submit" className="login-btn">
+                {registration ? 'Register' : 'Log In'}
+              </Button>
             </form>
-            <Button variant="outlined" onClick={this.handleRegister}>Register</Button>
+            {registration ? null : <Button variant="outlined" onClick={this.openRegistration}>Register</Button>}
           </div>
         </Popover>
       </React.Fragment>
